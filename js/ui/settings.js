@@ -1,6 +1,7 @@
 // Practice settings, Sound, and the progress export/reset controls.
 import { S, P, sv, replaceAll, resetProgress } from '../state/store.js';
 import { parseBackup } from '../state/backup.js';
+import { KINDS, kindEnabled } from '../drills/registry.js';
 import { el } from '../util.js';
 import { ALL12, WHITE } from '../theory/pitch.js';
 import { applyStatic, setLang, t } from '../i18n/index.js';
@@ -39,6 +40,7 @@ export const LAB_FLAGS = [
   { key: 'labMidi', available: midiAvailable, apply: setMidi },
   { key: 'labJamQuiz' },
   { key: 'labSing', available: singAvailable, apply: on => on || stopSing() },
+  { key: 'labRhythm' },
 ];
 
 function labRows() {
@@ -61,6 +63,8 @@ function labRows() {
       S[f] = box.checked;
       sv();
       if (apply) apply(box.checked);
+      // Flags can add drill kinds, so redraw the chips (and these rows) too.
+      chips();
       go(view);
     };
     const hint = document.createElement('span');
@@ -81,10 +85,12 @@ export function chips() {
     document.querySelector('[data-preset="' + k + '"]').textContent = pcs.map(nn).join(' ');
   chipRow(
     el('kindChips'),
-    ['note', 'interval', 'chord', 'inv', 'degree', 'melody', 'prog', 'cadence', 'scale'].map(v => ({
-      v,
-      b: t('kinds.' + v),
-    })),
+    Object.keys(KINDS)
+      .filter(k => kindEnabled(k, S))
+      .map(v => ({
+        v,
+        b: t('kinds.' + v),
+      })),
     v => S.kinds.includes(v),
     v => {
       S.kinds.includes(v) ? S.kinds.length > 1 && (S.kinds = S.kinds.filter(x => x !== v)) : S.kinds.push(v);

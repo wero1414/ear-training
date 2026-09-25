@@ -99,7 +99,9 @@
       "melody": "melodies",
       "prog": "progressions",
       "cadence": "cadences",
-      "scale": "scales"
+      "scale": "scales",
+      "rhythm": "rhythms",
+      "tap": "tap-backs"
     },
     "import": "Import progress",
     "importBad": "That file is not a progress export.",
@@ -115,7 +117,9 @@
     "melody": "melody",
     "prog": "progressions",
     "cadence": "cadences",
-    "scale": "scales"
+    "scale": "scales",
+    "rhythm": "rhythm",
+    "tap": "tap-back"
   },
   "about": {
     "summary": "What trains what",
@@ -138,7 +142,9 @@
     "melody": "Enter the melody by degree.",
     "prog": "Enter the progression.",
     "cadence": "Which cadence?",
-    "scale": "Which scale?"
+    "scale": "Which scale?",
+    "rhythm": "Write the rhythm, one beat per slot.",
+    "tap": "Listen, then tap it back."
   },
   "trial": {
     "outOfTime": "Out of time \u2014 <b>{truth}</b>",
@@ -432,6 +438,10 @@
     "labSing": {
       "name": "Sing your answers",
       "hint": "microphone pitch detection on this device; audio never leaves it"
+    },
+    "labRhythm": {
+      "name": "Rhythm",
+      "hint": "rhythmic dictation and tap-back drills in practice"
     }
   },
   "srs": {
@@ -459,5 +469,12 @@
     "heard": "Heard: {note}",
     "retry": "Didn't catch that. Sing again, a little louder.",
     "denied": "Microphone blocked. Allow it in the browser settings to sing answers."
+  },
+  "rhythm": {
+    "start": "Tap it back",
+    "pad": "Tap",
+    "countIn": "Count-in 1 2 3 4, then tap the rhythm here.",
+    "result": "worst tap {ms} ms off",
+    "count": "{got} taps for {want} notes"
   }
 }

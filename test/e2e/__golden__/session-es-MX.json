@@ -1270,6 +1270,13 @@
     "<span class=\"hint\">detecci\u00f3n de altura con el micr\u00f3fono en este dispositivo; el audio nunca sale de \u00e9l",
     "</span>",
     "</div>",
+    "<div class=\"srow\">",
+    "<label class=\"lbl\" for=\"labRhythm\">Ritmo",
+    "</label>",
+    "<input type=\"checkbox\" id=\"labRhythm\">",
+    "<span class=\"hint\">dictado r\u00edtmico y repetici\u00f3n de ritmos en la pr\u00e1ctica",
+    "</span>",
+    "</div>",
     "</div>\n    ",
     "</div>\n  ",
     "</details>"
@@ -1332,7 +1339,8 @@
     "labSrs=false",
     "labMidi=false",
     "labJamQuiz=false",
-    "labSing=false"
+    "labSing=false",
+    "labRhythm=false"
    ],
    "set": null,
    "prog": null
@@ -1875,6 +1883,13 @@
     "</label>",
     "<input type=\"checkbox\" id=\"labSing\" style=\"\">",
     "<span class=\"hint\">detecci\u00f3n de altura con el micr\u00f3fono en este dispositivo; el audio nunca sale de \u00e9l",
+    "</span>",
+    "</div>",
+    "<div class=\"srow\">",
+    "<label class=\"lbl\" for=\"labRhythm\">Ritmo",
+    "</label>",
+    "<input type=\"checkbox\" id=\"labRhythm\" style=\"\">",
+    "<span class=\"hint\">dictado r\u00edtmico y repetici\u00f3n de ritmos en la pr\u00e1ctica",
     "</span>",
     "</div>",
     "</div>\n    ",
@@ -5533,6 +5548,13 @@
     "<span class=\"hint\">detecci\u00f3n de altura con el micr\u00f3fono en este dispositivo; el audio nunca sale de \u00e9l",
     "</span>",
     "</div>",
+    "<div class=\"srow\">",
+    "<label class=\"lbl\" for=\"labRhythm\">Ritmo",
+    "</label>",
+    "<input type=\"checkbox\" id=\"labRhythm\">",
+    "<span class=\"hint\">dictado r\u00edtmico y repetici\u00f3n de ritmos en la pr\u00e1ctica",
+    "</span>",
+    "</div>",
     "</div>\n    ",
     "</div>\n  ",
     "</details>"
@@ -5565,7 +5587,8 @@
     "labSrs=false",
     "labMidi=false",
     "labJamQuiz=false",
-    "labSing=false"
+    "labSing=false",
+    "labRhythm=false"
    ],
    "set": "{\"a4\":440,\"timbre\":\"rhodes\",\"vol\":0.55,\"rev\":0.26,\"dur\":1.5,\"mask\":true,\"sfx\":true,\"adaptive\":true,\"kinds\":[\"note\",\"interval\",\"chord\",\"inv\",\"degree\",\"melody\",\"prog\",\"cadence\",\"scale\"],\"pcs\":[0,1,2,3,4,5,6,7,8,9,10,11],\"ivls\":[3,4,5,7,12],\"chords\":[\"maj\",\"min\",\"maj7\",\"dom7\",\"min7\"],\"scales\":[\"ionian\",\"aeolian\",\"dorian\",\"mixolydian\"],\"dir\":\"random\",\"arp\":2,\"octLow\":3,\"octHigh\":5,\"reqOct\":true,\"keyMode\":\"random\",\"keyQual\":\"both\",\"melLen\":4,\"chrom\":false,\"limit\":6,\"jamKey\":0,\"jamPreset\":0,\"jamBpm\":82,\"jamDrums\":true,\"jamBass\":true,\"iosMediaChannel\":true,\"jamQuiz\":8,\"lang\":\"es\",\"naming\":\"solf\",\"degNaming\":\"num\"}"
   },
@@ -5765,6 +5788,13 @@
     "</label>",
     "<input type=\"checkbox\" id=\"labSing\" style=\"\">",
     "<span class=\"hint\">detecci\u00f3n de altura con el micr\u00f3fono en este dispositivo; el audio nunca sale de \u00e9l",
+    "</span>",
+    "</div>",
+    "<div class=\"srow\">",
+    "<label class=\"lbl\" for=\"labRhythm\">Ritmo",
+    "</label>",
+    "<input type=\"checkbox\" id=\"labRhythm\" style=\"\">",
+    "<span class=\"hint\">dictado r\u00edtmico y repetici\u00f3n de ritmos en la pr\u00e1ctica",
     "</span>",
     "</div>",
     "</div>\n    ",
@@ -9387,7 +9417,8 @@
     "labSrs=false",
     "labMidi=false",
     "labJamQuiz=false",
-    "labSing=false"
+    "labSing=false",
+    "labRhythm=false"
    ],
    "set": "{\"a4\":440,\"timbre\":\"rhodes\",\"vol\":0.55,\"rev\":0.26,\"dur\":1.5,\"mask\":true,\"sfx\":true,\"adaptive\":true,\"kinds\":[\"note\",\"interval\",\"chord\",\"inv\",\"degree\",\"melody\",\"prog\",\"cadence\",\"scale\"],\"pcs\":[0,1,2,3,4,5,6,7,8,9,10,11],\"ivls\":[3,4,5,7,12],\"chords\":[\"maj\",\"min\",\"maj7\",\"dom7\",\"min7\"],\"scales\":[\"ionian\",\"aeolian\",\"dorian\",\"mixolydian\"],\"dir\":\"random\",\"arp\":2,\"octLow\":3,\"octHigh\":5,\"reqOct\":true,\"keyMode\":\"random\",\"keyQual\":\"both\",\"melLen\":4,\"chrom\":true,\"limit\":6,\"jamKey\":0,\"jamPreset\":0,\"jamBpm\":82,\"jamDrums\":true,\"jamBass\":true,\"iosMediaChannel\":true,\"jamQuiz\":8,\"lang\":\"es\",\"naming\":\"solf\",\"degNaming\":\"num\"}",
    "prog": "{\"xp\":366,\"stars\":{\"c0s0\":2},\"best\":{\"c0s0\":3428},\"stats\":{\"note\":{\"0\":{\"n\":6,\"ok\":5},\"5\":{\"n\":2,\"ok\":0},\"6\":{\"n\":6,\"ok\":6}},\"degree\":{\"0\":{\"n\":1,\"ok\":1},\"3\":{\"n\":1,\"ok\":0},\"7\":{\"n\":2,\"ok\":1}},\"scale\":{\"aeolian\":{\"n\":1,\"ok\":0},\"mixolydian\":{\"n\":2,\"ok\":0}},\"chord\":{\"maj\":{\"n\":1,\"ok\":0}},\"cadence\":{\"2\":{\"n\":1,\"ok\":0}},\"interval\":{\"4\":{\"n\":1,\"ok\":0},\"12\":{\"n\":1,\"ok\":0}},\"prog\":{\"seq\":{\"n\":1,\"ok\":0}},\"inv\":{\"1\":{\"n\":1,\"ok\":1}}},\"days\":1,\"last\":\"2026-03-02\",\"schema\":3,\"srs\":{}}"
@@ -12547,6 +12578,13 @@
     "</label>",
     "<input type=\"checkbox\" id=\"labSing\">",
     "<span class=\"hint\">detecci\u00f3n de altura con el micr\u00f3fono en este dispositivo; el audio nunca sale de \u00e9l",
+    "</span>",
+    "</div>",
+    "<div class=\"srow\">",
+    "<label class=\"lbl\" for=\"labRhythm\">Ritmo",
+    "</label>",
+    "<input type=\"checkbox\" id=\"labRhythm\">",
+    "<span class=\"hint\">dictado r\u00edtmico y repetici\u00f3n de ritmos en la pr\u00e1ctica",
     "</span>",
     "</div>",
     "</div>\n    ",
@@ -17611,7 +17649,8 @@
     "labSrs=false",
     "labMidi=false",
     "labJamQuiz=false",
-    "labSing=false"
+    "labSing=false",
+    "labRhythm=false"
    ],
    "set": "{\"a4\":432,\"timbre\":\"pluck\",\"vol\":0.3,\"rev\":0.1,\"dur\":2,\"mask\":true,\"sfx\":true,\"adaptive\":true,\"kinds\":[\"note\",\"interval\",\"chord\",\"inv\",\"degree\",\"melody\",\"prog\",\"cadence\",\"scale\"],\"pcs\":[0,1,2,3,4,5,6,7,8,9,10,11],\"ivls\":[3,4,5,7,12],\"chords\":[\"maj\",\"min\",\"maj7\",\"dom7\",\"min7\"],\"scales\":[\"ionian\",\"aeolian\",\"dorian\",\"mixolydian\"],\"dir\":\"random\",\"arp\":2,\"octLow\":2,\"octHigh\":2,\"reqOct\":true,\"keyMode\":\"random\",\"keyQual\":\"both\",\"melLen\":4,\"chrom\":true,\"limit\":6,\"jamKey\":0,\"jamPreset\":0,\"jamBpm\":82,\"jamDrums\":true,\"jamBass\":true,\"iosMediaChannel\":true,\"jamQuiz\":8,\"lang\":\"es\",\"naming\":\"flat\",\"degNaming\":\"num\"}"
   },
@@ -18120,6 +18159,13 @@
     "<span class=\"hint\">detecci\u00f3n de altura con el micr\u00f3fono en este dispositivo; el audio nunca sale de \u00e9l",
     "</span>",
     "</div>",
+    "<div class=\"srow\">",
+    "<label class=\"lbl\" for=\"labRhythm\">Ritmo",
+    "</label>",
+    "<input type=\"checkbox\" id=\"labRhythm\" style=\"\">",
+    "<span class=\"hint\">dictado r\u00edtmico y repetici\u00f3n de ritmos en la pr\u00e1ctica",
+    "</span>",
+    "</div>",
     "</div>\n    ",
     "</div>\n  ",
     "</details>"
@@ -18153,7 +18199,8 @@
     "labSrs=false",
     "labMidi=false",
     "labJamQuiz=false",
-    "labSing=false"
+    "labSing=false",
+    "labRhythm=false"
    ]
   },
   {
@@ -18525,7 +18572,8 @@
     "labSrs=false",
     "labMidi=false",
     "labJamQuiz=false",
-    "labSing=false"
+    "labSing=false",
+    "labRhythm=false"
    ],
    "set": "{\"a4\":432,\"timbre\":\"pluck\",\"vol\":0.3,\"rev\":0.1,\"dur\":2,\"mask\":true,\"sfx\":true,\"adaptive\":true,\"kinds\":[\"note\",\"interval\",\"chord\",\"inv\",\"degree\",\"melody\",\"prog\",\"cadence\",\"scale\"],\"pcs\":[0,1,2,3,4,5,6,7,8,9,10,11],\"ivls\":[3,4,5,7,12],\"chords\":[\"maj\",\"min\",\"maj7\",\"dom7\",\"min7\"],\"scales\":[\"ionian\",\"aeolian\",\"dorian\",\"mixolydian\"],\"dir\":\"random\",\"arp\":2,\"octLow\":2,\"octHigh\":2,\"reqOct\":true,\"keyMode\":\"random\",\"keyQual\":\"both\",\"melLen\":4,\"chrom\":true,\"limit\":6,\"jamKey\":7,\"jamPreset\":2,\"jamBpm\":140,\"jamDrums\":false,\"jamBass\":true,\"iosMediaChannel\":true,\"jamQuiz\":8,\"lang\":\"es\",\"naming\":\"flat\",\"degNaming\":\"num\"}"
   },
@@ -19855,7 +19903,8 @@
     "labSrs=false",
     "labMidi=false",
     "labJamQuiz=false",
-    "labSing=false"
+    "labSing=false",
+    "labRhythm=false"
    ],
    "prog": "{\"xp\":0,\"stars\":{},\"best\":{},\"stats\":{},\"days\":0,\"last\":\"\",\"schema\":3,\"srs\":{}}"
   },
@@ -20375,6 +20424,13 @@
     "</label>",
     "<input type=\"checkbox\" id=\"labSing\">",
     "<span class=\"hint\">detecci\u00f3n de altura con el micr\u00f3fono en este dispositivo; el audio nunca sale de \u00e9l",
+    "</span>",
+    "</div>",
+    "<div class=\"srow\">",
+    "<label class=\"lbl\" for=\"labRhythm\">Ritmo",
+    "</label>",
+    "<input type=\"checkbox\" id=\"labRhythm\">",
+    "<span class=\"hint\">dictado r\u00edtmico y repetici\u00f3n de ritmos en la pr\u00e1ctica",
     "</span>",
     "</div>",
     "</div>\n    ",

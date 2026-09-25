@@ -14,8 +14,26 @@ import * as melody from './melody.js';
 import * as progression from './progression.js';
 import * as cadence from './cadence.js';
 import * as scale from './scale.js';
+import * as rhythm from './rhythm.js';
+import * as tap from './tap.js';
 
-export const KINDS = { note, interval, chord, inv: inversion, degree, melody, prog: progression, cadence, scale };
+export const KINDS = {
+  note,
+  interval,
+  chord,
+  inv: inversion,
+  degree,
+  melody,
+  prog: progression,
+  cadence,
+  scale,
+  rhythm,
+  tap,
+};
+
+// Kinds that exist only while their Experimental flag is on.
+export const FLAGGED_KINDS = { rhythm: 'labRhythm', tap: 'labRhythm' };
+export const kindEnabled = (k, S) => !FLAGGED_KINDS[k] || !!S[FLAGGED_KINDS[k]];
 
 export const grade = (trial, given) =>
   KINDS[trial.kind].grade ? KINDS[trial.kind].grade(trial, given) : eq(trial.ans, given.v);

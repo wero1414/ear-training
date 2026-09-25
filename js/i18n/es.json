@@ -99,7 +99,9 @@
       "melody": "melod\u00edas",
       "prog": "progresiones",
       "cadence": "cadencias",
-      "scale": "escalas"
+      "scale": "escalas",
+      "rhythm": "ritmos",
+      "tap": "ritmos tocados"
     },
     "import": "Importar progreso",
     "importBad": "Ese archivo no es una exportaci\u00f3n de progreso.",
@@ -115,7 +117,9 @@
     "melody": "melod\u00eda",
     "prog": "progresiones",
     "cadence": "cadencias",
-    "scale": "escalas"
+    "scale": "escalas",
+    "rhythm": "ritmo",
+    "tap": "repetir ritmo"
   },
   "about": {
     "summary": "Qu\u00e9 entrena qu\u00e9",
@@ -138,7 +142,9 @@
     "melody": "Escribe la melod\u00eda por grados.",
     "prog": "Escribe la progresi\u00f3n.",
     "cadence": "\u00bfQu\u00e9 cadencia?",
-    "scale": "\u00bfQu\u00e9 escala?"
+    "scale": "\u00bfQu\u00e9 escala?",
+    "rhythm": "Escribe el ritmo, un pulso por casilla.",
+    "tap": "Escucha y luego rep\u00edtelo tocando."
   },
   "trial": {
     "outOfTime": "Se acab\u00f3 el tiempo: <b>{truth}</b>",
@@ -445,6 +451,10 @@
     "labSing": {
       "name": "Cantar las respuestas",
       "hint": "detecci\u00f3n de altura con el micr\u00f3fono en este dispositivo; el audio nunca sale de \u00e9l"
+    },
+    "labRhythm": {
+      "name": "Ritmo",
+      "hint": "dictado r\u00edtmico y repetici\u00f3n de ritmos en la pr\u00e1ctica"
     }
   },
   "srs": {
@@ -472,5 +482,12 @@
     "heard": "O\u00ed: {note}",
     "retry": "No te o\u00ed bien. Canta otra vez, un poco m\u00e1s fuerte.",
     "denied": "Micr\u00f3fono bloqueado. Perm\u00edtelo en los ajustes del navegador para cantar respuestas."
+  },
+  "rhythm": {
+    "start": "Repetirlo",
+    "pad": "Tocar",
+    "countIn": "Cuenta 1 2 3 4 y luego toca el ritmo aqu\u00ed.",
+    "result": "el peor toque se desvi\u00f3 {ms} ms",
+    "count": "{got} toques para {want} notas"
   }
 }

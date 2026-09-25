@@ -331,3 +331,82 @@ test('without labSing there is no Sing button', async ({ page }) => {
   await singPractice(page, 'degree', []);
   await expect(page.locator('#btnSing')).toHaveCount(0);
 });
+
+const currentPattern = page => page.evaluate(async () => (await import('./js/drills/trial.js')).session.trial.ans);
+
+async function rhythmPractice(page, kind) {
+  await page.addInitScript(AUDIO_CLOCK);
+  await page.clock.install({ time: new Date('2026-03-02T10:00:00Z') });
+  await page.clock.pauseAt(new Date('2026-03-02T10:00:00Z'));
+  await page.goto('./');
+  await page.click('#labBox summary');
+  await page.check('#labRhythm');
+  await page.click('#nav-practice');
+  await page.click('#setBox summary');
+  await page.locator('#kindChips button', { hasText: kind === 'rhythm' ? /^rhythm$/ : /^tap-back$/ }).click();
+  await page.locator('#kindChips button', { hasText: /^notes$/ }).click();
+  await page.click('#btnPlay');
+}
+
+test('labRhythm: writing the heard rhythm cell by cell', async ({ page }) => {
+  const problems = watch(page);
+  await rhythmPractice(page, 'rhythm');
+  const cells = await currentPattern(page);
+  for (const c of cells) await page.locator(`#answers .grid button[data-v="${c}"]`).click();
+  await expect(page.locator('#msg')).toHaveClass(/ok/);
+  await page.clock.runFor(1000);
+  const next = await currentPattern(page);
+  const wrong = next.map(c => (c === 'q' ? 'ee' : 'q'));
+  for (const c of wrong) await page.locator(`#answers .grid button[data-v="${c}"]`).click();
+  await expect(page.locator('#msg')).toHaveClass(/bad/);
+  expect(problems).toEqual([]);
+});
+
+async function tapBack(page, { shift = 0, drop = 0 } = {}) {
+  const cells = await currentPattern(page);
+  const spb = 60 / 80;
+  const onsets = [];
+  let t = 0;
+  const durs = { q: [4], ee: [2, 2], ssss: [1, 1, 1, 1], ess: [2, 1, 1], sse: [1, 1, 2] };
+  for (const c of cells)
+    for (const d of durs[c]) {
+      onsets.push((t / 4) * spb);
+      t += d;
+    }
+  const clock = () => page.evaluate(async () => (await import('./js/audio/context.js')).ac.currentTime);
+  await page.click('#tapStart');
+  const down = (await clock()) + 0.1 + 4 * spb;
+  for (const o of onsets.slice(drop)) {
+    const wait = (down + o + shift - (await clock())) * 1000;
+    if (wait > 0) await page.clock.runFor(Math.round(wait));
+    await page.locator('#tapPad').dispatchEvent('pointerdown');
+  }
+  // Until the verdict appears (the tapping window closes half a beat after the bar);
+  // running further would start the next question and clear it.
+  for (let i = 0; i < 60 && !(await page.locator('#msg.ok, #msg.bad').count()); i++) await page.clock.runFor(100);
+}
+
+test('labRhythm: tapping the rhythm back in time, with a constant latency, passes', async ({ page }) => {
+  await rhythmPractice(page, 'tap');
+  await tapBack(page, { shift: 0.06 });
+  await expect(page.locator('#msg')).toHaveClass(/ok/);
+});
+
+test('labRhythm: missing taps fail and say how many', async ({ page }) => {
+  await rhythmPractice(page, 'tap');
+  await tapBack(page, { drop: 2 });
+  await expect(page.locator('#msg')).toHaveClass(/bad/);
+  await expect(page.locator('#msg')).toContainText('taps for');
+});
+
+test('without labRhythm the rhythm drills are not offered, even if saved', async ({ page }) => {
+  await page.addInitScript(() => {
+    if (!localStorage.getItem('pe.set')) localStorage.setItem('pe.set', JSON.stringify({ kinds: ['rhythm', 'tap'] }));
+  });
+  await page.goto('./');
+  await page.click('#nav-practice');
+  await page.click('#setBox summary');
+  await expect(page.locator('#kindChips button', { hasText: /^rhythm$/ })).toHaveCount(0);
+  await page.click('#btnPlay');
+  await expect(page.locator('#answers .kb')).toBeVisible();
+});

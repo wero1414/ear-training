@@ -3,7 +3,7 @@ import { el } from '../util.js';
 import { t } from '../i18n/index.js';
 import { statLabel } from '../drills/registry.js';
 
-const ORDER = ['note', 'interval', 'chord', 'inv', 'degree', 'melody', 'prog', 'cadence', 'scale'];
+const ORDER = ['note', 'interval', 'chord', 'inv', 'degree', 'melody', 'prog', 'cadence', 'scale', 'rhythm', 'tap'];
 
 // The "Accuracy by item" table.
 export function paintStats() {

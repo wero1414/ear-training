@@ -10,7 +10,7 @@ import { SC } from '../theory/scales.js';
 import { noiseBurst, pickTimbre, sfx } from '../audio/instruments.js';
 import { bump } from './adaptive.js';
 import { quality, record, today } from './srs.js';
-import { KINDS, grade, statKey, truthOf } from './registry.js';
+import { KINDS, grade, kindEnabled, statKey, truthOf } from './registry.js';
 import { say, pop, flash, paintHUD } from '../ui/hud.js';
 import { paintStats } from '../ui/stats.js';
 import { endRun } from '../ui/stages.js';
@@ -46,7 +46,7 @@ function specOf() {
   if (session.run) return session.run.spec;
   if (session.review) return reviewSpec();
   return {
-    kinds: S.kinds.length ? S.kinds : ['note'],
+    kinds: S.kinds.filter(k => kindEnabled(k, S)).length ? S.kinds.filter(k => kindEnabled(k, S)) : ['note'],
     pcs: S.pcs.length ? S.pcs : [0],
     ivls: S.ivls.length ? S.ivls : [7],
     chords: S.chords.length ? S.chords : ['maj', 'min'],
