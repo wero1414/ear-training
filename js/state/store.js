@@ -57,6 +57,14 @@ export function sv() {
   }
 }
 
+// Replace settings and progress wholesale (progress import). Settings keep the object
+// identity every module imported; missing keys fall back to the defaults.
+export function replaceAll(settings, progress) {
+  for (const k of Object.keys(S)) delete S[k];
+  Object.assign(S, DEFS, settings);
+  P = Object.assign({}, DEFP, progress);
+}
+
 export function resetProgress() {
   P = Object.assign({}, DEFP, { stars: {}, best: {}, stats: {} });
 }

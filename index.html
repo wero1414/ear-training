@@ -110,8 +110,19 @@
       <div class="overflow"><table class="tbl" id="statTbl"></table></div>
       <div class="srow" style="margin-top:8px">
         <button class="mini" id="btnExport" data-i18n="stats.export">Export progress</button>
+        <button class="mini" id="btnImport" data-i18n="stats.import">Import progress</button>
+        <input type="file" id="importFile" accept="application/json,.json" hidden>
         <button class="mini" id="btnReset" data-i18n="stats.reset">Reset everything</button>
+        <span class="hint" id="importMsg"></span>
       </div>
+    </div>
+  </details>
+
+  <details id="labBox" hidden>
+    <summary data-i18n="lab.summary">Experimental</summary>
+    <div class="body">
+      <p class="hint" data-i18n="lab.intro">Features still being tuned. They may change.</p>
+      <div id="labRows"></div>
     </div>
   </details>
 

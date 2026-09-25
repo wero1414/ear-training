@@ -100,7 +100,11 @@
       "prog": "progressions",
       "cadence": "cadences",
       "scale": "scales"
-    }
+    },
+    "import": "Import progress",
+    "importBad": "That file is not a progress export.",
+    "confirmImport": "Replace your current progress and settings with the file?",
+    "imported": "Progress imported."
   },
   "kinds": {
     "note": "notes",
@@ -405,5 +409,9 @@
     "available": "New version available",
     "reload": "Reload",
     "dismiss": "Dismiss"
+  },
+  "lab": {
+    "summary": "Experimental",
+    "intro": "Features still being tuned. They may change."
   }
 }

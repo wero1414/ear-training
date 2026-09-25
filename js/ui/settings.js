@@ -1,5 +1,6 @@
 // Practice settings, Sound, and the progress export/reset controls.
-import { S, P, sv, resetProgress } from '../state/store.js';
+import { S, P, sv, replaceAll, resetProgress } from '../state/store.js';
+import { parseBackup } from '../state/backup.js';
 import { el } from '../util.js';
 import { ALL12, WHITE } from '../theory/pitch.js';
 import { applyStatic, setLang, t } from '../i18n/index.js';
@@ -27,11 +28,44 @@ function chipRow(host, items, isOn, toggle) {
   });
 }
 
+// Phase 2 features land behind these flags until they are solid (settings keys, all
+// default off). Each has lab.<flag>.name and lab.<flag>.hint strings.
+export const LAB_FLAGS = [];
+
+function labRows() {
+  const host = el('labRows');
+  el('labBox').hidden = !LAB_FLAGS.length;
+  host.innerHTML = '';
+  for (const f of LAB_FLAGS) {
+    const row = document.createElement('div');
+    row.className = 'srow';
+    const label = document.createElement('label');
+    label.className = 'lbl';
+    label.htmlFor = f;
+    label.textContent = t('lab.' + f + '.name');
+    const box = document.createElement('input');
+    box.type = 'checkbox';
+    box.id = f;
+    box.checked = !!S[f];
+    box.onchange = () => {
+      S[f] = box.checked;
+      sv();
+      go(view);
+    };
+    const hint = document.createElement('span');
+    hint.className = 'hint';
+    hint.textContent = t('lab.' + f + '.hint');
+    row.append(label, box, hint);
+    host.appendChild(row);
+  }
+}
+
 // Preset buttons show their notes in the current naming (C F# or Do Fa#).
 const PRESETS = { 2: [0, 6], 3: [0, 4, 8], 4: [0, 3, 6, 9] };
 
 // Every chip row refuses to deselect its last item.
 export function chips() {
+  labRows();
   for (const [k, pcs] of Object.entries(PRESETS))
     document.querySelector('[data-preset="' + k + '"]').textContent = pcs.map(nn).join(' ');
   chipRow(
@@ -266,6 +300,31 @@ export function bindSettings() {
     a.download = 'perfect-ear.json';
     a.click();
     setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  };
+  el('btnImport').onclick = () => el('importFile').click();
+  el('importFile').onchange = async e => {
+    const file = e.target.files[0];
+    e.target.value = '';
+    if (!file) return;
+    let data;
+    try {
+      data = parseBackup(await file.text());
+    } catch {
+      el('importMsg').textContent = t('stats.importBad');
+      return;
+    }
+    if (!confirm(t('stats.confirmImport'))) return;
+    replaceAll(data.settings, data.progress);
+    sv();
+    setLang(S.lang);
+    applyStatic();
+    octSelects();
+    chips();
+    syncSettings();
+    paintTop();
+    paintStats();
+    el('importMsg').textContent = t('stats.imported');
+    go('map');
   };
   el('btnReset').onclick = () => {
     if (!confirm(t('stats.confirmReset'))) return;

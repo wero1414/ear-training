@@ -100,7 +100,11 @@
       "prog": "progresiones",
       "cadence": "cadencias",
       "scale": "escalas"
-    }
+    },
+    "import": "Importar progreso",
+    "importBad": "Ese archivo no es una exportaci\u00f3n de progreso.",
+    "confirmImport": "\u00bfReemplazar tu progreso y ajustes actuales por los del archivo?",
+    "imported": "Progreso importado."
   },
   "kinds": {
     "note": "notas",
@@ -418,5 +422,9 @@
     "available": "Hay una versi\u00f3n nueva",
     "reload": "Recargar",
     "dismiss": "Cerrar"
+  },
+  "lab": {
+    "summary": "Experimental",
+    "intro": "Funciones que todav\u00eda se est\u00e1n ajustando. Pueden cambiar."
   }
 }
