@@ -5,13 +5,17 @@ export const SEED = 'test/baseline/seed.html';
 // any request that leaves the served subpath (the no-network rule).
 export function watch(page) {
   const problems = [];
-  page.on('console', m => { if (m.type() === 'error') problems.push('console: ' + m.text()); });
+  page.on('console', m => {
+    if (m.type() === 'error') problems.push('console: ' + m.text());
+  });
   page.on('pageerror', e => problems.push('pageerror: ' + e.message));
   page.on('request', r => {
     const u = r.url();
     if (!u.startsWith(ORIGIN) && !u.startsWith('blob:') && !u.startsWith('data:')) problems.push('request: ' + u);
   });
-  page.on('response', r => { if (r.status() >= 400) problems.push('http ' + r.status() + ': ' + r.url()); });
+  page.on('response', r => {
+    if (r.status() >= 400) problems.push('http ' + r.status() + ': ' + r.url());
+  });
   return problems;
 }
 
@@ -22,9 +26,9 @@ export const verdict = page => page.locator('#msg.ok, #msg.bad');
 export async function answer(page, k) {
   if (await page.locator('#answers .kb').count()) {
     const keys = page.locator('#answers .kb .k:not([disabled])');
-    await keys.nth(k % await keys.count()).click();
+    await keys.nth(k % (await keys.count())).click();
     const oct = page.locator('#octrow button[data-oct]');
-    if (await oct.count() && !await verdict(page).count()) await oct.nth(k % await oct.count()).click();
+    if ((await oct.count()) && !(await verdict(page).count())) await oct.nth(k % (await oct.count())).click();
     return 'keyboard';
   }
   const btns = page.locator('#answers .grid button');

@@ -1,0 +1,5 @@
+test/baseline/
+package-lock.json
+# Kept byte-identical to the seed DOM; the differential test compares it.
+index.html
+*.md

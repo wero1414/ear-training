@@ -5,14 +5,27 @@
 // it rather than smearing across the rest of the run.
 import { test, expect } from '@playwright/test';
 import { readFile } from 'node:fs/promises';
-import { SEED, watch, answer, verdict } from './helpers.js';
+import { SEED, watch, answer } from './helpers.js';
 
 const TARGET = process.env.DIFF_TARGET ?? './';
 const T0 = new Date('2026-03-02T10:00:00Z');
 // Steps that also get a full-page screenshot, chosen to cover every view and widget.
-const SHOTS = new Set(['boot', 'A1 answer 6', 'A1 result', 'D1 answered', 'practice configured',
-  'practice answer 1', 'practice answer 2', 'practice answer 4', 'practice answer 12', 'practice answer 14',
-  'settings changed', 'drone on', 'jam configured', 'stats open']);
+const SHOTS = new Set([
+  'boot',
+  'A1 answer 6',
+  'A1 result',
+  'D1 answered',
+  'practice configured',
+  'practice answer 1',
+  'practice answer 2',
+  'practice answer 4',
+  'practice answer 12',
+  'practice answer 14',
+  'settings changed',
+  'drone on',
+  'jam configured',
+  'stats open',
+]);
 
 const PRNG = `(() => {
   let s = 1;
@@ -31,8 +44,9 @@ async function snap(page, label) {
     // The countdown bar's width comes from a CSS transition on the real compositor
     // clock, which page.clock does not control.
     wrap.querySelectorAll('#timer i').forEach(i => i.removeAttribute('style'));
-    const values = [...document.querySelectorAll('.wrap input, .wrap select')]
-      .map(e => (e.id || e.className) + '=' + (e.type === 'checkbox' ? e.checked : e.value));
+    const values = [...document.querySelectorAll('.wrap input, .wrap select')].map(
+      e => (e.id || e.className) + '=' + (e.type === 'checkbox' ? e.checked : e.value),
+    );
     return {
       label,
       html: wrap.innerHTML,
@@ -57,7 +71,8 @@ async function scenario(browser, url) {
   const out = [];
   const shots = [];
   let step = 0;
-  const shoot = async label => shots.push({ label, png: (await page.screenshot({ fullPage: true })).toString('base64') });
+  const shoot = async label =>
+    shots.push({ label, png: (await page.screenshot({ fullPage: true })).toString('base64') });
   const S = async label => {
     await page.clock.runFor(10);
     out.push(await snap(page, label));
@@ -81,7 +96,7 @@ async function scenario(browser, url) {
   // A1 has two notes and the no-repeat guard makes them strictly alternate, starting on
   // F# under this seed (key index 1). Answer along with it and miss question 5 on
   // purpose, so the run covers streak, multiplier, a lost heart and a cleared stage.
-  for (let i = 0; i < 12 && !await page.locator('#rAgain').count(); i++) {
+  for (let i = 0; i < 12 && !(await page.locator('#rAgain').count()); i++) {
     await answer(page, (i % 2 ? 0 : 1) ^ (i === 5 ? 1 : 0));
     await S('A1 answer ' + i);
     await next();
@@ -122,8 +137,15 @@ async function scenario(browser, url) {
   await S('practice configured');
   await page.click('#btnPlay');
   for (let i = 0; i < 30; i++) {
-    if (i === 12) { await page.check('#chrom'); await page.click('#btnSkip'); }
-    if (i === 20) { await page.selectOption('#naming', 'solf'); await page.click('#nav-practice'); await page.click('#btnPlay'); }
+    if (i === 12) {
+      await page.check('#chrom');
+      await page.click('#btnSkip');
+    }
+    if (i === 20) {
+      await page.selectOption('#naming', 'solf');
+      await page.click('#nav-practice');
+      await page.click('#btnPlay');
+    }
     await answer(page, i);
     await S('practice answer ' + i);
     await next();
@@ -200,12 +222,16 @@ test('restructured build matches the seed step for step', async ({ browser }) =>
   // Controls: a diff over code the scenario never reaches proves nothing, so require
   // the stage run and the practice run to each hit both grading paths, and the stage
   // run to reach a cleared result with a multiplier on screen.
-  const html = prefix => want.snaps.filter(s => s.label.startsWith(prefix)).map(s => s.html).join('');
+  const html = prefix =>
+    want.snaps
+      .filter(s => s.label.startsWith(prefix))
+      .map(s => s.html)
+      .join('');
   for (const prefix of ['A1 answer', 'practice answer']) {
     expect(html(prefix), prefix).toContain('class="msg ok"');
     expect(html(prefix), prefix).toContain('class="msg bad"');
   }
-  expect(html('A1')).toMatch(/id="hc">×\d/);
+  expect(html('A1')).toMatch(/id="hc">\u00d7\d/);
   expect(html('A1 result')).toContain('Stage cleared');
 
   expect(got.snaps.map(s => s.label)).toEqual(want.snaps.map(s => s.label));

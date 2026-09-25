@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Perfect Ear</title>
+<link rel="stylesheet" href="./css/tokens.css">
+<link rel="stylesheet" href="./css/app.css">
+<script type="module" src="./js/main.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <div class="lvl">
+      <svg width="44" height="44" viewBox="0 0 44 44">
+        <circle cx="22" cy="22" r="19" fill="none" stroke="var(--line)" stroke-width="4"/>
+        <circle id="ring" cx="22" cy="22" r="19" fill="none" stroke="var(--teal)" stroke-width="4"
+                stroke-linecap="round" stroke-dasharray="119.4" stroke-dashoffset="119.4"/>
+      </svg><span id="lvlNum">1</span>
+    </div>
+    <div class="xp">
+      <div class="t"><span id="xpLabel">level 1</span><span id="xpNum">0 / 60 xp</span></div>
+      <div class="xpbar"><i id="xpFill" style="width:0%"></i></div>
+    </div>
+    <div class="fire" id="fire"></div>
+  </div>
+
+  <div class="nav" role="tablist">
+    <button role="tab" id="nav-map" aria-selected="true">Stages</button>
+    <button role="tab" id="nav-practice" aria-selected="false">Practice</button>
+    <button role="tab" id="nav-jam" aria-selected="false">Jam</button>
+    <button role="tab" id="nav-ref" aria-selected="false">Reference</button>
+  </div>
+
+  <div id="view"></div>
+
+  <details id="setBox" hidden>
+    <summary>Practice settings</summary>
+    <div class="body">
+      <div class="srow"><span class="lbl">Drill</span><div class="chips" id="kindChips"></div></div>
+      <div class="srow"><span class="lbl">Notes in play</span><div class="chips" id="pcChips"></div></div>
+      <div class="srow"><span class="lbl">Note presets</span>
+        <div class="chips">
+          <button class="mini" data-preset="2">C F#</button><button class="mini" data-preset="3">C E G#</button>
+          <button class="mini" data-preset="4">C D# F# A</button><button class="mini" data-preset="white">White</button>
+          <button class="mini" data-preset="all">All 12</button>
+        </div></div>
+      <div class="srow"><span class="lbl">Intervals</span><div class="chips" id="ivlChips"></div></div>
+      <div class="srow"><span class="lbl">Chord types</span><div class="chips" id="chChips"></div></div>
+      <div class="srow"><span class="lbl">Modes</span><div class="chips" id="scChips"></div></div>
+      <div class="srow"><span class="lbl">Direction</span>
+        <select id="dir"><option value="asc">Ascending</option><option value="desc">Descending</option>
+        <option value="harm">Together</option><option value="random">Random</option></select>
+        <span class="lbl" style="min-width:60px">Chords</span>
+        <select id="arp"><option value="0">Block</option><option value="1">Arpeggio</option><option value="2">Random</option></select>
+      </div>
+      <div class="srow"><span class="lbl">Key for function drills</span>
+        <select id="keyMode"><option value="fixed">Always C</option><option value="random">Random key</option></select>
+        <select id="keyQual"><option value="maj">Major</option><option value="min">Minor</option><option value="both">Both</option></select>
+      </div>
+      <div class="srow"><span class="lbl">Melody length</span>
+        <select id="melLen"><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option></select>
+        <span class="lbl" style="min-width:74px">Chromatic degrees</span><input type="checkbox" id="chrom">
+      </div>
+      <div class="srow"><span class="lbl">Octave range</span>
+        <select id="octLow"></select><span class="val" style="min-width:14px">to</span><select id="octHigh"></select></div>
+      <div class="srow"><span class="lbl">Also name the octave</span><input type="checkbox" id="reqOct"></div>
+      <div class="srow"><span class="lbl">Answer time limit</span>
+        <select id="limit"><option value="0">off</option><option value="15">15 s</option><option value="10">10 s</option>
+        <option value="6">6 s</option><option value="4">4 s</option></select></div>
+    </div>
+  </details>
+
+  <details id="audioBox">
+    <summary>Sound</summary>
+    <div class="body">
+      <div class="srow"><span class="lbl">Instrument</span>
+        <select id="timbre"><option value="rhodes">Electric piano</option><option value="pluck">Plucked string</option>
+        <option value="marimba">Marimba</option><option value="organ">Organ</option><option value="sine">Pure sine</option>
+        <option value="mixed">Random each time</option></select></div>
+      <div class="srow"><span class="lbl">Volume</span><input type="range" id="vol" min="0" max="1" step="0.02"><span class="val" id="volVal"></span></div>
+      <div class="srow"><span class="lbl">Reverb</span><input type="range" id="rev" min="0" max="0.6" step="0.02"><span class="val" id="revVal"></span></div>
+      <div class="srow"><span class="lbl">Note length</span><input type="range" id="dur" min="0.5" max="3" step="0.1"><span class="val" id="durVal"></span></div>
+      <div class="srow"><span class="lbl">A4 reference</span><input type="number" id="a4" min="380" max="500" step="0.5" style="width:88px"><span class="hint">Hz</span></div>
+      <div class="srow"><span class="lbl">Note names</span>
+        <select id="naming"><option value="sharp">C C# D</option><option value="flat">C Db D</option><option value="solf">Do Do# Re</option></select></div>
+      <div class="srow"><span class="lbl">Noise between trials</span><input type="checkbox" id="mask">
+        <span class="hint">only applies to single-note drills</span></div>
+      <div class="srow"><span class="lbl">Sound effects</span><input type="checkbox" id="sfx"></div>
+      <div class="srow"><span class="lbl">Drill weak items more</span><input type="checkbox" id="adaptive"></div>
+    </div>
+  </details>
+
+  <details id="statBox">
+    <summary>Accuracy by item</summary>
+    <div class="body">
+      <div class="overflow"><table class="tbl" id="statTbl"></table></div>
+      <div class="srow" style="margin-top:8px">
+        <button class="mini" id="btnExport">Export progress</button>
+        <button class="mini" id="btnReset">Reset everything</button>
+      </div>
+    </div>
+  </details>
+
+  <details>
+    <summary>What trains what</summary>
+    <div class="body">
+      <p>Absolute pitch barely transfers to playing. The skills that do are functional: hearing a note as a scale degree inside a key, hearing a chord's quality, and hearing where a progression is going. Chapters C and D are the ones that show up when you improvise.</p>
+      <ul>
+        <li>Degrees before intervals. Once <span class="hint">4</span> sounds like <span class="hint">4</span> rather than "a fourth above something", you can find a melody by ear in real time.</li>
+        <li>Sing the answer before you click it. Passive listening plateaus fast.</li>
+        <li>Do the chord chapters with arpeggio off. Block chords force you to hear the whole stack, not the top line.</li>
+        <li>Jam tab is the transfer test: loop a progression, improvise, and check yourself against the highlighted chord tones.</li>
+        <li>Ten focused minutes daily beats an hour once a week.</li>
+      </ul>
+    </div>
+  </details>
+
+  <footer>One file, no network. Save it and it runs offline. Progress lives in this browser's storage.</footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+/* Design tokens. Keep each block alphabetised, one token per line: this block was
+   hand-edited inside a single line once and corrupted. */
+:root {
+  --bg: #080b11;
+  --dim: #8494a6;
+  --dimmer: #586878;
+  --fg: #e0e7ef;
+  --gold: #efb748;
+  --line: #25303f;
+  --line2: #334151;
+  --mono: ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace;
+  --panel: #101722;
+  --panel2: #17202d;
+  --red: #ec5c6e;
+  --sans: system-ui, -apple-system, 'Segoe UI', Inter, Roboto, 'Helvetica Neue', sans-serif;
+  --teal: #35d9bb;
+  --violet: #8e7bf5;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme='dark']) {
+    --bg: #eceff4;
+    --dim: #5a6b7c;
+    --dimmer: #8a98a7;
+    --fg: #111c27;
+    --gold: #a97a10;
+    --line: #d5dce5;
+    --line2: #c2ccd8;
+    --panel: #fff;
+    --panel2: #f2f5f9;
+    --red: #c8394c;
+    --teal: #0b9c81;
+    --violet: #5d4bcc;
+  }
+}
