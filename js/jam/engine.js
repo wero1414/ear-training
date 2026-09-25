@@ -8,9 +8,10 @@ import { JAMP } from '../theory/harmony.js';
 import { ac, audio } from '../audio/context.js';
 import { hat, kick, playNote, playStack } from '../audio/instruments.js';
 import { LOOKAHEAD_S, atAudioTime, clearVisuals, startPolling, stopPolling } from '../audio/scheduler.js';
-import { highlightBar } from '../ui/jam-view.js';
+import { highlightBar, onQuiz } from '../ui/jam-view.js';
 
-export const jam = { on: false, pos: 0, next: 0, timer: null, bars: [] };
+// count: bars played since Play; quiz: bars between questions (0 = off, labJamQuiz).
+export const jam = { on: false, pos: 0, next: 0, timer: null, bars: [], count: 0, quiz: 0, asked: false };
 
 // One entry per bar; `first` marks the first bar of a chord that lasts several.
 export function jamBars() {
@@ -32,10 +33,23 @@ export function jamStart() {
   jam.bars = jamBars();
   jam.on = true;
   jam.pos = 0;
-  jam.next = ac.currentTime + 0.15;
-  jam.timer = startPolling(jamTick);
+  jam.count = 0;
+  jam.asked = false;
+  jam.quiz = S.labJamQuiz ? +S.jamQuiz : 0;
+  run();
   const b = el('jamBtn');
   if (b) b.textContent = t('jam.stop');
+}
+
+function run() {
+  jam.next = ac.currentTime + 0.15;
+  jam.timer = startPolling(jamTick);
+}
+
+// After a quiz: carry on from the bar after the one that was asked about.
+export function jamResume() {
+  if (!jam.on) return;
+  run();
 }
 
 export function jamStop() {
@@ -53,6 +67,20 @@ function jamTick() {
   const spb = 60 / S.jamBpm,
     barLen = spb * 4;
   while (jam.next < ac.currentTime + LOOKAHEAD_S) {
+    // Quiz time: stop scheduling, and when the last bar has finished sounding, ask
+    // about it. The loop resumes from jamResume().
+    if (jam.quiz && jam.count && jam.count % jam.quiz === 0 && !jam.asked) {
+      jam.asked = true;
+      stopPolling(jam.timer);
+      jam.timer = null;
+      const last = (jam.pos + jam.bars.length - 1) % jam.bars.length;
+      atAudioTime(jam.next, () => {
+        if (jam.on) onQuiz(jam.bars[last], last);
+      });
+      return;
+    }
+    jam.asked = false;
+    jam.count++;
     scheduleBar(jam.pos, jam.next);
     const idx = jam.pos;
     atAudioTime(jam.next, () => {

@@ -30,6 +30,7 @@ export const DEFS = {
   jamDrums: true,
   jamBass: true,
   iosMediaChannel: true,
+  jamQuiz: 8,
   ...localeDefaults(navigator.language),
 };
 export const DEFP = { xp: 0, stars: {}, best: {}, stats: {}, days: 0, last: '', schema: PROGRESS_SCHEMA, srs: {} };

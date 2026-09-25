@@ -1,6 +1,6 @@
 // Phase 2 features behind the Experimental flags, exercised through the UI.
 import { test, expect } from '@playwright/test';
-import { PRNG, watch } from './helpers.js';
+import { AUDIO_CLOCK, PRNG, watch } from './helpers.js';
 
 async function practice(page, kind, flags = []) {
   await page.addInitScript(PRNG);
@@ -147,4 +147,56 @@ test('browsers without Web MIDI never show the setting', async ({ page }) => {
   await page.click('#labBox summary');
   await expect(page.locator('#labMelody')).toBeVisible();
   await expect(page.locator('#labMidi')).toHaveCount(0);
+});
+
+test('labJamQuiz: the jam stops after N bars, asks about the last bar, and feeds the stats', async ({ page }) => {
+  const problems = watch(page);
+  await page.addInitScript(AUDIO_CLOCK);
+  await page.clock.install();
+  await page.goto('./');
+  await page.click('#labBox summary');
+  await page.check('#labJamQuiz');
+  await page.click('#nav-jam');
+  await page.selectOption('#jamQuiz', '4');
+  await page.locator('#jamBpm').fill('180');
+  await page.click('#jamBtn');
+  // Four bars at 180 bpm take 5.3 s of audio time.
+  await page.clock.runFor(4000);
+  await expect(page.locator('#quizMsg')).toHaveCount(0);
+  await page.clock.runFor(2000);
+  await expect(page.locator('#quizMsg')).toBeVisible();
+  // The loop stops while the question is open.
+  const barAt = () => page.locator('.bar.on').evaluate(b => [...b.parentNode.children].indexOf(b));
+  const asked = await barAt();
+  expect(asked).toBe(3);
+  await page.clock.runFor(5000);
+  expect(await barAt()).toBe(asked);
+
+  const before = await page.evaluate(() => JSON.parse(localStorage.getItem('pe.prog') || '{"stats":{}}').stats);
+  await page.locator('#quizAnswers .grid button').first().click();
+  await expect(page.locator('#quizMsg')).toHaveClass(/ok|bad/);
+  const after = await page.evaluate(() => JSON.parse(localStorage.getItem('pe.prog')).stats);
+  const count = s =>
+    Object.values(s.chord || {})
+      .concat(Object.values(s.degree || {}))
+      .reduce((n, x) => n + x.n, 0);
+  expect(count(after)).toBe(count(before) + 1);
+
+  await page.click('#quizGo');
+  await expect(page.locator('#jamQuizBox')).toBeEmpty();
+  await page.clock.runFor(1000);
+  expect(await barAt()).toBe(0);
+  expect(problems).toEqual([]);
+});
+
+test('without labJamQuiz the jam never stops to ask', async ({ page }) => {
+  await page.addInitScript(AUDIO_CLOCK);
+  await page.clock.install();
+  await page.goto('./');
+  await page.click('#nav-jam');
+  await expect(page.locator('#jamQuiz')).toHaveCount(0);
+  await page.locator('#jamBpm').fill('180');
+  await page.click('#jamBtn');
+  await page.clock.runFor(12000);
+  await expect(page.locator('#quizMsg')).toHaveCount(0);
 });

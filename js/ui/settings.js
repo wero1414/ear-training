@@ -36,6 +36,7 @@ export const LAB_FLAGS = [
   { key: 'labMelody' },
   { key: 'labSrs' },
   { key: 'labMidi', available: midiAvailable, apply: setMidi },
+  { key: 'labJamQuiz' },
 ];
 
 function labRows() {

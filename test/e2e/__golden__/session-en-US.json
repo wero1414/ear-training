@@ -1256,6 +1256,13 @@
     "<span class=\"hint\">answer note, degree, melody and interval drills from a controller",
     "</span>",
     "</div>",
+    "<div class=\"srow\">",
+    "<label class=\"lbl\" for=\"labJamQuiz\">Jam quizzes",
+    "</label>",
+    "<input type=\"checkbox\" id=\"labJamQuiz\">",
+    "<span class=\"hint\">the jam stops every few bars and asks about what just played",
+    "</span>",
+    "</div>",
     "</div>\n    ",
     "</div>\n  ",
     "</details>"
@@ -1316,7 +1323,8 @@
     "importFile=",
     "labMelody=false",
     "labSrs=false",
-    "labMidi=false"
+    "labMidi=false",
+    "labJamQuiz=false"
    ],
    "set": null,
    "prog": null
@@ -1847,6 +1855,13 @@
     "<span class=\"hint\">answer note, degree, melody and interval drills from a controller",
     "</span>",
     "</div>",
+    "<div class=\"srow\">",
+    "<label class=\"lbl\" for=\"labJamQuiz\">Jam quizzes",
+    "</label>",
+    "<input type=\"checkbox\" id=\"labJamQuiz\" style=\"\">",
+    "<span class=\"hint\">the jam stops every few bars and asks about what just played",
+    "</span>",
+    "</div>",
     "</div>\n    ",
     "</div>\n  ",
     "</details>"
@@ -2011,7 +2026,7 @@
     "</div>",
     "</div>"
    ],
-   "set": "{\"a4\":440,\"timbre\":\"rhodes\",\"vol\":0.55,\"rev\":0.26,\"dur\":1.5,\"mask\":true,\"sfx\":true,\"adaptive\":true,\"kinds\":[\"note\"],\"pcs\":[0,4,7],\"ivls\":[3,4,5,7,12],\"chords\":[\"maj\",\"min\",\"maj7\",\"dom7\",\"min7\"],\"scales\":[\"ionian\",\"aeolian\",\"dorian\",\"mixolydian\"],\"dir\":\"asc\",\"arp\":0,\"octLow\":3,\"octHigh\":5,\"reqOct\":false,\"keyMode\":\"fixed\",\"keyQual\":\"maj\",\"melLen\":4,\"chrom\":false,\"limit\":0,\"jamKey\":0,\"jamPreset\":0,\"jamBpm\":82,\"jamDrums\":true,\"jamBass\":true,\"iosMediaChannel\":true,\"lang\":\"en\",\"naming\":\"sharp\",\"degNaming\":\"num\"}",
+   "set": "{\"a4\":440,\"timbre\":\"rhodes\",\"vol\":0.55,\"rev\":0.26,\"dur\":1.5,\"mask\":true,\"sfx\":true,\"adaptive\":true,\"kinds\":[\"note\"],\"pcs\":[0,4,7],\"ivls\":[3,4,5,7,12],\"chords\":[\"maj\",\"min\",\"maj7\",\"dom7\",\"min7\"],\"scales\":[\"ionian\",\"aeolian\",\"dorian\",\"mixolydian\"],\"dir\":\"asc\",\"arp\":0,\"octLow\":3,\"octHigh\":5,\"reqOct\":false,\"keyMode\":\"fixed\",\"keyQual\":\"maj\",\"melLen\":4,\"chrom\":false,\"limit\":0,\"jamKey\":0,\"jamPreset\":0,\"jamBpm\":82,\"jamDrums\":true,\"jamBass\":true,\"iosMediaChannel\":true,\"jamQuiz\":8,\"lang\":\"en\",\"naming\":\"sharp\",\"degNaming\":\"num\"}",
    "prog": "{\"xp\":0,\"stars\":{},\"best\":{},\"stats\":{\"note\":{\"6\":{\"n\":1,\"ok\":1}}},\"days\":0,\"last\":\"\",\"schema\":3,\"srs\":{}}"
   },
   {
@@ -5489,6 +5504,13 @@
     "<span class=\"hint\">answer note, degree, melody and interval drills from a controller",
     "</span>",
     "</div>",
+    "<div class=\"srow\">",
+    "<label class=\"lbl\" for=\"labJamQuiz\">Jam quizzes",
+    "</label>",
+    "<input type=\"checkbox\" id=\"labJamQuiz\">",
+    "<span class=\"hint\">the jam stops every few bars and asks about what just played",
+    "</span>",
+    "</div>",
     "</div>\n    ",
     "</div>\n  ",
     "</details>"
@@ -5519,9 +5541,10 @@
     "importFile=",
     "labMelody=false",
     "labSrs=false",
-    "labMidi=false"
+    "labMidi=false",
+    "labJamQuiz=false"
    ],
-   "set": "{\"a4\":440,\"timbre\":\"rhodes\",\"vol\":0.55,\"rev\":0.26,\"dur\":1.5,\"mask\":true,\"sfx\":true,\"adaptive\":true,\"kinds\":[\"note\",\"interval\",\"chord\",\"inv\",\"degree\",\"melody\",\"prog\",\"cadence\",\"scale\"],\"pcs\":[0,1,2,3,4,5,6,7,8,9,10,11],\"ivls\":[3,4,5,7,12],\"chords\":[\"maj\",\"min\",\"maj7\",\"dom7\",\"min7\"],\"scales\":[\"ionian\",\"aeolian\",\"dorian\",\"mixolydian\"],\"dir\":\"random\",\"arp\":2,\"octLow\":3,\"octHigh\":5,\"reqOct\":true,\"keyMode\":\"random\",\"keyQual\":\"both\",\"melLen\":4,\"chrom\":false,\"limit\":6,\"jamKey\":0,\"jamPreset\":0,\"jamBpm\":82,\"jamDrums\":true,\"jamBass\":true,\"iosMediaChannel\":true,\"lang\":\"en\",\"naming\":\"sharp\",\"degNaming\":\"num\"}"
+   "set": "{\"a4\":440,\"timbre\":\"rhodes\",\"vol\":0.55,\"rev\":0.26,\"dur\":1.5,\"mask\":true,\"sfx\":true,\"adaptive\":true,\"kinds\":[\"note\",\"interval\",\"chord\",\"inv\",\"degree\",\"melody\",\"prog\",\"cadence\",\"scale\"],\"pcs\":[0,1,2,3,4,5,6,7,8,9,10,11],\"ivls\":[3,4,5,7,12],\"chords\":[\"maj\",\"min\",\"maj7\",\"dom7\",\"min7\"],\"scales\":[\"ionian\",\"aeolian\",\"dorian\",\"mixolydian\"],\"dir\":\"random\",\"arp\":2,\"octLow\":3,\"octHigh\":5,\"reqOct\":true,\"keyMode\":\"random\",\"keyQual\":\"both\",\"melLen\":4,\"chrom\":false,\"limit\":6,\"jamKey\":0,\"jamPreset\":0,\"jamBpm\":82,\"jamDrums\":true,\"jamBass\":true,\"iosMediaChannel\":true,\"jamQuiz\":8,\"lang\":\"en\",\"naming\":\"sharp\",\"degNaming\":\"num\"}"
   },
   {
    "label": "practice answer 0",
@@ -5705,6 +5728,13 @@
     "</label>",
     "<input type=\"checkbox\" id=\"labMidi\" style=\"\">",
     "<span class=\"hint\">answer note, degree, melody and interval drills from a controller",
+    "</span>",
+    "</div>",
+    "<div class=\"srow\">",
+    "<label class=\"lbl\" for=\"labJamQuiz\">Jam quizzes",
+    "</label>",
+    "<input type=\"checkbox\" id=\"labJamQuiz\" style=\"\">",
+    "<span class=\"hint\">the jam stops every few bars and asks about what just played",
     "</span>",
     "</div>",
     "</div>\n    ",
@@ -9325,9 +9355,10 @@
     "importFile=",
     "labMelody=false",
     "labSrs=false",
-    "labMidi=false"
+    "labMidi=false",
+    "labJamQuiz=false"
    ],
-   "set": "{\"a4\":440,\"timbre\":\"rhodes\",\"vol\":0.55,\"rev\":0.26,\"dur\":1.5,\"mask\":true,\"sfx\":true,\"adaptive\":true,\"kinds\":[\"note\",\"interval\",\"chord\",\"inv\",\"degree\",\"melody\",\"prog\",\"cadence\",\"scale\"],\"pcs\":[0,1,2,3,4,5,6,7,8,9,10,11],\"ivls\":[3,4,5,7,12],\"chords\":[\"maj\",\"min\",\"maj7\",\"dom7\",\"min7\"],\"scales\":[\"ionian\",\"aeolian\",\"dorian\",\"mixolydian\"],\"dir\":\"random\",\"arp\":2,\"octLow\":3,\"octHigh\":5,\"reqOct\":true,\"keyMode\":\"random\",\"keyQual\":\"both\",\"melLen\":4,\"chrom\":true,\"limit\":6,\"jamKey\":0,\"jamPreset\":0,\"jamBpm\":82,\"jamDrums\":true,\"jamBass\":true,\"iosMediaChannel\":true,\"lang\":\"en\",\"naming\":\"sharp\",\"degNaming\":\"num\"}",
+   "set": "{\"a4\":440,\"timbre\":\"rhodes\",\"vol\":0.55,\"rev\":0.26,\"dur\":1.5,\"mask\":true,\"sfx\":true,\"adaptive\":true,\"kinds\":[\"note\",\"interval\",\"chord\",\"inv\",\"degree\",\"melody\",\"prog\",\"cadence\",\"scale\"],\"pcs\":[0,1,2,3,4,5,6,7,8,9,10,11],\"ivls\":[3,4,5,7,12],\"chords\":[\"maj\",\"min\",\"maj7\",\"dom7\",\"min7\"],\"scales\":[\"ionian\",\"aeolian\",\"dorian\",\"mixolydian\"],\"dir\":\"random\",\"arp\":2,\"octLow\":3,\"octHigh\":5,\"reqOct\":true,\"keyMode\":\"random\",\"keyQual\":\"both\",\"melLen\":4,\"chrom\":true,\"limit\":6,\"jamKey\":0,\"jamPreset\":0,\"jamBpm\":82,\"jamDrums\":true,\"jamBass\":true,\"iosMediaChannel\":true,\"jamQuiz\":8,\"lang\":\"en\",\"naming\":\"sharp\",\"degNaming\":\"num\"}",
    "prog": "{\"xp\":366,\"stars\":{\"c0s0\":2},\"best\":{\"c0s0\":3428},\"stats\":{\"note\":{\"0\":{\"n\":6,\"ok\":5},\"5\":{\"n\":2,\"ok\":0},\"6\":{\"n\":6,\"ok\":6}},\"degree\":{\"0\":{\"n\":1,\"ok\":1},\"3\":{\"n\":1,\"ok\":0},\"7\":{\"n\":2,\"ok\":1}},\"scale\":{\"aeolian\":{\"n\":1,\"ok\":0},\"mixolydian\":{\"n\":2,\"ok\":0}},\"chord\":{\"maj\":{\"n\":1,\"ok\":0}},\"cadence\":{\"2\":{\"n\":1,\"ok\":0}},\"interval\":{\"4\":{\"n\":1,\"ok\":0},\"12\":{\"n\":1,\"ok\":0}},\"prog\":{\"seq\":{\"n\":1,\"ok\":0}},\"inv\":{\"1\":{\"n\":1,\"ok\":1}}},\"days\":1,\"last\":\"2026-03-02\",\"schema\":3,\"srs\":{}}"
   },
   {
@@ -12779,6 +12810,13 @@
     "<span class=\"hint\">answer note, degree, melody and interval drills from a controller",
     "</span>",
     "</div>",
+    "<div class=\"srow\">",
+    "<label class=\"lbl\" for=\"labJamQuiz\">Jam quizzes",
+    "</label>",
+    "<input type=\"checkbox\" id=\"labJamQuiz\">",
+    "<span class=\"hint\">the jam stops every few bars and asks about what just played",
+    "</span>",
+    "</div>",
     "</div>\n    ",
     "</div>\n  ",
     "</details>"
@@ -12809,9 +12847,10 @@
     "importFile=",
     "labMelody=false",
     "labSrs=false",
-    "labMidi=false"
+    "labMidi=false",
+    "labJamQuiz=false"
    ],
-   "set": "{\"a4\":440,\"timbre\":\"rhodes\",\"vol\":0.55,\"rev\":0.26,\"dur\":1.5,\"mask\":true,\"sfx\":true,\"adaptive\":true,\"kinds\":[\"note\",\"interval\",\"chord\",\"inv\",\"degree\",\"melody\",\"prog\",\"cadence\",\"scale\"],\"pcs\":[0,1,2,3,4,5,6,7,8,9,10,11],\"ivls\":[3,4,5,7,12],\"chords\":[\"maj\",\"min\",\"maj7\",\"dom7\",\"min7\"],\"scales\":[\"ionian\",\"aeolian\",\"dorian\",\"mixolydian\"],\"dir\":\"random\",\"arp\":2,\"octLow\":3,\"octHigh\":5,\"reqOct\":true,\"keyMode\":\"random\",\"keyQual\":\"both\",\"melLen\":4,\"chrom\":true,\"limit\":6,\"jamKey\":0,\"jamPreset\":0,\"jamBpm\":82,\"jamDrums\":true,\"jamBass\":true,\"iosMediaChannel\":true,\"lang\":\"en\",\"naming\":\"solf\",\"degNaming\":\"num\"}",
+   "set": "{\"a4\":440,\"timbre\":\"rhodes\",\"vol\":0.55,\"rev\":0.26,\"dur\":1.5,\"mask\":true,\"sfx\":true,\"adaptive\":true,\"kinds\":[\"note\",\"interval\",\"chord\",\"inv\",\"degree\",\"melody\",\"prog\",\"cadence\",\"scale\"],\"pcs\":[0,1,2,3,4,5,6,7,8,9,10,11],\"ivls\":[3,4,5,7,12],\"chords\":[\"maj\",\"min\",\"maj7\",\"dom7\",\"min7\"],\"scales\":[\"ionian\",\"aeolian\",\"dorian\",\"mixolydian\"],\"dir\":\"random\",\"arp\":2,\"octLow\":3,\"octHigh\":5,\"reqOct\":true,\"keyMode\":\"random\",\"keyQual\":\"both\",\"melLen\":4,\"chrom\":true,\"limit\":6,\"jamKey\":0,\"jamPreset\":0,\"jamBpm\":82,\"jamDrums\":true,\"jamBass\":true,\"iosMediaChannel\":true,\"jamQuiz\":8,\"lang\":\"en\",\"naming\":\"solf\",\"degNaming\":\"num\"}",
    "prog": "{\"xp\":366,\"stars\":{\"c0s0\":2},\"best\":{\"c0s0\":3428},\"stats\":{\"note\":{\"0\":{\"n\":6,\"ok\":5},\"5\":{\"n\":2,\"ok\":0},\"6\":{\"n\":6,\"ok\":6}},\"degree\":{\"0\":{\"n\":1,\"ok\":1},\"3\":{\"n\":1,\"ok\":0},\"7\":{\"n\":2,\"ok\":1}},\"scale\":{\"aeolian\":{\"n\":1,\"ok\":0},\"mixolydian\":{\"n\":2,\"ok\":0},\"dorian\":{\"n\":1,\"ok\":1}},\"chord\":{\"maj\":{\"n\":1,\"ok\":0},\"min7\":{\"n\":1,\"ok\":1}},\"cadence\":{\"2\":{\"n\":1,\"ok\":0}},\"interval\":{\"4\":{\"n\":1,\"ok\":0},\"12\":{\"n\":2,\"ok\":0}},\"prog\":{\"seq\":{\"n\":2,\"ok\":0}},\"inv\":{\"1\":{\"n\":2,\"ok\":2}},\"melody\":{\"seq\":{\"n\":3,\"ok\":0}}},\"days\":1,\"last\":\"2026-03-02\",\"schema\":3,\"srs\":{}}"
   },
   {
@@ -17876,9 +17915,10 @@
     "importFile=",
     "labMelody=false",
     "labSrs=false",
-    "labMidi=false"
+    "labMidi=false",
+    "labJamQuiz=false"
    ],
-   "set": "{\"a4\":432,\"timbre\":\"pluck\",\"vol\":0.3,\"rev\":0.1,\"dur\":2,\"mask\":true,\"sfx\":true,\"adaptive\":true,\"kinds\":[\"note\",\"interval\",\"chord\",\"inv\",\"degree\",\"melody\",\"prog\",\"cadence\",\"scale\"],\"pcs\":[0,1,2,3,4,5,6,7,8,9,10,11],\"ivls\":[3,4,5,7,12],\"chords\":[\"maj\",\"min\",\"maj7\",\"dom7\",\"min7\"],\"scales\":[\"ionian\",\"aeolian\",\"dorian\",\"mixolydian\"],\"dir\":\"random\",\"arp\":2,\"octLow\":2,\"octHigh\":2,\"reqOct\":true,\"keyMode\":\"random\",\"keyQual\":\"both\",\"melLen\":4,\"chrom\":true,\"limit\":6,\"jamKey\":0,\"jamPreset\":0,\"jamBpm\":82,\"jamDrums\":true,\"jamBass\":true,\"iosMediaChannel\":true,\"lang\":\"en\",\"naming\":\"flat\",\"degNaming\":\"num\"}"
+   "set": "{\"a4\":432,\"timbre\":\"pluck\",\"vol\":0.3,\"rev\":0.1,\"dur\":2,\"mask\":true,\"sfx\":true,\"adaptive\":true,\"kinds\":[\"note\",\"interval\",\"chord\",\"inv\",\"degree\",\"melody\",\"prog\",\"cadence\",\"scale\"],\"pcs\":[0,1,2,3,4,5,6,7,8,9,10,11],\"ivls\":[3,4,5,7,12],\"chords\":[\"maj\",\"min\",\"maj7\",\"dom7\",\"min7\"],\"scales\":[\"ionian\",\"aeolian\",\"dorian\",\"mixolydian\"],\"dir\":\"random\",\"arp\":2,\"octLow\":2,\"octHigh\":2,\"reqOct\":true,\"keyMode\":\"random\",\"keyQual\":\"both\",\"melLen\":4,\"chrom\":true,\"limit\":6,\"jamKey\":0,\"jamPreset\":0,\"jamBpm\":82,\"jamDrums\":true,\"jamBass\":true,\"iosMediaChannel\":true,\"jamQuiz\":8,\"lang\":\"en\",\"naming\":\"flat\",\"degNaming\":\"num\"}"
   },
   {
    "label": "drone on",
@@ -18371,6 +18411,13 @@
     "<span class=\"hint\">answer note, degree, melody and interval drills from a controller",
     "</span>",
     "</div>",
+    "<div class=\"srow\">",
+    "<label class=\"lbl\" for=\"labJamQuiz\">Jam quizzes",
+    "</label>",
+    "<input type=\"checkbox\" id=\"labJamQuiz\" style=\"\">",
+    "<span class=\"hint\">the jam stops every few bars and asks about what just played",
+    "</span>",
+    "</div>",
     "</div>\n    ",
     "</div>\n  ",
     "</details>"
@@ -18402,7 +18449,8 @@
     "importFile=",
     "labMelody=false",
     "labSrs=false",
-    "labMidi=false"
+    "labMidi=false",
+    "labJamQuiz=false"
    ]
   },
   {
@@ -18684,6 +18732,8 @@
     "</div>",
     "<div class=\"now\" id=\"jamNow\">Press play. Chord tones light up in solid teal, the rest of the scale in outline.",
     "</div>",
+    "<div id=\"jamQuizBox\">",
+    "</div>",
     "<div id=\"jamKb\">",
     "<div class=\"kb tall\">",
     "<button class=\"k w\" data-pc=\"0\" data-oct=\"0\" style=\"left: 0%; width: 7.14286%;\">C",
@@ -18770,9 +18820,10 @@
     "importFile=",
     "labMelody=false",
     "labSrs=false",
-    "labMidi=false"
+    "labMidi=false",
+    "labJamQuiz=false"
    ],
-   "set": "{\"a4\":432,\"timbre\":\"pluck\",\"vol\":0.3,\"rev\":0.1,\"dur\":2,\"mask\":true,\"sfx\":true,\"adaptive\":true,\"kinds\":[\"note\",\"interval\",\"chord\",\"inv\",\"degree\",\"melody\",\"prog\",\"cadence\",\"scale\"],\"pcs\":[0,1,2,3,4,5,6,7,8,9,10,11],\"ivls\":[3,4,5,7,12],\"chords\":[\"maj\",\"min\",\"maj7\",\"dom7\",\"min7\"],\"scales\":[\"ionian\",\"aeolian\",\"dorian\",\"mixolydian\"],\"dir\":\"random\",\"arp\":2,\"octLow\":2,\"octHigh\":2,\"reqOct\":true,\"keyMode\":\"random\",\"keyQual\":\"both\",\"melLen\":4,\"chrom\":true,\"limit\":6,\"jamKey\":7,\"jamPreset\":2,\"jamBpm\":140,\"jamDrums\":false,\"jamBass\":true,\"iosMediaChannel\":true,\"lang\":\"en\",\"naming\":\"flat\",\"degNaming\":\"num\"}"
+   "set": "{\"a4\":432,\"timbre\":\"pluck\",\"vol\":0.3,\"rev\":0.1,\"dur\":2,\"mask\":true,\"sfx\":true,\"adaptive\":true,\"kinds\":[\"note\",\"interval\",\"chord\",\"inv\",\"degree\",\"melody\",\"prog\",\"cadence\",\"scale\"],\"pcs\":[0,1,2,3,4,5,6,7,8,9,10,11],\"ivls\":[3,4,5,7,12],\"chords\":[\"maj\",\"min\",\"maj7\",\"dom7\",\"min7\"],\"scales\":[\"ionian\",\"aeolian\",\"dorian\",\"mixolydian\"],\"dir\":\"random\",\"arp\":2,\"octLow\":2,\"octHigh\":2,\"reqOct\":true,\"keyMode\":\"random\",\"keyQual\":\"both\",\"melLen\":4,\"chrom\":true,\"limit\":6,\"jamKey\":7,\"jamPreset\":2,\"jamBpm\":140,\"jamDrums\":false,\"jamBass\":true,\"iosMediaChannel\":true,\"jamQuiz\":8,\"lang\":\"en\",\"naming\":\"flat\",\"degNaming\":\"num\"}"
   },
   {
    "label": "jam stopped",
@@ -18898,6 +18949,8 @@
     "<b>G7",
     "</b> \u00b7 G mixolydian",
     "<br>G  A  B  C  D  E  F   \u00b7   chord tones G B D F",
+    "</div>",
+    "<div id=\"jamQuizBox\">",
     "</div>",
     "<div id=\"jamKb\">",
     "<div class=\"kb tall\">",
@@ -20096,7 +20149,8 @@
     "importFile=",
     "labMelody=false",
     "labSrs=false",
-    "labMidi=false"
+    "labMidi=false",
+    "labJamQuiz=false"
    ],
    "prog": "{\"xp\":0,\"stars\":{},\"best\":{},\"stats\":{},\"days\":0,\"last\":\"\",\"schema\":3,\"srs\":{}}"
   },
@@ -20604,6 +20658,13 @@
     "<span class=\"hint\">answer note, degree, melody and interval drills from a controller",
     "</span>",
     "</div>",
+    "<div class=\"srow\">",
+    "<label class=\"lbl\" for=\"labJamQuiz\">Jam quizzes",
+    "</label>",
+    "<input type=\"checkbox\" id=\"labJamQuiz\">",
+    "<span class=\"hint\">the jam stops every few bars and asks about what just played",
+    "</span>",
+    "</div>",
     "</div>\n    ",
     "</div>\n  ",
     "</details>"
@@ -20616,6 +20677,6 @@
  },
  "progress": {
   "name": "perfect-ear.json",
-  "body": "ewogICJzZXR0aW5ncyI6IHsKICAgICJhNCI6IDQzMiwKICAgICJ0aW1icmUiOiAicGx1Y2siLAogICAgInZvbCI6IDAuMywKICAgICJyZXYiOiAwLjEsCiAgICAiZHVyIjogMiwKICAgICJtYXNrIjogdHJ1ZSwKICAgICJzZngiOiB0cnVlLAogICAgImFkYXB0aXZlIjogdHJ1ZSwKICAgICJraW5kcyI6IFsKICAgICAgIm5vdGUiLAogICAgICAiaW50ZXJ2YWwiLAogICAgICAiY2hvcmQiLAogICAgICAiaW52IiwKICAgICAgImRlZ3JlZSIsCiAgICAgICJtZWxvZHkiLAogICAgICAicHJvZyIsCiAgICAgICJjYWRlbmNlIiwKICAgICAgInNjYWxlIgogICAgXSwKICAgICJwY3MiOiBbCiAgICAgIDAsCiAgICAgIDEsCiAgICAgIDIsCiAgICAgIDMsCiAgICAgIDQsCiAgICAgIDUsCiAgICAgIDYsCiAgICAgIDcsCiAgICAgIDgsCiAgICAgIDksCiAgICAgIDEwLAogICAgICAxMQogICAgXSwKICAgICJpdmxzIjogWwogICAgICAzLAogICAgICA0LAogICAgICA1LAogICAgICA3LAogICAgICAxMgogICAgXSwKICAgICJjaG9yZHMiOiBbCiAgICAgICJtYWoiLAogICAgICAibWluIiwKICAgICAgIm1hajciLAogICAgICAiZG9tNyIsCiAgICAgICJtaW43IgogICAgXSwKICAgICJzY2FsZXMiOiBbCiAgICAgICJpb25pYW4iLAogICAgICAiYWVvbGlhbiIsCiAgICAgICJkb3JpYW4iLAogICAgICAibWl4b2x5ZGlhbiIKICAgIF0sCiAgICAiZGlyIjogInJhbmRvbSIsCiAgICAiYXJwIjogMiwKICAgICJvY3RMb3ciOiAyLAogICAgIm9jdEhpZ2giOiAyLAogICAgInJlcU9jdCI6IHRydWUsCiAgICAia2V5TW9kZSI6ICJyYW5kb20iLAogICAgImtleVF1YWwiOiAiYm90aCIsCiAgICAibWVsTGVuIjogNCwKICAgICJjaHJvbSI6IHRydWUsCiAgICAibGltaXQiOiA2LAogICAgImphbUtleSI6IDcsCiAgICAiamFtUHJlc2V0IjogMiwKICAgICJqYW1CcG0iOiAxNDAsCiAgICAiamFtRHJ1bXMiOiBmYWxzZSwKICAgICJqYW1CYXNzIjogdHJ1ZSwKICAgICJpb3NNZWRpYUNoYW5uZWwiOiB0cnVlLAogICAgImxhbmciOiAiZW4iLAogICAgIm5hbWluZyI6ICJmbGF0IiwKICAgICJkZWdOYW1pbmciOiAibnVtIgogIH0sCiAgInByb2dyZXNzIjogewogICAgInhwIjogMzY2LAogICAgInN0YXJzIjogewogICAgICAiYzBzMCI6IDIKICAgIH0sCiAgICAiYmVzdCI6IHsKICAgICAgImMwczAiOiAzNDI4CiAgICB9LAogICAgInN0YXRzIjogewogICAgICAibm90ZSI6IHsKICAgICAgICAiMCI6IHsKICAgICAgICAgICJuIjogNiwKICAgICAgICAgICJvayI6IDUKICAgICAgICB9LAogICAgICAgICI1IjogewogICAgICAgICAgIm4iOiAyLAogICAgICAgICAgIm9rIjogMAogICAgICAgIH0sCiAgICAgICAgIjYiOiB7CiAgICAgICAgICAibiI6IDYsCiAgICAgICAgICAib2siOiA2CiAgICAgICAgfQogICAgICB9LAogICAgICAiZGVncmVlIjogewogICAgICAgICIwIjogewogICAgICAgICAgIm4iOiAxLAogICAgICAgICAgIm9rIjogMQogICAgICAgIH0sCiAgICAgICAgIjMiOiB7CiAgICAgICAgICAibiI6IDEsCiAgICAgICAgICAib2siOiAwCiAgICAgICAgfSwKICAgICAgICAiNyI6IHsKICAgICAgICAgICJuIjogMiwKICAgICAgICAgICJvayI6IDEKICAgICAgICB9LAogICAgICAgICIxMSI6IHsKICAgICAgICAgICJuIjogMSwKICAgICAgICAgICJvayI6IDEKICAgICAgICB9CiAgICAgIH0sCiAgICAgICJzY2FsZSI6IHsKICAgICAgICAiYWVvbGlhbiI6IHsKICAgICAgICAgICJuIjogMSwKICAgICAgICAgICJvayI6IDAKICAgICAgICB9LAogICAgICAgICJtaXhvbHlkaWFuIjogewogICAgICAgICAgIm4iOiA2LAogICAgICAgICAgIm9rIjogMQogICAgICAgIH0sCiAgICAgICAgImRvcmlhbiI6IHsKICAgICAgICAgICJuIjogMSwKICAgICAgICAgICJvayI6IDEKICAgICAgICB9CiAgICAgIH0sCiAgICAgICJjaG9yZCI6IHsKICAgICAgICAibWFqIjogewogICAgICAgICAgIm4iOiAxLAogICAgICAgICAgIm9rIjogMAogICAgICAgIH0sCiAgICAgICAgIm1pbjciOiB7CiAgICAgICAgICAibiI6IDIsCiAgICAgICAgICAib2siOiAxCiAgICAgICAgfQogICAgICB9LAogICAgICAiY2FkZW5jZSI6IHsKICAgICAgICAiMiI6IHsKICAgICAgICAgICJuIjogMSwKICAgICAgICAgICJvayI6IDAKICAgICAgICB9CiAgICAgIH0sCiAgICAgICJpbnRlcnZhbCI6IHsKICAgICAgICAiNCI6IHsKICAgICAgICAgICJuIjogMSwKICAgICAgICAgICJvayI6IDAKICAgICAgICB9LAogICAgICAgICIxMiI6IHsKICAgICAgICAgICJuIjogMiwKICAgICAgICAgICJvayI6IDAKICAgICAgICB9CiAgICAgIH0sCiAgICAgICJwcm9nIjogewogICAgICAgICJzZXEiOiB7CiAgICAgICAgICAibiI6IDIsCiAgICAgICAgICAib2siOiAwCiAgICAgICAgfQogICAgICB9LAogICAgICAiaW52IjogewogICAgICAgICIwIjogewogICAgICAgICAgIm4iOiAxLAogICAgICAgICAgIm9rIjogMQogICAgICAgIH0sCiAgICAgICAgIjEiOiB7CiAgICAgICAgICAibiI6IDIsCiAgICAgICAgICAib2siOiAyCiAgICAgICAgfSwKICAgICAgICAiMiI6IHsKICAgICAgICAgICJuIjogMSwKICAgICAgICAgICJvayI6IDEKICAgICAgICB9CiAgICAgIH0sCiAgICAgICJtZWxvZHkiOiB7CiAgICAgICAgInNlcSI6IHsKICAgICAgICAgICJuIjogNSwKICAgICAgICAgICJvayI6IDAKICAgICAgICB9CiAgICAgIH0KICAgIH0sCiAgICAiZGF5cyI6IDEsCiAgICAibGFzdCI6ICIyMDI2LTAzLTAyIiwKICAgICJzY2hlbWEiOiAzLAogICAgInNycyI6IHt9CiAgfSwKICAiYXQiOiAiMjAyNi0wMy0wMlQxMDowMTo1NS4yMjBaIgp9"
+  "body": "ewogICJzZXR0aW5ncyI6IHsKICAgICJhNCI6IDQzMiwKICAgICJ0aW1icmUiOiAicGx1Y2siLAogICAgInZvbCI6IDAuMywKICAgICJyZXYiOiAwLjEsCiAgICAiZHVyIjogMiwKICAgICJtYXNrIjogdHJ1ZSwKICAgICJzZngiOiB0cnVlLAogICAgImFkYXB0aXZlIjogdHJ1ZSwKICAgICJraW5kcyI6IFsKICAgICAgIm5vdGUiLAogICAgICAiaW50ZXJ2YWwiLAogICAgICAiY2hvcmQiLAogICAgICAiaW52IiwKICAgICAgImRlZ3JlZSIsCiAgICAgICJtZWxvZHkiLAogICAgICAicHJvZyIsCiAgICAgICJjYWRlbmNlIiwKICAgICAgInNjYWxlIgogICAgXSwKICAgICJwY3MiOiBbCiAgICAgIDAsCiAgICAgIDEsCiAgICAgIDIsCiAgICAgIDMsCiAgICAgIDQsCiAgICAgIDUsCiAgICAgIDYsCiAgICAgIDcsCiAgICAgIDgsCiAgICAgIDksCiAgICAgIDEwLAogICAgICAxMQogICAgXSwKICAgICJpdmxzIjogWwogICAgICAzLAogICAgICA0LAogICAgICA1LAogICAgICA3LAogICAgICAxMgogICAgXSwKICAgICJjaG9yZHMiOiBbCiAgICAgICJtYWoiLAogICAgICAibWluIiwKICAgICAgIm1hajciLAogICAgICAiZG9tNyIsCiAgICAgICJtaW43IgogICAgXSwKICAgICJzY2FsZXMiOiBbCiAgICAgICJpb25pYW4iLAogICAgICAiYWVvbGlhbiIsCiAgICAgICJkb3JpYW4iLAogICAgICAibWl4b2x5ZGlhbiIKICAgIF0sCiAgICAiZGlyIjogInJhbmRvbSIsCiAgICAiYXJwIjogMiwKICAgICJvY3RMb3ciOiAyLAogICAgIm9jdEhpZ2giOiAyLAogICAgInJlcU9jdCI6IHRydWUsCiAgICAia2V5TW9kZSI6ICJyYW5kb20iLAogICAgImtleVF1YWwiOiAiYm90aCIsCiAgICAibWVsTGVuIjogNCwKICAgICJjaHJvbSI6IHRydWUsCiAgICAibGltaXQiOiA2LAogICAgImphbUtleSI6IDcsCiAgICAiamFtUHJlc2V0IjogMiwKICAgICJqYW1CcG0iOiAxNDAsCiAgICAiamFtRHJ1bXMiOiBmYWxzZSwKICAgICJqYW1CYXNzIjogdHJ1ZSwKICAgICJpb3NNZWRpYUNoYW5uZWwiOiB0cnVlLAogICAgImphbVF1aXoiOiA4LAogICAgImxhbmciOiAiZW4iLAogICAgIm5hbWluZyI6ICJmbGF0IiwKICAgICJkZWdOYW1pbmciOiAibnVtIgogIH0sCiAgInByb2dyZXNzIjogewogICAgInhwIjogMzY2LAogICAgInN0YXJzIjogewogICAgICAiYzBzMCI6IDIKICAgIH0sCiAgICAiYmVzdCI6IHsKICAgICAgImMwczAiOiAzNDI4CiAgICB9LAogICAgInN0YXRzIjogewogICAgICAibm90ZSI6IHsKICAgICAgICAiMCI6IHsKICAgICAgICAgICJuIjogNiwKICAgICAgICAgICJvayI6IDUKICAgICAgICB9LAogICAgICAgICI1IjogewogICAgICAgICAgIm4iOiAyLAogICAgICAgICAgIm9rIjogMAogICAgICAgIH0sCiAgICAgICAgIjYiOiB7CiAgICAgICAgICAibiI6IDYsCiAgICAgICAgICAib2siOiA2CiAgICAgICAgfQogICAgICB9LAogICAgICAiZGVncmVlIjogewogICAgICAgICIwIjogewogICAgICAgICAgIm4iOiAxLAogICAgICAgICAgIm9rIjogMQogICAgICAgIH0sCiAgICAgICAgIjMiOiB7CiAgICAgICAgICAibiI6IDEsCiAgICAgICAgICAib2siOiAwCiAgICAgICAgfSwKICAgICAgICAiNyI6IHsKICAgICAgICAgICJuIjogMiwKICAgICAgICAgICJvayI6IDEKICAgICAgICB9LAogICAgICAgICIxMSI6IHsKICAgICAgICAgICJuIjogMSwKICAgICAgICAgICJvayI6IDEKICAgICAgICB9CiAgICAgIH0sCiAgICAgICJzY2FsZSI6IHsKICAgICAgICAiYWVvbGlhbiI6IHsKICAgICAgICAgICJuIjogMSwKICAgICAgICAgICJvayI6IDAKICAgICAgICB9LAogICAgICAgICJtaXhvbHlkaWFuIjogewogICAgICAgICAgIm4iOiA2LAogICAgICAgICAgIm9rIjogMQogICAgICAgIH0sCiAgICAgICAgImRvcmlhbiI6IHsKICAgICAgICAgICJuIjogMSwKICAgICAgICAgICJvayI6IDEKICAgICAgICB9CiAgICAgIH0sCiAgICAgICJjaG9yZCI6IHsKICAgICAgICAibWFqIjogewogICAgICAgICAgIm4iOiAxLAogICAgICAgICAgIm9rIjogMAogICAgICAgIH0sCiAgICAgICAgIm1pbjciOiB7CiAgICAgICAgICAibiI6IDIsCiAgICAgICAgICAib2siOiAxCiAgICAgICAgfQogICAgICB9LAogICAgICAiY2FkZW5jZSI6IHsKICAgICAgICAiMiI6IHsKICAgICAgICAgICJuIjogMSwKICAgICAgICAgICJvayI6IDAKICAgICAgICB9CiAgICAgIH0sCiAgICAgICJpbnRlcnZhbCI6IHsKICAgICAgICAiNCI6IHsKICAgICAgICAgICJuIjogMSwKICAgICAgICAgICJvayI6IDAKICAgICAgICB9LAogICAgICAgICIxMiI6IHsKICAgICAgICAgICJuIjogMiwKICAgICAgICAgICJvayI6IDAKICAgICAgICB9CiAgICAgIH0sCiAgICAgICJwcm9nIjogewogICAgICAgICJzZXEiOiB7CiAgICAgICAgICAibiI6IDIsCiAgICAgICAgICAib2siOiAwCiAgICAgICAgfQogICAgICB9LAogICAgICAiaW52IjogewogICAgICAgICIwIjogewogICAgICAgICAgIm4iOiAxLAogICAgICAgICAgIm9rIjogMQogICAgICAgIH0sCiAgICAgICAgIjEiOiB7CiAgICAgICAgICAibiI6IDIsCiAgICAgICAgICAib2siOiAyCiAgICAgICAgfSwKICAgICAgICAiMiI6IHsKICAgICAgICAgICJuIjogMSwKICAgICAgICAgICJvayI6IDEKICAgICAgICB9CiAgICAgIH0sCiAgICAgICJtZWxvZHkiOiB7CiAgICAgICAgInNlcSI6IHsKICAgICAgICAgICJuIjogNSwKICAgICAgICAgICJvayI6IDAKICAgICAgICB9CiAgICAgIH0KICAgIH0sCiAgICAiZGF5cyI6IDEsCiAgICAibGFzdCI6ICIyMDI2LTAzLTAyIiwKICAgICJzY2hlbWEiOiAzLAogICAgInNycyI6IHt9CiAgfSwKICAiYXQiOiAiMjAyNi0wMy0wMlQxMDowMTo1NS4yMjBaIgp9"
  }
 }

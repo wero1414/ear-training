@@ -424,6 +424,10 @@
     "labMidi": {
       "name": "MIDI keyboard input",
       "hint": "answer note, degree, melody and interval drills from a controller"
+    },
+    "labJamQuiz": {
+      "name": "Jam quizzes",
+      "hint": "the jam stops every few bars and asks about what just played"
     }
   },
   "srs": {
@@ -431,5 +435,13 @@
     "none": "Nothing due today",
     "review": "Review",
     "reviewing": "Reviewing {n} due items."
+  },
+  "quiz": {
+    "every": "quiz every",
+    "bars": "{n} bars",
+    "chord": "What was that chord?",
+    "degree": "What degree was that bass note?",
+    "replay": "Replay bar",
+    "continue": "Continue"
   }
 }

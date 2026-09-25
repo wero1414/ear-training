@@ -437,6 +437,10 @@
     "labMidi": {
       "name": "Entrada de teclado MIDI",
       "hint": "responde notas, grados, melod\u00edas e intervalos desde un controlador"
+    },
+    "labJamQuiz": {
+      "name": "Preguntas en la jam",
+      "hint": "la jam se detiene cada pocos compases y pregunta por lo que acaba de sonar"
     }
   },
   "srs": {
@@ -444,5 +448,13 @@
     "none": "Nada para repasar hoy",
     "review": "Repasar",
     "reviewing": "Repasando {n} elementos pendientes."
+  },
+  "quiz": {
+    "every": "pregunta cada",
+    "bars": "{n} compases",
+    "chord": "\u00bfQu\u00e9 acorde son\u00f3?",
+    "degree": "\u00bfQu\u00e9 grado era esa nota del bajo?",
+    "replay": "Repetir comp\u00e1s",
+    "continue": "Seguir"
   }
 }
