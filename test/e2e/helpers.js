@@ -38,9 +38,18 @@ const AUDIO_DEVICE_ERROR = /^The AudioContext encountered an error from the audi
 // A stand-in audio clock: AudioContext.currentTime follows performance.now(), so it
 // advances without audio hardware and, under page.clock, only when the test says so.
 // The app still reads currentTime exactly as in production.
+// Zero is taken on the first read, not when this script runs: under page.clock the
+// init script can run before the fake clock replaces performance.now(), and mixing the
+// two made currentTime slightly negative under CPU load (Web Audio then throws).
 export const AUDIO_CLOCK = () => {
-  const t0 = performance.now();
-  Object.defineProperty(AudioContext.prototype, 'currentTime', { get: () => (performance.now() - t0) / 1000 });
+  let t0 = null;
+  Object.defineProperty(AudioContext.prototype, 'currentTime', {
+    get: () => {
+      const now = performance.now();
+      if (t0 === null) t0 = now;
+      return (now - t0) / 1000;
+    },
+  });
   Object.defineProperty(AudioContext.prototype, 'state', { get: () => 'running' });
   AudioContext.prototype.getOutputTimestamp = undefined;
 };
