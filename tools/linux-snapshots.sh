@@ -7,5 +7,9 @@ gh workflow run record-linux-snapshots --ref "$ref"
 sleep 8
 id=$(gh run list --workflow record-linux-snapshots --branch "$ref" -L1 --json databaseId -q '.[0].databaseId')
 gh run watch "$id" --exit-status > /dev/null
-gh run download "$id" -n linux-snapshots -D test/e2e/__golden__
+# gh will not overwrite files, so download beside and copy over.
+tmp=$(mktemp -d)
+gh run download "$id" -n linux-snapshots -D "$tmp"
+cp "$tmp"/*-linux.png test/e2e/__golden__/
+rm -rf "$tmp"
 echo "downloaded Linux snapshots from run $id"
