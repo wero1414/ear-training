@@ -13,5 +13,5 @@ escapes).
 
 Before sending a change, run `npm run lint` and `npm test`. If you change behaviour on
 purpose, re-record the session snapshots (`npx playwright test session -u`, plus
-`npm run snapshots:linux` with Docker running) and say why in the commit. Commits use
+`npm run snapshots:linux` after pushing the branch; it records in CI) and say why in the commit. Commits use
 Conventional Commits (`feat:`, `fix:`, `test:`, ...).

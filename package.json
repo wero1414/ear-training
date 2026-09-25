@@ -13,7 +13,7 @@
     "test:e2e": "playwright test",
     "sw": "node tools/build-sw.mjs",
     "icons": "node tools/make-icons.mjs",
-    "snapshots:linux": "docker run --rm -v \"$PWD\":/work -w /work mcr.microsoft.com/playwright:v1.63.0-noble npx playwright test session -u"
+    "snapshots:linux": "sh tools/linux-snapshots.sh"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

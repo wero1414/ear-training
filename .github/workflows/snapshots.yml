@@ -1,0 +1,28 @@
+name: record-linux-snapshots
+
+# Manual: re-records the session snapshots in the CI image and uploads them as an
+# artifact, for committing after a deliberate UI change. Same image and architecture as
+# the test job in ci.yml.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  record:
+    runs-on: ubuntu-24.04-arm
+    container: mcr.microsoft.com/playwright:v1.63.0-noble
+    steps:
+      - run: apt-get update -qq && apt-get install -y -qq git > /dev/null
+      - uses: actions/checkout@v4
+      - run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+      - run: npm ci
+      - run: npx playwright test session -u
+        env:
+          CI: 'true'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: linux-snapshots
+          path: test/e2e/__golden__/*-linux.png
+          retention-days: 3

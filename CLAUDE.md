@@ -24,7 +24,7 @@ npx vitest run test/unit/theory.test.js          # one unit file
 npx vitest run -t "labels the minor third"       # one unit test by name
 npx playwright test smoke                        # one browser spec
 npx playwright test session -u                   # re-record session snapshots (macOS)
-npm run snapshots:linux                          # same, Linux, in the CI Docker image
+npm run snapshots:linux                          # same, Linux: runs in CI on the pushed branch
 npm run sw                                       # refresh sw.js after changing site files
 npm run icons                                    # re-render icons/*.png from icons/icon.svg
 REG_URL=test/baseline/seed.html npx playwright test regressions   # run bug tests on the seed
@@ -62,7 +62,8 @@ tests the same way it would in production. Playwright starts it automatically.
 - `.github/workflows/ci.yml`: lint, unit and browser tests in
   `mcr.microsoft.com/playwright:v1.63.0-noble` on `ubuntu-24.04-arm`, then deploy to
   Pages on push to `main`. Screenshot snapshots are per platform; record Linux ones with
-  `npm run snapshots:linux` (Docker) whenever you re-record macOS ones.
+  `npm run snapshots:linux` (a manual CI workflow on the pushed branch, then download)
+  whenever you re-record macOS ones.
 - Browser tests use a stand-in audio clock (`AUDIO_CLOCK` in `test/e2e/helpers.js`)
   because headless browsers may have no audio output. Timing specs run as a separate
   Playwright project after the rest.
