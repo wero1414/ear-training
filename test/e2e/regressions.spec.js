@@ -63,3 +63,27 @@ test('degree stats: v1 progress migrates without changing the labels it showed',
   expect(stored.stats.degree).toEqual({ 2: { n: 2, ok: 1 }, 9: { n: 1, ok: 1 } });
   expect(stored.xp).toBe(10);
 });
+
+// Melodies are always diatonic; "Chromatic degrees" used to relabel their answer buttons
+// as if the degree indices were semitones.
+for (const [qual, want] of [
+  ['maj', ['1', '2', '3', '4', '5', '6', '7']],
+  ['min', ['1', '2', '\u266d3', '4', '5', '\u266d6', '\u266d7']],
+]) {
+  test(`melody labels stay diatonic with chromatic degrees on (${qual})`, async ({ page }) => {
+    await page.addInitScript(PRNG);
+    await page.goto(URL);
+    await openPractice(page, ['melody']);
+    await page.check('#chrom');
+    await page.selectOption('#keyQual', qual);
+    await page.click('#btnPlay');
+    expect(await page.locator('#answers .grid button').allTextContents()).toEqual(want);
+    const len = await page.locator('#answers .slots').first().locator('.slot').count();
+    for (let i = 0; i < len; i++) await page.locator('#answers .grid button').nth(i).click();
+    expect(await page.locator('#answers .slots').first().locator('.slot').allTextContents()).toEqual(
+      want.slice(0, len),
+    );
+    const truth = (await page.locator('#msg b').textContent()).split('   in ')[0].split(' ');
+    for (const label of truth) expect(want).toContain(label);
+  });
+}

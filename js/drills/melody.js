@@ -1,6 +1,6 @@
 import { pick } from '../util.js';
-import { DIA_MAJ, DIA_MIN } from '../theory/scales.js';
-import { degText, nn } from '../labels.js';
+import { DIA_MAJ, DIA_MIN, degreeToSemitone } from '../theory/scales.js';
+import { degLabel, nn } from '../labels.js';
 import { keyContext, playNote } from '../audio/instruments.js';
 import { seqUI } from '../ui/sequence.js';
 import { keyFor } from './adaptive.js';
@@ -9,7 +9,8 @@ import { judge, session } from './trial.js';
 export const prompt = 'Enter the melody by degree.';
 
 // Random walk over degree indices 0-6, starting on the tonic. The answer is the list of
-// degree indices.
+// degree indices into trial.scale, which is always diatonic: "Chromatic degrees" applies
+// to the degree drill only, so labels here must not go through drillScale().
 export function make(trial, sp) {
   const K = keyFor(sp);
   const scale = K.minor ? DIA_MIN : DIA_MAJ;
@@ -30,26 +31,23 @@ export function play(trial) {
   trial.midis.forEach((m, i) => playNote(m, off + 0.3 + i * 0.55, 0.8, trial.timbre));
 }
 
+export const slotLabel = (v, trial) => degLabel(degreeToSemitone(v, trial.scale));
+
 export const truth = t =>
-  t.ans.map(d => degText(d, t.sp, t.key.minor)).join(' ') + '   in ' + nn(t.key.pc) + (t.key.minor ? 'm' : '');
+  t.ans.map(d => slotLabel(d, t)).join(' ') + '   in ' + nn(t.key.pc) + (t.key.minor ? 'm' : '');
 
-export const slotLabel = (v, trial) => degText(v, trial.sp, trial.key.minor);
-
-export function render(host, trial, sp) {
+export function render(host, trial) {
   const degs = [0, 1, 2, 3, 4, 5, 6];
   seqUI(
     host,
-    degs.map(d => ({ v: d, b: degText(d, sp, trial.key.minor) })),
+    degs.map(d => ({ v: d, b: slotLabel(d, trial) })),
     trial.ans.length,
     'tight',
     {
       current: () => session.trial,
       label: v => slotLabel(v, session.trial),
       submit: v => judge({ v }),
-      hear: t => {
-        const sc = t.key.minor ? DIA_MIN : DIA_MAJ;
-        t.seq.forEach((d, i) => playNote(60 + t.key.pc + sc[d], i * 0.5, 0.7, t.timbre));
-      },
+      hear: t => t.seq.forEach((d, i) => playNote(60 + t.key.pc + t.scale[d], i * 0.5, 0.7, t.timbre)),
     },
   );
 }

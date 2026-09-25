@@ -31,4 +31,16 @@
   bump = (b, key, ok) => bump0(b, b === 'degree' ? semiOf(trial.ans, trial.sp, trial.key.minor) : key, ok);
   const statLabel0 = statLabel;
   statLabel = (b, key) => (b === 'degree' ? degLabel(+key) : statLabel0(b, key));
+
+  /* fix(melody): labels use the melody's diatonic scale even with chromatic degrees on.
+     degText is a const in the seed, so give melody trials a non-chromatic spec (their
+     generator ignores chrom) and redraw the answers. */
+  const makeTrial0 = makeTrial;
+  makeTrial = () => {
+    makeTrial0();
+    if (trial && trial.kind === 'melody' && trial.sp.chrom) {
+      trial.sp = Object.assign({}, trial.sp, { chrom: false });
+      renderPlay();
+    }
+  };
 })();
