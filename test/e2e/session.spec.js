@@ -1,18 +1,22 @@
-// Behaviour-freeze test. Drives the seed prototype and the target build through one
-// scripted session with Math.random seeded and the clock paused, and requires identical
-// DOM, form values, localStorage, downloaded files and screenshots after every step. The
-// PRNG is reseeded per step so a divergence is reported at the step that caused it rather
-// than smearing across the rest of the run.
+// Behaviour snapshot test. Drives the app through one scripted session per locale with
+// Math.random seeded (reseeded per step) and the clock paused, and compares DOM, form
+// values, localStorage and downloaded files after every step, plus full-page screenshots
+// at chosen steps, against the recorded snapshots in __golden__/.
 //
-// The reference is the seed plus test/baseline/fixes.js: every intended behaviour change
-// since Phase 0 is applied to the seed there, so anything else that differs still fails.
-// Set DIFF_SEED_FIXES=0 to compare against the untouched seed.
+// The first recording (commit "test: compare the app against recorded session
+// snapshots") was taken from a build proven identical to the seed prototype plus the
+// documented fixes, so the snapshots start out equal to that reference.
+//
+// A deliberate behaviour change updates the snapshots in the same commit:
+//   npx playwright test session -u
+// and the snapshot diff in that commit is the review of what changed. Screenshots are
+// per platform (-darwin, -linux); DOM snapshots are shared.
 import { test, expect } from '@playwright/test';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
-import { PRNG, SEED, watch, answer } from './helpers.js';
+import { PRNG, watch, answer } from './helpers.js';
 
-const TARGET = process.env.DIFF_TARGET ?? './';
-const SEED_FIXES = process.env.DIFF_SEED_FIXES !== '0';
+const LOCALES = ['en-US'];
 const T0 = new Date('2026-03-02T10:00:00Z');
 // Steps that also get a full-page screenshot, chosen to cover every view and widget.
 const SHOTS = new Set([
@@ -31,12 +35,17 @@ const SHOTS = new Set([
   'jam configured',
   'stats open',
 ]);
+// Drill kind chips, in the order the settings panel draws them.
+const KIND_CHIPS = ['note', 'interval', 'chord', 'inv', 'degree', 'melody', 'prog', 'cadence', 'scale'];
+const STRICT = { fullPage: true, threshold: 0, maxDiffPixels: 0 };
 
-// The app sets data-ready once its strings are applied (the seed has no module script
-// and is ready on load). Polled from Node because the page's timers are faked.
+const strings = locale => JSON.parse(readFileSync(`js/i18n/${locale.slice(0, 2)}.json`, 'utf8'));
+const shotName = (locale, label) => `${locale}-${label.replace(/[^a-z0-9]+/gi, '-')}.png`;
+
+// The app sets data-ready once its strings are applied. Polled from Node because the
+// page's timers are faked.
 async function ready(page) {
-  const done = () =>
-    page.evaluate(() => !document.querySelector('script[type=module]') || 'ready' in document.documentElement.dataset);
+  const done = () => page.evaluate(() => 'ready' in document.documentElement.dataset);
   while (!(await done())) await new Promise(r => setTimeout(r, 20));
 }
 
@@ -46,21 +55,14 @@ async function snap(page, label) {
     // The countdown bar's width comes from a CSS transition on the real compositor
     // clock, which page.clock does not control.
     wrap.querySelectorAll('#timer i').forEach(i => i.removeAttribute('style'));
-    // i18n hooks only exist in the app; the text they produce is still compared.
-    wrap.querySelectorAll('[data-i18n], [data-i18n-html]').forEach(e => {
-      e.removeAttribute('data-i18n');
-      e.removeAttribute('data-i18n-html');
-    });
     const values = [...document.querySelectorAll('.wrap input, .wrap select')].map(
       e => (e.id || e.className) + '=' + (e.type === 'checkbox' ? e.checked : e.value),
     );
-    return {
-      label,
-      html: wrap.innerHTML,
-      values,
-      set: localStorage.getItem('pe.set'),
-      prog: localStorage.getItem('pe.prog'),
-    };
+    // One entry per top-level section of the page, one tag per line, so a snapshot diff
+    // points at the element that changed.
+    const sections = {};
+    [...wrap.children].forEach((e, i) => (sections[e.id || e.className || e.tagName + i] = e.outerHTML.split(/(?=<)/)));
+    return { label, ...sections, values, set: localStorage.getItem('pe.set'), prog: localStorage.getItem('pe.prog') };
   }, label);
 }
 
@@ -69,17 +71,14 @@ async function download(page, click) {
   return { name: d.suggestedFilename(), body: (await readFile(await d.path())).toString('base64') };
 }
 
-async function scenario(browser, url) {
-  // Reduced motion keeps CSS animations out of the screenshots; the rules it disables
-  // are identical in both builds, so nothing under test is hidden by it.
-  const ctx = await browser.newContext({ reducedMotion: 'reduce', colorScheme: 'dark' });
+async function scenario(browser, locale) {
+  // Reduced motion keeps CSS animations out of the screenshots.
+  const ctx = await browser.newContext({ locale, reducedMotion: 'reduce', colorScheme: 'dark' });
   const page = await ctx.newPage();
   const problems = watch(page);
   const out = [];
-  const shots = [];
   let step = 0;
-  const shoot = async label =>
-    shots.push({ label, png: (await page.screenshot({ fullPage: true })).toString('base64') });
+  const shoot = label => expect.soft(page).toHaveScreenshot(shotName(locale, label), STRICT);
   const S = async label => {
     await page.clock.runFor(10);
     out.push(await snap(page, label));
@@ -91,10 +90,8 @@ async function scenario(browser, url) {
   await page.addInitScript(PRNG);
   await page.clock.install({ time: T0 });
   await page.clock.pauseAt(T0);
-  const patch = () => (url === SEED && SEED_FIXES ? page.addScriptTag({ path: 'test/baseline/fixes.js' }) : null);
-  await page.goto(url);
+  await page.goto('./');
   await ready(page);
-  await patch();
   await page.evaluate(() => window.__reseed(1));
   await S('boot');
 
@@ -117,7 +114,7 @@ async function scenario(browser, url) {
   await page.locator('#rNext, #rMap').first().click();
   await S('after result');
 
-  // Grid drill with a time limit, including a timeout.
+  // Grid drill, keyboard answers.
   await page.click('#nav-map');
   await page.click('[data-c="3"][data-s="0"]');
   await page.click('#btnPlay');
@@ -135,8 +132,7 @@ async function scenario(browser, url) {
   await page.click('#nav-practice');
   await page.click('#setBox summary');
   await page.click('#audioBox summary');
-  for (const k of ['intervals', 'chords', 'inversions', 'degrees', 'melody', 'progressions', 'cadences', 'scales'])
-    await page.locator('#kindChips button', { hasText: new RegExp('^' + k + '$') }).click();
+  for (const k of KIND_CHIPS.slice(1)) await page.locator('#kindChips button').nth(KIND_CHIPS.indexOf(k)).click();
   await page.locator('[data-preset="all"]').click();
   await page.selectOption('#keyQual', 'both');
   await page.selectOption('#keyMode', 'random');
@@ -212,7 +208,6 @@ async function scenario(browser, url) {
   await S('after reset');
   await page.reload();
   await ready(page);
-  await patch();
   await page.evaluate(() => window.__reseed(99));
   await S('after reload');
   await page.emulateMedia({ colorScheme: 'light' });
@@ -222,35 +217,53 @@ async function scenario(browser, url) {
   await shoot('light: jam and sound panel');
 
   await ctx.close();
-  return { snaps: out, shots, midi, progress, problems };
+  return { snaps: out, midi, progress, problems };
 }
 
-test('app matches the seed (plus intended fixes) step for step', async ({ browser }) => {
-  const want = await scenario(browser, SEED);
-  const got = await scenario(browser, TARGET);
+for (const locale of LOCALES) {
+  test(`session snapshot: ${locale}`, async ({ browser }) => {
+    const got = await scenario(browser, locale);
+    expect(got.problems).toEqual([]);
 
-  expect(want.problems).toEqual([]);
-  expect(got.problems).toEqual([]);
-  // Controls: a diff over code the scenario never reaches proves nothing, so require
-  // the stage run and the practice run to each hit both grading paths, and the stage
-  // run to reach a cleared result with a multiplier on screen.
-  const html = prefix =>
-    want.snaps
-      .filter(s => s.label.startsWith(prefix))
-      .map(s => s.html)
-      .join('');
-  for (const prefix of ['A1 answer', 'practice answer']) {
-    expect(html(prefix), prefix).toContain('class="msg ok"');
-    expect(html(prefix), prefix).toContain('class="msg bad"');
-  }
-  expect(html('A1')).toMatch(/id="hc">\u00d7\d/);
-  expect(html('A1 result')).toContain('Stage cleared');
+    // Controls: a snapshot of code the scenario never reaches proves nothing, so require
+    // the stage run and the practice run to each hit both grading paths, and the stage
+    // run to reach a cleared result with a multiplier on screen.
+    const html = prefix =>
+      got.snaps
+        .filter(s => s.label.startsWith(prefix))
+        .map(s => Object.values(s).flat().join(''))
+        .join('');
+    for (const prefix of ['A1 answer', 'practice answer']) {
+      expect(html(prefix), prefix).toContain('class="msg ok"');
+      expect(html(prefix), prefix).toContain('class="msg bad"');
+    }
+    expect(html('A1')).toMatch(/id="hc">\u00d7\d/);
+    expect(html('A1 result')).toContain(strings(locale).result.cleared);
 
-  expect(got.snaps.map(s => s.label)).toEqual(want.snaps.map(s => s.label));
-  for (let i = 0; i < want.snaps.length; i++) expect(got.snaps[i], want.snaps[i].label).toEqual(want.snaps[i]);
-  expect(got.midi).toEqual(want.midi);
-  expect(got.progress).toEqual(want.progress);
-  expect(got.shots.map(s => s.label)).toEqual(want.shots.map(s => s.label));
-  for (let i = 0; i < want.shots.length; i++)
-    expect(got.shots[i].png === want.shots[i].png, 'screenshot differs: ' + want.shots[i].label).toBe(true);
-});
+    // Store each step as only the fields that changed since the previous step.
+    let prev = {};
+    const steps = got.snaps.map(s => {
+      const d = { label: s.label };
+      for (const k of Object.keys(s))
+        if (k !== 'label' && JSON.stringify(s[k]) !== JSON.stringify(prev[k])) d[k] = s[k];
+      prev = s;
+      return d;
+    });
+    const file = `test/e2e/__golden__/session-${locale}.json`;
+    const mode = test.info().config.updateSnapshots;
+    if ((mode === 'all' || mode === 'changed' || (mode === 'missing' && !existsSync(file))) && mode !== 'none') {
+      // Non-ASCII is written as JSON \u escapes, like everywhere else in the repo.
+      const json = JSON.stringify({ steps, midi: got.midi, progress: got.progress }, null, 1).replace(
+        /[\u0080-\uffff]/g,
+        c => '\\u' + c.charCodeAt(0).toString(16).padStart(4, '0'),
+      );
+      writeFileSync(file, json + '\n');
+      return;
+    }
+    const want = JSON.parse(readFileSync(file, 'utf8'));
+    expect(steps.map(s => s.label)).toEqual(want.steps.map(s => s.label));
+    for (let i = 0; i < want.steps.length; i++) expect(steps[i], want.steps[i].label).toEqual(want.steps[i]);
+    expect(got.midi).toEqual(want.midi);
+    expect(got.progress).toEqual(want.progress);
+  });
+}

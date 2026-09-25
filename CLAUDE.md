@@ -12,18 +12,19 @@ Offline-first ear-training PWA. Static site, GitHub Pages, MIT.
 - `.claude/skills/` has `music-theory`, `web-audio-engine`, `offline-pwa`. Load the
   matching one before touching `js/theory|drills`, `js/audio|jam`, or SW/manifest/deploy.
 - `test/baseline/seed.html` is the original single-file prototype, kept unchanged as the
-  behavioural reference for the differential test. Never edit it.
+  original behavioural reference (smoke test, regression checks). Never edit it.
 
 ## Commands
 
 ```
 npm run serve        # http://localhost:4173/ear-trainer/ (served under a subpath, like Pages)
-npm run lint         # eslint + prettier --check
+npm run lint         # eslint + prettier --check + ASCII-only check
 npm test             # unit (vitest) then browser (playwright)
 npx vitest run test/unit/theory.test.js          # one unit file
 npx vitest run -t "labels the minor third"       # one unit test by name
 npx playwright test smoke                        # one browser spec
-DIFF_TARGET=<path> npx playwright test diff      # diff the seed against another page
+npx playwright test session -u                   # re-record session snapshots
+REG_URL=test/baseline/seed.html npx playwright test regressions   # run bug tests on the seed
 ```
 
 `test/serve.mjs` 404s everything outside `/ear-trainer/`, so an absolute path fails in
@@ -31,20 +32,19 @@ tests the same way it would in production. Playwright starts it automatically.
 
 ## Tests that guard behaviour
 
+- `test/e2e/session.spec.js` drives one scripted session per locale with `Math.random`
+  seeded (reseeded per step) and `page.clock` paused, and compares DOM, form values,
+  `localStorage` and downloads at every step, plus strict full-page screenshots (dark
+  and light), against `test/e2e/__golden__/`. The first recording came from a build
+  proven identical to the seed prototype plus the documented bug fixes.
+  - A deliberate behaviour change re-records with `-u` in the same commit; the snapshot
+    diff is the review of what changed, so read it before committing. Any other snapshot
+    failure is a regression.
+  - Screenshots are per platform (`-darwin`, `-linux`); the JSON is shared.
+  - It does not control `AudioContext.currentTime`, so jam is only snapshotted after stop.
 - `test/e2e/smoke.spec.js` runs against both the seed and the app: every tab, one answer
   in each answer widget (keyboard, grid, sequence), no console errors, no request
   leaving the local origin.
-- `test/e2e/diff.spec.js` runs one scripted session on the seed and on the app with
-  `Math.random` seeded (reseeded per step) and `page.clock` paused, and requires identical
-  DOM, form values, `localStorage`, downloaded files and full-page screenshots (dark and
-  light) at every step. The seed is the reference, so this test pins seed behaviour: a
-  deliberate behaviour change (bug fix, new feature) makes it fail by design, and the
-  scenario or reference has to be updated in the same change, with the reason stated.
-  It does not control `AudioContext.currentTime`, so jam is only snapshotted after stop.
-- The reference is the seed plus `test/baseline/fixes.js`, which re-applies every intended
-  behaviour change to the seed's globals. A deliberate change lands in `js/` and in
-  `fixes.js` in the same commit; then check that `DIFF_SEED_FIXES=0` makes the diff fail
-  at the step you expect, which proves the scenario exercises the change.
 - `test/e2e/regressions.spec.js` has one test per fixed bug. Confirm each new one fails
   on the seed with `REG_URL=test/baseline/seed.html` before trusting it.
 
