@@ -14,6 +14,7 @@ import { bindSettings, chips, octSelects, syncSettings } from './ui/settings.js'
 import { bindShortcuts } from './ui/shortcuts.js';
 import { registerWorker } from './ui/update.js';
 import { installLifecycle } from './audio/context.js';
+import { setMidi } from './ui/midi.js';
 
 const TABS = ['map', 'practice', 'jam', 'ref'];
 
@@ -47,6 +48,7 @@ function boot() {
   paintTop();
   go('map');
   registerWorker();
+  if (S.labMidi) setMidi(true);
 }
 
 // The page stays hidden (css/app.css) until data-ready is set, so the markup's

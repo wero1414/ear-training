@@ -420,6 +420,10 @@
     "labSrs": {
       "name": "Spaced repetition",
       "hint": "SM-2 review schedule per item; due count on the stage map"
+    },
+    "labMidi": {
+      "name": "MIDI keyboard input",
+      "hint": "answer note, degree, melody and interval drills from a controller"
     }
   },
   "srs": {

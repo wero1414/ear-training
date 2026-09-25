@@ -10,6 +10,7 @@ import { nn } from '../labels.js';
 import { isIOS, mediaChannel, setReverb } from '../audio/context.js';
 import { clearPluckCache, playNote } from '../audio/instruments.js';
 import { paintTop } from './hud.js';
+import { midiAvailable, setMidi } from './midi.js';
 import { paintStats } from './stats.js';
 import { go, view } from '../main.js';
 
@@ -29,14 +30,20 @@ function chipRow(host, items, isOn, toggle) {
 }
 
 // Phase 2 features land behind these flags until they are solid (settings keys, all
-// default off). Each has lab.<flag>.name and lab.<flag>.hint strings.
-export const LAB_FLAGS = ['labMelody', 'labSrs'];
+// default off). Each has lab.<key>.name and lab.<key>.hint strings; `available` hides a
+// flag the browser cannot support, `apply` runs when it is switched.
+export const LAB_FLAGS = [
+  { key: 'labMelody' },
+  { key: 'labSrs' },
+  { key: 'labMidi', available: midiAvailable, apply: setMidi },
+];
 
 function labRows() {
   const host = el('labRows');
-  el('labBox').hidden = !LAB_FLAGS.length;
+  const flags = LAB_FLAGS.filter(f => !f.available || f.available());
+  el('labBox').hidden = !flags.length;
   host.innerHTML = '';
-  for (const f of LAB_FLAGS) {
+  for (const { key: f, apply } of flags) {
     const row = document.createElement('div');
     row.className = 'srow';
     const label = document.createElement('label');
@@ -50,6 +57,7 @@ function labRows() {
     box.onchange = () => {
       S[f] = box.checked;
       sv();
+      if (apply) apply(box.checked);
       go(view);
     };
     const hint = document.createElement('span');

@@ -433,6 +433,10 @@
     "labSrs": {
       "name": "Repetici\u00f3n espaciada",
       "hint": "calendario de repaso SM-2 por elemento; pendientes en el mapa de etapas"
+    },
+    "labMidi": {
+      "name": "Entrada de teclado MIDI",
+      "hint": "responde notas, grados, melod\u00edas e intervalos desde un controlador"
     }
   },
   "srs": {

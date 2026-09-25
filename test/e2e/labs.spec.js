@@ -92,3 +92,59 @@ test('without labSrs no review cards are recorded', async ({ page }) => {
   await page.click('#nav-map');
   await expect(page.locator('.due')).toHaveCount(0);
 });
+
+// A fake controller: window.__key(note) sends a note-on through Web MIDI.
+const FAKE_MIDI = () => {
+  const input = { onmidimessage: null };
+  navigator.requestMIDIAccess = () => Promise.resolve({ inputs: new Map([['fake', input]]), onstatechange: null });
+  window.__key = note => input.onmidimessage && input.onmidimessage({ data: new Uint8Array([0x90, note, 100]) });
+};
+
+async function midiPractice(page, kind, flags = ['labMidi']) {
+  await page.addInitScript(FAKE_MIDI);
+  await practice(page, kind, flags);
+  await page.click('#btnPlay');
+}
+
+const marked = (page, sel) =>
+  page.locator(sel).evaluate(b => b.classList.contains('right') || b.classList.contains('wrong'));
+
+test('labMidi: a key answers the note drill', async ({ page }) => {
+  await midiPractice(page, 'note');
+  await page.evaluate(() => window.__key(64)); // E4
+  expect(await marked(page, '#answers .kb .k[data-pc="4"]')).toBe(true);
+});
+
+test('labMidi: a key answers the degree drill relative to the key', async ({ page }) => {
+  await midiPractice(page, 'degree');
+  await page.evaluate(() => window.__key(64)); // E in C major: degree index 2
+  expect(await marked(page, '#answers .grid button[data-v="2"]')).toBe(true);
+});
+
+test('labMidi: a note outside the scale is a wrong degree answer', async ({ page }) => {
+  await midiPractice(page, 'degree');
+  await page.evaluate(() => window.__key(61)); // C#: not in C major
+  await expect(page.locator('#msg')).toHaveClass(/bad/);
+});
+
+test('labMidi: two keys answer the interval drill', async ({ page }) => {
+  await midiPractice(page, 'interval');
+  await page.evaluate(() => window.__key(60));
+  await expect(page.locator('#msg.ok, #msg.bad')).toHaveCount(0);
+  await page.evaluate(() => window.__key(67)); // a fifth
+  expect(await marked(page, '#answers .grid button[data-v="7"]')).toBe(true);
+});
+
+test('without labMidi, MIDI keys do nothing', async ({ page }) => {
+  await midiPractice(page, 'note', []);
+  await page.evaluate(() => window.__key(64));
+  await expect(page.locator('#msg.ok, #msg.bad')).toHaveCount(0);
+});
+
+test('browsers without Web MIDI never show the setting', async ({ page }) => {
+  await page.addInitScript(() => delete Navigator.prototype.requestMIDIAccess);
+  await page.goto('./');
+  await page.click('#labBox summary');
+  await expect(page.locator('#labMelody')).toBeVisible();
+  await expect(page.locator('#labMidi')).toHaveCount(0);
+});
