@@ -1,4 +1,4 @@
-// Serves the repo under /ear-trainer/ so that an absolute asset path 404s here exactly
+// Serves the repo under /ear-training/ so that an absolute asset path 404s here exactly
 // as it would on GitHub Pages. Anything outside the prefix is a 404, never a fallback.
 import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
@@ -6,7 +6,7 @@ import { extname, join, normalize, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = resolve(fileURLToPath(new URL('..', import.meta.url)));
-const PREFIX = '/ear-trainer/';
+const PREFIX = '/ear-training/';
 const PORT = Number(process.env.PORT || 4173);
 const TYPES = {
   '.html': 'text/html; charset=utf-8',

@@ -14,7 +14,7 @@
 import { test, expect } from '@playwright/test';
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
-import { PRNG, watch, answer } from './helpers.js';
+import { AUDIO_CLOCK, PRNG, watch, answer } from './helpers.js';
 
 const LOCALES = ['en-US', 'es-MX'];
 const T0 = new Date('2026-03-02T10:00:00Z');
@@ -88,6 +88,7 @@ async function scenario(browser, locale) {
   const next = () => page.clock.runFor(2400);
 
   await page.addInitScript(PRNG);
+  await page.addInitScript(AUDIO_CLOCK);
   await page.clock.install({ time: T0 });
   await page.clock.pauseAt(T0);
   await page.goto('./');
@@ -185,8 +186,8 @@ async function scenario(browser, locale) {
   await page.click('#refrow button');
   await S('drone off');
 
-  // Jam: controls, playback, MIDI export. Snapshotted after stop, because the bar
-  // highlight follows AudioContext.currentTime, which page.clock does not control.
+  // Jam: controls, playback, MIDI export. With the stand-in audio clock, three seconds of
+  // page.clock is three seconds of audio time, so the bar highlight is deterministic.
   await page.click('#nav-jam');
   await page.selectOption('#jamPreset', '2');
   await page.selectOption('#jamKey', '7');

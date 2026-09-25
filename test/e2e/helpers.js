@@ -1,4 +1,4 @@
-export const ORIGIN = 'http://localhost:4173/ear-trainer/';
+export const ORIGIN = 'http://localhost:4173/ear-training/';
 export const SEED = 'test/baseline/seed.html';
 
 // mulberry32, installed as Math.random; window.__reseed(n) restarts the sequence.
@@ -18,7 +18,7 @@ export const PRNG = `(() => {
 export function watch(page) {
   const problems = [];
   page.on('console', m => {
-    if (m.type() === 'error') problems.push('console: ' + m.text());
+    if (m.type() === 'error' && !AUDIO_DEVICE_ERROR.test(m.text())) problems.push('console: ' + m.text());
   });
   page.on('pageerror', e => problems.push('pageerror: ' + e.message));
   page.on('request', r => {
@@ -30,6 +30,20 @@ export function watch(page) {
   });
   return problems;
 }
+
+// Chromium logs this when the machine has no usable audio output (headless, CI, a busy
+// device). It describes the host, not the app, and tests must not need audio hardware.
+const AUDIO_DEVICE_ERROR = /^The AudioContext encountered an error from the audio device/;
+
+// A stand-in audio clock: AudioContext.currentTime follows performance.now(), so it
+// advances without audio hardware and, under page.clock, only when the test says so.
+// The app still reads currentTime exactly as in production.
+export const AUDIO_CLOCK = () => {
+  const t0 = performance.now();
+  Object.defineProperty(AudioContext.prototype, 'currentTime', { get: () => (performance.now() - t0) / 1000 });
+  Object.defineProperty(AudioContext.prototype, 'state', { get: () => 'running' });
+  AudioContext.prototype.getOutputTimestamp = undefined;
+};
 
 export const verdict = page => page.locator('#msg.ok, #msg.bad');
 

@@ -17,7 +17,7 @@ Offline-first ear-training PWA. Static site, GitHub Pages, MIT.
 ## Commands
 
 ```
-npm run serve        # http://localhost:4173/ear-trainer/ (served under a subpath, like Pages)
+npm run serve        # http://localhost:4173/ear-training/ (served under a subpath, like Pages)
 npm run lint         # eslint + prettier --check + ASCII-only check
 npm test             # unit (vitest) then browser (playwright)
 npx vitest run test/unit/theory.test.js          # one unit file
@@ -27,7 +27,7 @@ npx playwright test session -u                   # re-record session snapshots
 REG_URL=test/baseline/seed.html npx playwright test regressions   # run bug tests on the seed
 ```
 
-`test/serve.mjs` 404s everything outside `/ear-trainer/`, so an absolute path fails in
+`test/serve.mjs` 404s everything outside `/ear-training/`, so an absolute path fails in
 tests the same way it would in production. Playwright starts it automatically.
 
 ## Tests that guard behaviour
