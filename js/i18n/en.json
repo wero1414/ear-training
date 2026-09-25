@@ -412,6 +412,10 @@
   },
   "lab": {
     "summary": "Experimental",
-    "intro": "Features still being tuned. They may change."
+    "intro": "Features still being tuned. They may change.",
+    "labMelody": {
+      "name": "Musical melodies and minor progressions",
+      "hint": "phrase-based dictation; minor and modal loops in practice"
+    }
   }
 }

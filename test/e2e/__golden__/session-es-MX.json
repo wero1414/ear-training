@@ -1228,13 +1228,20 @@
     "</details>"
    ],
    "labBox": [
-    "<details id=\"labBox\" hidden=\"\">\n    ",
+    "<details id=\"labBox\">\n    ",
     "<summary data-i18n=\"lab.summary\">Experimental",
     "</summary>\n    ",
     "<div class=\"body\">\n      ",
     "<p class=\"hint\" data-i18n=\"lab.intro\">Funciones que todav\u00eda se est\u00e1n ajustando. Pueden cambiar.",
     "</p>\n      ",
     "<div id=\"labRows\">",
+    "<div class=\"srow\">",
+    "<label class=\"lbl\" for=\"labMelody\">Melod\u00edas musicales y progresiones menores",
+    "</label>",
+    "<input type=\"checkbox\" id=\"labMelody\">",
+    "<span class=\"hint\">dictado por frases; ciclos menores y modales en la pr\u00e1ctica",
+    "</span>",
+    "</div>",
     "</div>\n    ",
     "</div>\n  ",
     "</details>"
@@ -1292,7 +1299,8 @@
     "iosMediaChannel=true",
     "sfx=true",
     "adaptive=true",
-    "importFile="
+    "importFile=",
+    "labMelody=false"
    ],
    "set": null,
    "prog": null
@@ -1790,6 +1798,25 @@
     "</button>\n        ",
     "<span class=\"hint\" id=\"importMsg\">",
     "</span>\n      ",
+    "</div>\n    ",
+    "</div>\n  ",
+    "</details>"
+   ],
+   "labBox": [
+    "<details id=\"labBox\">\n    ",
+    "<summary data-i18n=\"lab.summary\">Experimental",
+    "</summary>\n    ",
+    "<div class=\"body\">\n      ",
+    "<p class=\"hint\" data-i18n=\"lab.intro\">Funciones que todav\u00eda se est\u00e1n ajustando. Pueden cambiar.",
+    "</p>\n      ",
+    "<div id=\"labRows\">",
+    "<div class=\"srow\">",
+    "<label class=\"lbl\" for=\"labMelody\">Melod\u00edas musicales y progresiones menores",
+    "</label>",
+    "<input type=\"checkbox\" id=\"labMelody\" style=\"\">",
+    "<span class=\"hint\">dictado por frases; ciclos menores y modales en la pr\u00e1ctica",
+    "</span>",
+    "</div>",
     "</div>\n    ",
     "</div>\n  ",
     "</details>"
@@ -5403,6 +5430,25 @@
     "</div>\n  ",
     "</details>"
    ],
+   "labBox": [
+    "<details id=\"labBox\">\n    ",
+    "<summary data-i18n=\"lab.summary\">Experimental",
+    "</summary>\n    ",
+    "<div class=\"body\">\n      ",
+    "<p class=\"hint\" data-i18n=\"lab.intro\">Funciones que todav\u00eda se est\u00e1n ajustando. Pueden cambiar.",
+    "</p>\n      ",
+    "<div id=\"labRows\">",
+    "<div class=\"srow\">",
+    "<label class=\"lbl\" for=\"labMelody\">Melod\u00edas musicales y progresiones menores",
+    "</label>",
+    "<input type=\"checkbox\" id=\"labMelody\">",
+    "<span class=\"hint\">dictado por frases; ciclos menores y modales en la pr\u00e1ctica",
+    "</span>",
+    "</div>",
+    "</div>\n    ",
+    "</div>\n  ",
+    "</details>"
+   ],
    "values": [
     "dir=random",
     "arp=2",
@@ -5426,7 +5472,8 @@
     "iosMediaChannel=true",
     "sfx=true",
     "adaptive=true",
-    "importFile="
+    "importFile=",
+    "labMelody=false"
    ],
    "set": "{\"a4\":440,\"timbre\":\"rhodes\",\"vol\":0.55,\"rev\":0.26,\"dur\":1.5,\"mask\":true,\"sfx\":true,\"adaptive\":true,\"kinds\":[\"note\",\"interval\",\"chord\",\"inv\",\"degree\",\"melody\",\"prog\",\"cadence\",\"scale\"],\"pcs\":[0,1,2,3,4,5,6,7,8,9,10,11],\"ivls\":[3,4,5,7,12],\"chords\":[\"maj\",\"min\",\"maj7\",\"dom7\",\"min7\"],\"scales\":[\"ionian\",\"aeolian\",\"dorian\",\"mixolydian\"],\"dir\":\"random\",\"arp\":2,\"octLow\":3,\"octHigh\":5,\"reqOct\":true,\"keyMode\":\"random\",\"keyQual\":\"both\",\"melLen\":4,\"chrom\":false,\"limit\":6,\"jamKey\":0,\"jamPreset\":0,\"jamBpm\":82,\"jamDrums\":true,\"jamBass\":true,\"iosMediaChannel\":true,\"lang\":\"es\",\"naming\":\"solf\",\"degNaming\":\"num\"}"
   },
@@ -5581,6 +5628,25 @@
     "</button>\n        ",
     "<span class=\"hint\" id=\"importMsg\">",
     "</span>\n      ",
+    "</div>\n    ",
+    "</div>\n  ",
+    "</details>"
+   ],
+   "labBox": [
+    "<details id=\"labBox\">\n    ",
+    "<summary data-i18n=\"lab.summary\">Experimental",
+    "</summary>\n    ",
+    "<div class=\"body\">\n      ",
+    "<p class=\"hint\" data-i18n=\"lab.intro\">Funciones que todav\u00eda se est\u00e1n ajustando. Pueden cambiar.",
+    "</p>\n      ",
+    "<div id=\"labRows\">",
+    "<div class=\"srow\">",
+    "<label class=\"lbl\" for=\"labMelody\">Melod\u00edas musicales y progresiones menores",
+    "</label>",
+    "<input type=\"checkbox\" id=\"labMelody\" style=\"\">",
+    "<span class=\"hint\">dictado por frases; ciclos menores y modales en la pr\u00e1ctica",
+    "</span>",
+    "</div>",
     "</div>\n    ",
     "</div>\n  ",
     "</details>"
@@ -9196,7 +9262,8 @@
     "iosMediaChannel=true",
     "sfx=true",
     "adaptive=true",
-    "importFile="
+    "importFile=",
+    "labMelody=false"
    ],
    "set": "{\"a4\":440,\"timbre\":\"rhodes\",\"vol\":0.55,\"rev\":0.26,\"dur\":1.5,\"mask\":true,\"sfx\":true,\"adaptive\":true,\"kinds\":[\"note\",\"interval\",\"chord\",\"inv\",\"degree\",\"melody\",\"prog\",\"cadence\",\"scale\"],\"pcs\":[0,1,2,3,4,5,6,7,8,9,10,11],\"ivls\":[3,4,5,7,12],\"chords\":[\"maj\",\"min\",\"maj7\",\"dom7\",\"min7\"],\"scales\":[\"ionian\",\"aeolian\",\"dorian\",\"mixolydian\"],\"dir\":\"random\",\"arp\":2,\"octLow\":3,\"octHigh\":5,\"reqOct\":true,\"keyMode\":\"random\",\"keyQual\":\"both\",\"melLen\":4,\"chrom\":true,\"limit\":6,\"jamKey\":0,\"jamPreset\":0,\"jamBpm\":82,\"jamDrums\":true,\"jamBass\":true,\"iosMediaChannel\":true,\"lang\":\"es\",\"naming\":\"solf\",\"degNaming\":\"num\"}",
    "prog": "{\"xp\":366,\"stars\":{\"c0s0\":2},\"best\":{\"c0s0\":3428},\"stats\":{\"note\":{\"0\":{\"n\":6,\"ok\":5},\"5\":{\"n\":2,\"ok\":0},\"6\":{\"n\":6,\"ok\":6}},\"degree\":{\"0\":{\"n\":1,\"ok\":1},\"3\":{\"n\":1,\"ok\":0},\"7\":{\"n\":2,\"ok\":1}},\"scale\":{\"aeolian\":{\"n\":1,\"ok\":0},\"mixolydian\":{\"n\":2,\"ok\":0}},\"chord\":{\"maj\":{\"n\":1,\"ok\":0}},\"cadence\":{\"2\":{\"n\":1,\"ok\":0}},\"interval\":{\"4\":{\"n\":1,\"ok\":0},\"12\":{\"n\":1,\"ok\":0}},\"prog\":{\"seq\":{\"n\":1,\"ok\":0}},\"inv\":{\"1\":{\"n\":1,\"ok\":1}}},\"days\":1,\"last\":\"2026-03-02\",\"schema\":2}"
@@ -12311,6 +12378,25 @@
     "</button>\n        ",
     "<span class=\"hint\" id=\"importMsg\">",
     "</span>\n      ",
+    "</div>\n    ",
+    "</div>\n  ",
+    "</details>"
+   ],
+   "labBox": [
+    "<details id=\"labBox\">\n    ",
+    "<summary data-i18n=\"lab.summary\">Experimental",
+    "</summary>\n    ",
+    "<div class=\"body\">\n      ",
+    "<p class=\"hint\" data-i18n=\"lab.intro\">Funciones que todav\u00eda se est\u00e1n ajustando. Pueden cambiar.",
+    "</p>\n      ",
+    "<div id=\"labRows\">",
+    "<div class=\"srow\">",
+    "<label class=\"lbl\" for=\"labMelody\">Melod\u00edas musicales y progresiones menores",
+    "</label>",
+    "<input type=\"checkbox\" id=\"labMelody\">",
+    "<span class=\"hint\">dictado por frases; ciclos menores y modales en la pr\u00e1ctica",
+    "</span>",
+    "</div>",
     "</div>\n    ",
     "</div>\n  ",
     "</details>"
@@ -17368,7 +17454,8 @@
     "iosMediaChannel=true",
     "sfx=true",
     "adaptive=true",
-    "importFile="
+    "importFile=",
+    "labMelody=false"
    ],
    "set": "{\"a4\":432,\"timbre\":\"pluck\",\"vol\":0.3,\"rev\":0.1,\"dur\":2,\"mask\":true,\"sfx\":true,\"adaptive\":true,\"kinds\":[\"note\",\"interval\",\"chord\",\"inv\",\"degree\",\"melody\",\"prog\",\"cadence\",\"scale\"],\"pcs\":[0,1,2,3,4,5,6,7,8,9,10,11],\"ivls\":[3,4,5,7,12],\"chords\":[\"maj\",\"min\",\"maj7\",\"dom7\",\"min7\"],\"scales\":[\"ionian\",\"aeolian\",\"dorian\",\"mixolydian\"],\"dir\":\"random\",\"arp\":2,\"octLow\":2,\"octHigh\":2,\"reqOct\":true,\"keyMode\":\"random\",\"keyQual\":\"both\",\"melLen\":4,\"chrom\":true,\"limit\":6,\"jamKey\":0,\"jamPreset\":0,\"jamBpm\":82,\"jamDrums\":true,\"jamBass\":true,\"iosMediaChannel\":true,\"lang\":\"es\",\"naming\":\"flat\",\"degNaming\":\"num\"}"
   },
@@ -17834,6 +17921,25 @@
     "</div>\n  ",
     "</details>"
    ],
+   "labBox": [
+    "<details id=\"labBox\">\n    ",
+    "<summary data-i18n=\"lab.summary\">Experimental",
+    "</summary>\n    ",
+    "<div class=\"body\">\n      ",
+    "<p class=\"hint\" data-i18n=\"lab.intro\">Funciones que todav\u00eda se est\u00e1n ajustando. Pueden cambiar.",
+    "</p>\n      ",
+    "<div id=\"labRows\">",
+    "<div class=\"srow\">",
+    "<label class=\"lbl\" for=\"labMelody\">Melod\u00edas musicales y progresiones menores",
+    "</label>",
+    "<input type=\"checkbox\" id=\"labMelody\" style=\"\">",
+    "<span class=\"hint\">dictado por frases; ciclos menores y modales en la pr\u00e1ctica",
+    "</span>",
+    "</div>",
+    "</div>\n    ",
+    "</div>\n  ",
+    "</details>"
+   ],
    "values": [
     "=64",
     "dir=random",
@@ -17858,7 +17964,8 @@
     "iosMediaChannel=true",
     "sfx=true",
     "adaptive=true",
-    "importFile="
+    "importFile=",
+    "labMelody=false"
    ]
   },
   {
@@ -18223,7 +18330,8 @@
     "iosMediaChannel=true",
     "sfx=true",
     "adaptive=true",
-    "importFile="
+    "importFile=",
+    "labMelody=false"
    ],
    "set": "{\"a4\":432,\"timbre\":\"pluck\",\"vol\":0.3,\"rev\":0.1,\"dur\":2,\"mask\":true,\"sfx\":true,\"adaptive\":true,\"kinds\":[\"note\",\"interval\",\"chord\",\"inv\",\"degree\",\"melody\",\"prog\",\"cadence\",\"scale\"],\"pcs\":[0,1,2,3,4,5,6,7,8,9,10,11],\"ivls\":[3,4,5,7,12],\"chords\":[\"maj\",\"min\",\"maj7\",\"dom7\",\"min7\"],\"scales\":[\"ionian\",\"aeolian\",\"dorian\",\"mixolydian\"],\"dir\":\"random\",\"arp\":2,\"octLow\":2,\"octHigh\":2,\"reqOct\":true,\"keyMode\":\"random\",\"keyQual\":\"both\",\"melLen\":4,\"chrom\":true,\"limit\":6,\"jamKey\":7,\"jamPreset\":2,\"jamBpm\":140,\"jamDrums\":false,\"jamBass\":true,\"iosMediaChannel\":true,\"lang\":\"es\",\"naming\":\"flat\",\"degNaming\":\"num\"}"
   },
@@ -19546,7 +19654,8 @@
     "iosMediaChannel=true",
     "sfx=true",
     "adaptive=true",
-    "importFile="
+    "importFile=",
+    "labMelody=false"
    ],
    "prog": "{\"xp\":0,\"stars\":{},\"best\":{},\"stats\":{},\"days\":0,\"last\":\"\",\"schema\":2}"
   },
@@ -20021,6 +20130,25 @@
     "</button>\n        ",
     "<span class=\"hint\" id=\"importMsg\">",
     "</span>\n      ",
+    "</div>\n    ",
+    "</div>\n  ",
+    "</details>"
+   ],
+   "labBox": [
+    "<details id=\"labBox\">\n    ",
+    "<summary data-i18n=\"lab.summary\">Experimental",
+    "</summary>\n    ",
+    "<div class=\"body\">\n      ",
+    "<p class=\"hint\" data-i18n=\"lab.intro\">Funciones que todav\u00eda se est\u00e1n ajustando. Pueden cambiar.",
+    "</p>\n      ",
+    "<div id=\"labRows\">",
+    "<div class=\"srow\">",
+    "<label class=\"lbl\" for=\"labMelody\">Melod\u00edas musicales y progresiones menores",
+    "</label>",
+    "<input type=\"checkbox\" id=\"labMelody\">",
+    "<span class=\"hint\">dictado por frases; ciclos menores y modales en la pr\u00e1ctica",
+    "</span>",
+    "</div>",
     "</div>\n    ",
     "</div>\n  ",
     "</details>"

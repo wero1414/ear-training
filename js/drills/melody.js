@@ -5,15 +5,12 @@ import { degLabel, nn } from '../labels.js';
 import { keyContext, playNote } from '../audio/instruments.js';
 import { seqUI } from '../ui/sequence.js';
 import { keyFor } from './adaptive.js';
+import { phrase } from './phrase.js';
+import { S } from '../state/store.js';
 import { judge, session } from './trial.js';
 
-// Random walk over degree indices 0-6, starting on the tonic. The answer is the list of
-// degree indices into trial.scale, which is always diatonic: "Chromatic degrees" applies
-// to the degree drill only, so labels here must not go through drillScale().
-export function make(trial, sp) {
-  const K = keyFor(sp);
-  const scale = K.minor ? DIA_MIN : DIA_MAJ;
-  const len = sp.melLen || 4;
+// The original generator, kept until the phrase grammar leaves the Experimental panel.
+function walk(len) {
   const seq = [0];
   for (let i = 1; i < len; i++) {
     const prev = seq[i - 1];
@@ -22,6 +19,17 @@ export function make(trial, sp) {
     if (v === prev) v = (prev + 1) % 7;
     seq.push(v);
   }
+  return seq;
+}
+
+// The answer is the list of degree indices into trial.scale, which is always diatonic:
+// "Chromatic degrees" applies to the degree drill only, so labels here must not go
+// through drillScale().
+export function make(trial, sp) {
+  const K = keyFor(sp);
+  const scale = K.minor ? DIA_MIN : DIA_MAJ;
+  const len = sp.melLen || 4;
+  const seq = S.labMelody ? phrase(len) : walk(len);
   Object.assign(trial, { key: K, ans: seq, midis: seq.map(d => 60 + K.pc + scale[d]), scale });
 }
 

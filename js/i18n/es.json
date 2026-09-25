@@ -425,6 +425,10 @@
   },
   "lab": {
     "summary": "Experimental",
-    "intro": "Funciones que todav\u00eda se est\u00e1n ajustando. Pueden cambiar."
+    "intro": "Funciones que todav\u00eda se est\u00e1n ajustando. Pueden cambiar.",
+    "labMelody": {
+      "name": "Melod\u00edas musicales y progresiones menores",
+      "hint": "dictado por frases; ciclos menores y modales en la pr\u00e1ctica"
+    }
   }
 }

@@ -30,7 +30,7 @@ function chipRow(host, items, isOn, toggle) {
 
 // Phase 2 features land behind these flags until they are solid (settings keys, all
 // default off). Each has lab.<flag>.name and lab.<flag>.hint strings.
-export const LAB_FLAGS = [];
+export const LAB_FLAGS = ['labMelody'];
 
 function labRows() {
   const host = el('labRows');

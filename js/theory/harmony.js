@@ -11,6 +11,15 @@ export const ROM = [
   { r: 'iv', s: 5, q: 'min' },
   { r: '\u266dVI', s: 8, q: 'maj' },
   { r: '\u266dIII', s: 3, q: 'maj' },
+  // Minor-key numerals (relative to the minor tonic) and two modal colours.
+  { r: 'i', s: 0, q: 'min' },
+  { r: 'ii\u00b0', s: 2, q: 'dim' },
+  { r: 'III', s: 3, q: 'maj' },
+  { r: 'v', s: 7, q: 'min' },
+  { r: 'VI', s: 8, q: 'maj' },
+  { r: 'VII', s: 10, q: 'maj' },
+  { r: 'II', s: 2, q: 'maj' },
+  { r: '\u266dII', s: 1, q: 'maj' },
 ];
 
 // Progressions are lists of ROM indices.
@@ -29,6 +38,21 @@ export const PROG_25 = [
   [1, 4, 0, 0],
   [0, 5, 1, 4],
   [2, 5, 1, 4],
+];
+// Minor key, including the Dorian (i IV) and Phrygian (i bII) vamps.
+export const PROG_MINOR = [
+  [11, 8, 4, 11],
+  [11, 15, 13, 16],
+  [11, 16, 15, 4],
+  [11, 8, 16, 13],
+  [11, 12, 4, 11],
+  [11, 3, 11, 3],
+  [11, 18, 11, 18],
+];
+// Major-tonic modes: Mixolydian (I bVII IV) and Lydian (I II).
+export const PROG_MODAL = [
+  [0, 7, 3, 0],
+  [0, 17, 0, 17],
 ];
 export const PROG_BORROW = [
   [0, 7, 3, 0],
