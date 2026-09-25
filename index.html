@@ -75,6 +75,8 @@
   <details id="audioBox">
     <summary data-i18n="sound.summary">Sound</summary>
     <div class="body">
+      <div class="srow"><span class="lbl" data-i18n="sound.lang">Language</span>
+        <select id="lang"><option value="en" data-i18n="langName.en">English</option><option value="es" data-i18n="langName.es">Espa&ntilde;ol</option></select></div>
       <div class="srow"><span class="lbl" data-i18n="sound.instrument">Instrument</span>
         <select id="timbre"><option value="rhodes" data-i18n="sound.timbre.rhodes">Electric piano</option><option value="pluck" data-i18n="sound.timbre.pluck">Plucked string</option>
         <option value="marimba" data-i18n="sound.timbre.marimba">Marimba</option><option value="organ" data-i18n="sound.timbre.organ">Organ</option><option value="sine" data-i18n="sound.timbre.sine">Pure sine</option>
@@ -85,6 +87,8 @@
       <div class="srow"><span class="lbl" data-i18n="sound.a4">A4 reference</span><input type="number" id="a4" min="380" max="500" step="0.5" style="width:88px"><span class="hint">Hz</span></div>
       <div class="srow"><span class="lbl" data-i18n="sound.naming">Note names</span>
         <select id="naming"><option value="sharp">C C# D</option><option value="flat">C Db D</option><option value="solf">Do Do# Re</option></select></div>
+      <div class="srow"><span class="lbl" data-i18n="sound.degNaming">Degree labels</span>
+        <select id="degNaming"><option value="num" data-i18n="sound.degNamingOpt.num">1 2 3</option><option value="movable" data-i18n="sound.degNamingOpt.movable">Do Re Mi (movable)</option></select></div>
       <div class="srow"><span class="lbl" data-i18n="sound.mask">Noise between trials</span><input type="checkbox" id="mask">
         <span class="hint" data-i18n="sound.maskHint">only applies to single-note drills</span></div>
       <div class="srow"><span class="lbl" data-i18n="sound.sfx">Sound effects</span><input type="checkbox" id="sfx"></div>

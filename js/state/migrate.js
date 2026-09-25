@@ -28,3 +28,18 @@ export function migrateProgress(p) {
   if (!p.schema || p.schema < 2) v1to2(p);
   return p;
 }
+
+// Defaults that depend on the device language. Spanish is the default for every es*
+// locale (not a fallback), with fixed-do note names; everything else gets English and
+// letter names. Degree labels default to numbers in both.
+export function localeDefaults(language) {
+  const es = /^es(-|$)/i.test(language || '');
+  return { lang: es ? 'es' : 'en', naming: es ? 'solf' : 'sharp', degNaming: 'num' };
+}
+
+// Stored settings (`pe.set`) from before degree labels had their own setting: Do-Re-Mi
+// note names used to switch degrees to movable-do syllables too, so keep that for them.
+export function upgradeSettings(s) {
+  if (s.degNaming === undefined) s.degNaming = s.naming === 'solf' ? 'movable' : 'num';
+  return s;
+}

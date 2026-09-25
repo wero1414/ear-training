@@ -73,7 +73,13 @@
     "mask": "Noise between trials",
     "maskHint": "only applies to single-note drills",
     "sfx": "Sound effects",
-    "adaptive": "Drill weak items more"
+    "adaptive": "Drill weak items more",
+    "lang": "Language",
+    "degNaming": "Degree labels",
+    "degNamingOpt": {
+      "num": "1 2 3",
+      "movable": "Do Re Mi (movable)"
+    }
   },
   "stats": {
     "summary": "Accuracy by item",
@@ -116,7 +122,7 @@
       "Ten focused minutes daily beats an hour once a week."
     ]
   },
-  "footer": "One file, no network. Save it and it runs offline. Progress lives in this browser's storage.",
+  "footer": "No accounts, no tracking. Progress lives in this browser's storage.",
   "prompt": {
     "note": "Which note?",
     "interval": "Which interval?",
@@ -321,7 +327,8 @@
         "name": "half-whole diminished",
         "short": "half-whole"
       }
-    }
+    },
+    "degreeSub": ["Do", "Ra", "Re", "Me", "Mi", "Fa", "Fi", "Sol", "Le", "La", "Te", "Ti"]
   },
   "chapters": [
     {
@@ -387,5 +394,9 @@
       "title": "F \u00b7 Combined",
       "stages": ["Notes and intervals", "Chords and degrees", "The lot"]
     }
-  ]
+  ],
+  "langName": {
+    "en": "English",
+    "es": "Espa\u00f1ol"
+  }
 }

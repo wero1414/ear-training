@@ -1,7 +1,7 @@
 // UI strings live in <lang>.json next to this module. All languages are fetched at boot
 // (relative to this file, so it works under the Pages subpath) and kept in memory, so a
 // language switch in settings is synchronous.
-export const LANGS = ['en'];
+export const LANGS = ['en', 'es'];
 
 const tables = {};
 let current = 'en';

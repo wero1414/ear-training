@@ -16,7 +16,7 @@ import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
 import { PRNG, watch, answer } from './helpers.js';
 
-const LOCALES = ['en-US'];
+const LOCALES = ['en-US', 'es-MX'];
 const T0 = new Date('2026-03-02T10:00:00Z');
 // Steps that also get a full-page screenshot, chosen to cover every view and widget.
 const SHOTS = new Set([

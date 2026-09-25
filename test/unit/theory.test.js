@@ -37,13 +37,13 @@ describe('degrees', () => {
   // The shipped bug: a degree index used as a semitone labels the second degree flat-2.
   it('labels degree index 1 of a major scale as 2, not flat-2', () => {
     expect(degreeToSemitone(1, DIA_MAJ)).toBe(2);
-    expect(degreeLabel(degreeToSemitone(1, DIA_MAJ), 'sharp')).toBe('2');
-    expect(degreeLabel(degreeToSemitone(1, DIA_MAJ), 'solf')).toBe('Re');
+    expect(degreeLabel(degreeToSemitone(1, DIA_MAJ), 'num')).toBe('2');
+    expect(degreeLabel(degreeToSemitone(1, DIA_MAJ), 'movable')).toBe('Re');
   });
 
   it('labels the minor third as flat-3', () => {
-    expect(degreeLabel(degreeToSemitone(2, DIA_MIN), 'sharp')).toBe('\u266d3');
-    expect(degreeLabel(degreeToSemitone(2, DIA_MIN), 'solf')).toBe('Me');
+    expect(degreeLabel(degreeToSemitone(2, DIA_MIN), 'num')).toBe('\u266d3');
+    expect(degreeLabel(degreeToSemitone(2, DIA_MIN), 'movable')).toBe('Me');
   });
 
   it('treats chromatic-mode answers as semitones', () => {

@@ -1,9 +1,8 @@
-import { PROGRESS_SCHEMA, migrateProgress } from './migrate.js';
+import { PROGRESS_SCHEMA, localeDefaults, migrateProgress, upgradeSettings } from './migrate.js';
 
 export const DEFS = {
   a4: 440,
   timbre: 'rhodes',
-  naming: 'sharp',
   vol: 0.55,
   rev: 0.26,
   dur: 1.5,
@@ -30,6 +29,7 @@ export const DEFS = {
   jamBpm: 82,
   jamDrums: true,
   jamBass: true,
+  ...localeDefaults(navigator.language),
 };
 export const DEFP = { xp: 0, stars: {}, best: {}, stats: {}, days: 0, last: '', schema: PROGRESS_SCHEMA };
 
@@ -42,7 +42,7 @@ function ldj(k, d, migrate = x => x) {
   }
 }
 
-export const S = ldj('pe.set', DEFS);
+export const S = ldj('pe.set', DEFS, upgradeSettings);
 // Reassigned by resetProgress(); importers see the new object through the live binding.
 export let P = ldj('pe.prog', DEFP, migrateProgress);
 if (!P.stats) P.stats = {};

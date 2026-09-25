@@ -1,0 +1,415 @@
+{
+  "app": {
+    "title": "Perfect Ear"
+  },
+  "nav": {
+    "map": "Etapas",
+    "practice": "Pr\u00e1ctica",
+    "jam": "Jam",
+    "ref": "Referencia"
+  },
+  "top": {
+    "level": "nivel {n}",
+    "xp": "{cur} / {next} xp",
+    "streak": "racha de {n} d\u00edas"
+  },
+  "practiceSettings": {
+    "summary": "Ajustes de pr\u00e1ctica",
+    "drill": "Ejercicio",
+    "notes": "Notas en juego",
+    "presets": "Grupos de notas",
+    "white": "Blancas",
+    "all12": "Las 12",
+    "intervals": "Intervalos",
+    "chords": "Tipos de acorde",
+    "modes": "Modos",
+    "direction": "Direcci\u00f3n",
+    "dir": {
+      "asc": "Ascendente",
+      "desc": "Descendente",
+      "harm": "Simult\u00e1neo",
+      "random": "Aleatoria"
+    },
+    "arpLabel": "Acordes",
+    "arp": {
+      "0": "En bloque",
+      "1": "Arpegiados",
+      "2": "Aleatorio"
+    },
+    "keyFor": "Tonalidad en ejercicios de funci\u00f3n",
+    "keyMode": {
+      "fixed": "Siempre Do",
+      "random": "Tonalidad aleatoria"
+    },
+    "keyQual": {
+      "maj": "Mayor",
+      "min": "Menor",
+      "both": "Ambas"
+    },
+    "melLen": "Longitud de la melod\u00eda",
+    "chrom": "Grados crom\u00e1ticos",
+    "octRange": "Rango de octavas",
+    "to": "a",
+    "reqOct": "Nombrar tambi\u00e9n la octava",
+    "limit": "Tiempo para responder",
+    "off": "sin l\u00edmite"
+  },
+  "sound": {
+    "summary": "Sonido",
+    "instrument": "Instrumento",
+    "timbre": {
+      "rhodes": "Piano el\u00e9ctrico",
+      "pluck": "Cuerda pulsada",
+      "marimba": "Marimba",
+      "organ": "\u00d3rgano",
+      "sine": "Onda senoidal",
+      "mixed": "Aleatorio cada vez"
+    },
+    "volume": "Volumen",
+    "reverb": "Reverberaci\u00f3n",
+    "noteLength": "Duraci\u00f3n de la nota",
+    "a4": "La4 de referencia",
+    "naming": "Nombres de notas",
+    "mask": "Ruido entre ejercicios",
+    "maskHint": "solo en ejercicios de una nota",
+    "sfx": "Efectos de sonido",
+    "adaptive": "Repasar m\u00e1s lo que falla",
+    "lang": "Idioma",
+    "degNaming": "Nombres de grados",
+    "degNamingOpt": {
+      "num": "1 2 3",
+      "movable": "Do Re Mi (m\u00f3vil)"
+    }
+  },
+  "stats": {
+    "summary": "Aciertos por elemento",
+    "export": "Exportar progreso",
+    "reset": "Borrar todo",
+    "confirmReset": "\u00bfBorrar estrellas, xp y todo el historial de aciertos?",
+    "empty": "nada todav\u00eda",
+    "row": "{p}%  n={n}",
+    "kind": {
+      "note": "notas",
+      "interval": "intervalos",
+      "chord": "acordes",
+      "inv": "inversiones",
+      "degree": "grados",
+      "melody": "melod\u00edas",
+      "prog": "progresiones",
+      "cadence": "cadencias",
+      "scale": "escalas"
+    }
+  },
+  "kinds": {
+    "note": "notas",
+    "interval": "intervalos",
+    "chord": "acordes",
+    "inv": "inversiones",
+    "degree": "grados",
+    "melody": "melod\u00eda",
+    "prog": "progresiones",
+    "cadence": "cadencias",
+    "scale": "escalas"
+  },
+  "about": {
+    "summary": "Qu\u00e9 entrena qu\u00e9",
+    "p": "El o\u00eddo absoluto casi no se transfiere a tocar. Las habilidades que s\u00ed lo hacen son funcionales: o\u00edr una nota como un grado dentro de una tonalidad, o\u00edr la calidad de un acorde y o\u00edr hacia d\u00f3nde va una progresi\u00f3n. Los cap\u00edtulos C y D son los que aparecen cuando improvisas.",
+    "li": [
+      "Grados antes que intervalos. Cuando el <span class=\"hint\">4</span> te suene a <span class=\"hint\">4</span> y no a \"una cuarta por encima de algo\", podr\u00e1s sacar una melod\u00eda de o\u00eddo en tiempo real.",
+      "Canta la respuesta antes de pulsarla. La escucha pasiva se estanca r\u00e1pido.",
+      "Haz los cap\u00edtulos de acordes con el arpegio desactivado. Los acordes en bloque te obligan a o\u00edr el acorde entero, no solo la voz superior.",
+      "La pesta\u00f1a Jam es la prueba de transferencia: repite una progresi\u00f3n, improvisa y comp\u00e1rate con las notas del acorde resaltadas.",
+      "Diez minutos concentrados al d\u00eda rinden m\u00e1s que una hora a la semana."
+    ]
+  },
+  "footer": "Sin cuentas ni rastreo. El progreso se guarda en el almacenamiento de este navegador.",
+  "prompt": {
+    "note": "\u00bfQu\u00e9 nota?",
+    "interval": "\u00bfQu\u00e9 intervalo?",
+    "chord": "\u00bfQu\u00e9 acorde?",
+    "inv": "\u00bfQu\u00e9 inversi\u00f3n?",
+    "degree": "\u00bfQu\u00e9 grado?",
+    "melody": "Escribe la melod\u00eda por grados.",
+    "prog": "Escribe la progresi\u00f3n.",
+    "cadence": "\u00bfQu\u00e9 cadencia?",
+    "scale": "\u00bfQu\u00e9 escala?"
+  },
+  "trial": {
+    "outOfTime": "Se acab\u00f3 el tiempo: <b>{truth}</b>",
+    "wrong": "No: <b>{truth}</b>",
+    "nowOctave": "Ahora la octava.",
+    "octave": "octava",
+    "hearMine": "o\u00edr la m\u00eda",
+    "time": "tiempo"
+  },
+  "truth": {
+    "note": "{note}   {hz} Hz",
+    "interval": "{name}   {from} \u2192 {to}",
+    "chord": "{symbol}   {name}",
+    "chordInv": "{symbol}   {name}  ({inv})",
+    "inv": "{inv}   {symbol}",
+    "degree": "{deg}  de  {key} {quality}   ({note})",
+    "melody": "{seq}   en {key}",
+    "prog": "{seq}   en {key}",
+    "scale": "{root} {name}",
+    "major": "mayor",
+    "minor": "menor",
+    "minorKeySuffix": "m"
+  },
+  "run": {
+    "start": "Empezar",
+    "replay": "Repetir",
+    "quit": "Salir",
+    "skip": "Saltar",
+    "ready": "Ponte los auriculares y pulsa Empezar.",
+    "keysNote": "A W S E D F T G Y H U J \u00b7 espacio repite",
+    "keysGrid": "1-9 0 \u00b7 espacio repite \u00b7 \u232b deshacer"
+  },
+  "result": {
+    "summary": "{right} de {total} \u00b7 {pct}% \u00b7 +{xp} xp",
+    "mastered": "Etapa dominada",
+    "cleared": "Etapa superada",
+    "outOfHearts": "Sin vidas",
+    "below": "Menos del 70%",
+    "again": "Reintentar",
+    "next": "Siguiente etapa",
+    "map": "Etapas"
+  },
+  "map": {
+    "locked": "bloqueada",
+    "questions": "{n} preg.",
+    "limit": "{n} s"
+  },
+  "practice": {
+    "ready": "Pr\u00e1ctica sin fin. Aqu\u00ed no se punt\u00faa.",
+    "keys": "espacio repite \u00b7 Enter siguiente"
+  },
+  "ref": {
+    "intro": "Toca una tecla para o\u00edrla en la octava {oct}. Mant\u00e9n una nota pedal para instalarte en una altura; luego qu\u00edtala y ponte a prueba.",
+    "holdDrone": "Mantener nota pedal",
+    "stopDrone": "Quitar nota pedal"
+  },
+  "jam": {
+    "play": "Tocar",
+    "stop": "Parar",
+    "tempo": "tempo",
+    "bpm": "{n} bpm",
+    "drums": "bater\u00eda",
+    "bass": "bajo",
+    "exportMidi": "Exportar MIDI",
+    "oneBar": "1 comp\u00e1s",
+    "help": "Pulsa Tocar. Las notas del acorde se iluminan en color s\u00f3lido; el resto de la escala, solo en contorno.",
+    "now": "<b>{chord}</b> \u00b7 {root} {scale}<br>{notes}   \u00b7   notas del acorde {tones}",
+    "presets": [
+      "Ciclo pop  I V vi IV",
+      "ii V I  (jazz)",
+      "Blues de 12 compases",
+      "Ciclo menor  i \u266dVI \u266dIII \u266dVII",
+      "Vamp d\u00f3rico  i IV",
+      "Vuelta  I vi ii V",
+      "Fondo lidio  I II",
+      "Cadencia andaluza  i \u266dVII \u266dVI V",
+      "Pedal modal  i"
+    ]
+  },
+  "theory": {
+    "interval": [
+      "un\u00edsono",
+      "segunda menor",
+      "segunda mayor",
+      "tercera menor",
+      "tercera mayor",
+      "cuarta justa",
+      "tritono",
+      "quinta justa",
+      "sexta menor",
+      "sexta mayor",
+      "s\u00e9ptima menor",
+      "s\u00e9ptima mayor",
+      "octava"
+    ],
+    "intervalShort": ["U", "2m", "2M", "3m", "3M", "4J", "TT", "5J", "6m", "6M", "7m", "7M", "8J"],
+    "chord": {
+      "maj": "mayor",
+      "min": "menor",
+      "dim": "disminuido",
+      "aug": "aumentado",
+      "sus4": "suspendido de 4.\u00aa",
+      "sus2": "suspendido de 2.\u00aa",
+      "maj7": "s\u00e9ptima mayor",
+      "dom7": "s\u00e9ptima de dominante",
+      "min7": "menor s\u00e9ptima",
+      "m7b5": "semidisminuido",
+      "dim7": "s\u00e9ptima disminuida",
+      "mMaj7": "menor con s\u00e9ptima mayor",
+      "maj6": "sexta a\u00f1adida",
+      "min6": "menor sexta",
+      "dom9": "novena de dominante",
+      "maj9": "s\u00e9ptima mayor con novena",
+      "min9": "menor s\u00e9ptima con novena",
+      "d7b9": "novena de dominante menor"
+    },
+    "inversion": ["estado fundamental", "primera inversi\u00f3n", "segunda inversi\u00f3n", "tercera inversi\u00f3n"],
+    "inversionShort": ["fundamental", "1.\u00aa", "2.\u00aa", "3.\u00aa"],
+    "inversionWord": "inversi\u00f3n",
+    "cadence": [
+      {
+        "name": "aut\u00e9ntica",
+        "formula": "V\u2013I"
+      },
+      {
+        "name": "plagal",
+        "formula": "IV\u2013I"
+      },
+      {
+        "name": "semicadencia",
+        "formula": "\u2026\u2013V"
+      },
+      {
+        "name": "rota",
+        "formula": "V\u2013vi"
+      }
+    ],
+    "scale": {
+      "ionian": {
+        "name": "mayor (j\u00f3nico)",
+        "short": "mayor"
+      },
+      "aeolian": {
+        "name": "menor natural (e\u00f3lico)",
+        "short": "natural"
+      },
+      "dorian": {
+        "name": "d\u00f3rico",
+        "short": "d\u00f3rico"
+      },
+      "phrygian": {
+        "name": "frigio",
+        "short": "frigio"
+      },
+      "lydian": {
+        "name": "lidio",
+        "short": "lidio"
+      },
+      "mixolydian": {
+        "name": "mixolidio",
+        "short": "mixolidio"
+      },
+      "locrian": {
+        "name": "locrio",
+        "short": "locrio"
+      },
+      "harmMinor": {
+        "name": "menor arm\u00f3nica",
+        "short": "arm\u00f3nica"
+      },
+      "melMinor": {
+        "name": "menor mel\u00f3dica",
+        "short": "mel\u00f3dica"
+      },
+      "majPent": {
+        "name": "pentat\u00f3nica mayor",
+        "short": "pent. mayor"
+      },
+      "minPent": {
+        "name": "pentat\u00f3nica menor",
+        "short": "pent. menor"
+      },
+      "blues": {
+        "name": "blues",
+        "short": "blues"
+      },
+      "wholeTone": {
+        "name": "tonos enteros",
+        "short": "tonos"
+      },
+      "halfWhole": {
+        "name": "disminuida semitono-tono",
+        "short": "disminuida"
+      }
+    },
+    "degreeSub": [
+      "t\u00f3nica",
+      "",
+      "supert\u00f3nica",
+      "mediante",
+      "mediante",
+      "subdominante",
+      "",
+      "dominante",
+      "superdominante",
+      "superdominante",
+      "subt\u00f3nica",
+      "sensible"
+    ]
+  },
+  "chapters": [
+    {
+      "title": "A \u00b7 Altura",
+      "stages": [
+        "Dos anclas",
+        "Tres anclas",
+        "Cuatro anclas",
+        "Teclas blancas",
+        "Las doce",
+        "Entre octavas",
+        "Timbre cambiante",
+        "Nombra la octava"
+      ]
+    },
+    {
+      "title": "B \u00b7 Intervalos",
+      "stages": [
+        "Cuartas y quintas",
+        "Terceras y sextas",
+        "Segundas y s\u00e9ptimas",
+        "Todos, ascendentes",
+        "Arriba y abajo",
+        "Simult\u00e1neos"
+      ]
+    },
+    {
+      "title": "C \u00b7 Acordes",
+      "stages": [
+        "Mayor o menor",
+        "Con disminuido y aumentado",
+        "Suspendidos",
+        "Inversiones de tr\u00edadas",
+        "Tres s\u00e9ptimas",
+        "Las siete s\u00e9ptimas",
+        "Extensiones",
+        "Inversiones de s\u00e9ptimas",
+        "Acordes arpegiados"
+      ]
+    },
+    {
+      "title": "D \u00b7 Funci\u00f3n",
+      "stages": [
+        "Grados 1 3 5",
+        "Grados 1 2 3 5 6",
+        "Los siete",
+        "Los siete en cualquier tonalidad",
+        "Grados en menor",
+        "Cadencias",
+        "Detectar ii V I",
+        "Ciclos de cuatro acordes",
+        "Acordes prestados",
+        "Melod\u00eda, 3 notas",
+        "Melod\u00eda, 5 notas",
+        "Melod\u00eda, cualquier tonalidad"
+      ]
+    },
+    {
+      "title": "E \u00b7 Escalas",
+      "stages": ["Mayor o menor", "Modos griegos", "Pentat\u00f3nicas y blues", "Menores alteradas", "Todo"]
+    },
+    {
+      "title": "F \u00b7 Combinado",
+      "stages": ["Notas e intervalos", "Acordes y grados", "Todo junto"]
+    }
+  ],
+  "langName": {
+    "en": "English",
+    "es": "Espa\u00f1ol"
+  }
+}

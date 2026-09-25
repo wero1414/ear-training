@@ -1,5 +1,6 @@
 import { el } from './util.js';
 import { applyStatic, loadStrings, setLang } from './i18n/index.js';
+import { S } from './state/store.js';
 import { droneOff } from './audio/instruments.js';
 import { abandon } from './drills/trial.js';
 import { jamStop } from './jam/engine.js';
@@ -31,7 +32,7 @@ export function go(v) {
 }
 
 function boot() {
-  setLang('en');
+  setLang(S.lang);
   applyStatic();
   bindSettings();
   TABS.forEach(v => (el('nav-' + v).onclick = () => go(v)));

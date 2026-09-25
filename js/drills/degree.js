@@ -1,12 +1,7 @@
 import { S } from '../state/store.js';
 import { t } from '../i18n/index.js';
 import { ALL12 } from '../theory/pitch.js';
-import {
-  DEGREE_NUMERALS_BY_SEMITONE,
-  DEGREE_SOLFEGE_BY_SEMITONE,
-  degreeToSemitone,
-  drillScale,
-} from '../theory/scales.js';
+import { DEGREE_NUMERALS_BY_SEMITONE, degreeToSemitone, drillScale } from '../theory/scales.js';
 import { degLabel, degText, fullName, nn } from '../labels.js';
 import { keyContext, playNote } from '../audio/instruments.js';
 import { gridUI } from '../ui/grid.js';
@@ -50,15 +45,17 @@ export const statLabel = key => degLabel(+key);
 export function render(host, trial, sp) {
   const degs = sp.chrom ? ALL12 : sp.degrees;
   const scale = drillScale(sp, trial.key.minor);
-  const solf = S.naming === 'solf';
+  const movable = S.degNaming === 'movable';
   gridUI(
     host,
     degs.map(d => {
       const semi = degreeToSemitone(d, scale);
       return {
         v: d,
-        b: solf ? DEGREE_SOLFEGE_BY_SEMITONE[semi] : DEGREE_NUMERALS_BY_SEMITONE[semi],
-        s: solf ? DEGREE_NUMERALS_BY_SEMITONE[semi] : DEGREE_SOLFEGE_BY_SEMITONE[semi],
+        b: degLabel(semi),
+        // The other system underneath; with numbers that is theory.degreeSub (movable-do
+        // syllables in English, degree function names in Spanish).
+        s: movable ? DEGREE_NUMERALS_BY_SEMITONE[semi] : t('theory.degreeSub')[semi],
       };
     }),
     'tight',

@@ -2,7 +2,7 @@
 import { S, P, sv, resetProgress } from '../state/store.js';
 import { el } from '../util.js';
 import { ALL12, WHITE } from '../theory/pitch.js';
-import { t } from '../i18n/index.js';
+import { applyStatic, setLang, t } from '../i18n/index.js';
 import { CH } from '../theory/chords.js';
 import { SC } from '../theory/scales.js';
 import { nn } from '../labels.js';
@@ -27,8 +27,13 @@ function chipRow(host, items, isOn, toggle) {
   });
 }
 
+// Preset buttons show their notes in the current naming (C F# or Do Fa#).
+const PRESETS = { 2: [0, 6], 3: [0, 4, 8], 4: [0, 3, 6, 9] };
+
 // Every chip row refuses to deselect its last item.
 export function chips() {
+  for (const [k, pcs] of Object.entries(PRESETS))
+    document.querySelector('[data-preset="' + k + '"]').textContent = pcs.map(nn).join(' ');
   chipRow(
     el('kindChips'),
     ['note', 'interval', 'chord', 'inv', 'degree', 'melody', 'prog', 'cadence', 'scale'].map(v => ({
@@ -102,6 +107,8 @@ export function syncSettings() {
   el('chrom').checked = S.chrom;
   el('timbre').value = S.timbre;
   el('naming').value = S.naming;
+  el('lang').value = S.lang;
+  el('degNaming').value = S.degNaming;
   el('mask').checked = S.mask;
   el('sfx').checked = S.sfx;
   el('adaptive').checked = S.adaptive;
@@ -156,6 +163,22 @@ export function bindSettings() {
     S.naming = e.target.value;
     sv();
     chips();
+    paintStats();
+    go(view);
+  };
+  el('degNaming').onchange = e => {
+    S.degNaming = e.target.value;
+    sv();
+    paintStats();
+    go(view);
+  };
+  el('lang').onchange = e => {
+    S.lang = e.target.value;
+    sv();
+    setLang(S.lang);
+    applyStatic();
+    chips();
+    paintTop();
     paintStats();
     go(view);
   };

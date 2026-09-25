@@ -1,0 +1,32 @@
+{
+  "why": "Keys whose value is intentionally identical in every language: the app name, loanwords used as-is in Spanish (jam, marimba, tempo, blues), words spelled the same (plagal, natural), notation and templates without words, and language autonyms. Any other value equal to en.json is treated as untranslated by the tests.",
+  "keys": [
+    "app.title",
+    "nav.jam",
+    "top.xp",
+    "sound.timbre.marimba",
+    "sound.degNamingOpt.num",
+    "stats.row",
+    "truth.note",
+    "truth.interval",
+    "truth.chord",
+    "truth.chordInv",
+    "truth.inv",
+    "truth.scale",
+    "truth.minorKeySuffix",
+    "jam.tempo",
+    "jam.bpm",
+    "jam.presets.1",
+    "theory.intervalShort.6",
+    "theory.cadence.0.formula",
+    "theory.cadence.1.name",
+    "theory.cadence.1.formula",
+    "theory.cadence.2.formula",
+    "theory.cadence.3.formula",
+    "theory.scale.aeolian.short",
+    "theory.scale.blues.name",
+    "theory.scale.blues.short",
+    "langName.en",
+    "langName.es"
+  ]
+}

@@ -67,5 +67,6 @@ export const degreeToSemitone = (degree, scale) => scale[degree];
 // already semitones, and ALL12 is the identity mapping.
 export const drillScale = (sp, minor) => (sp && sp.chrom ? ALL12 : minor ? DIA_MIN : DIA_MAJ);
 
-export const degreeLabel = (semitone, naming) =>
-  naming === 'solf' ? DEGREE_SOLFEGE_BY_SEMITONE[semitone] : DEGREE_NUMERALS_BY_SEMITONE[semitone];
+// system: 'num' for 1 flat-2 2 ..., 'movable' for movable-do syllables (Do Ra Re ...).
+export const degreeLabel = (semitone, system) =>
+  system === 'movable' ? DEGREE_SOLFEGE_BY_SEMITONE[semitone] : DEGREE_NUMERALS_BY_SEMITONE[semitone];

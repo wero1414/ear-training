@@ -75,6 +75,8 @@ other app modules.
   writer.
 - `js/ui/` - one module per view plus the shared answer widgets (`keyboard`, `grid`,
   `sequence`). Views render with `innerHTML` into `#view`.
+- `js/i18n/` - string tables and `t()`. `main.js` fetches them, applies static text,
+  then boots; `html[data-ready]` hides the page until then (see `css/app.css`).
 - `css/tokens.css` holds design tokens (alphabetised, enforced by a unit test);
   `css/app.css` everything else.
 
@@ -123,8 +125,19 @@ Randomness order is observable: the diff test compares seeded runs, so reorderin
 ## i18n
 
 - Spanish is the default for `es*` locales, not a fallback. No hardcoded UI strings.
-- `es` uses fixed-do (Do = C always). `en` uses letter names. Both overridable.
-- Check Spanish music terminology against a real source before inventing it.
+- `es` uses fixed-do (Do = C always). `en` uses letter names. Both overridable. Defaults
+  come from `localeDefaults()` in `js/state/migrate.js`.
+- Check Spanish music terminology against a real source before inventing it. Chord
+  symbols (maj7, m7, sus4) stay as-is: cifrado americano uses them in Spanish too.
+- Strings live in `js/i18n/en.json` and `es.json` (same keys, same `{placeholders}`),
+  read with `t('dotted.key', vars)`; static markup uses `data-i18n` / `data-i18n-html`.
+  Theory tables hold data only; their display names are under `theory.*` in the tables.
+  Never call `t()` at module load: strings arrive asynchronously at boot.
+- A value identical in both languages must be listed in `js/i18n/same-in-all.json`;
+  anything else equal to English fails `test/unit/i18n.test.js` as untranslated, and
+  `test/e2e/i18n.spec.js` fails if English text shows up in the es-MX UI.
+- Note naming (`S.naming`) and degree labels (`S.degNaming`: numbers or movable-do) are
+  separate settings. A fixed-do user still sees degrees as numbers by default.
 
 ## Testing
 
