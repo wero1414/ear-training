@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "serve": "node test/serve.mjs",
-    "lint": "eslint . && prettier --check .",
+    "lint": "eslint . && prettier --check . && node test/check-ascii.mjs",
     "format": "prettier --write .",
     "test": "vitest run && playwright test",
     "test:unit": "vitest run",
