@@ -672,6 +672,10 @@ details[open] summary::after {
   padding: 9px 0;
   border-bottom: 1px solid var(--line);
 }
+/* .srow sets display, which would otherwise override the hidden attribute. */
+.srow[hidden] {
+  display: none;
+}
 .srow:last-child {
   border-bottom: none;
 }

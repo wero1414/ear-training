@@ -13,6 +13,7 @@ import { showRef } from './ui/reference.js';
 import { bindSettings, chips, octSelects, syncSettings } from './ui/settings.js';
 import { bindShortcuts } from './ui/shortcuts.js';
 import { registerWorker } from './ui/update.js';
+import { installLifecycle } from './audio/context.js';
 
 const TABS = ['map', 'practice', 'jam', 'ref'];
 
@@ -38,6 +39,7 @@ function boot() {
   bindSettings();
   TABS.forEach(v => (el('nav-' + v).onclick = () => go(v)));
   bindShortcuts();
+  installLifecycle();
 
   octSelects();
   chips();

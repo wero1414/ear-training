@@ -79,7 +79,9 @@
     "degNamingOpt": {
       "num": "1 2 3",
       "movable": "Do Re Mi (movable)"
-    }
+    },
+    "iosMediaChannel": "Play with the silent switch on",
+    "iosHint": "iPhone and iPad"
   },
   "stats": {
     "summary": "Accuracy by item",

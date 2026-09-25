@@ -29,6 +29,7 @@ export const DEFS = {
   jamBpm: 82,
   jamDrums: true,
   jamBass: true,
+  iosMediaChannel: true,
   ...localeDefaults(navigator.language),
 };
 export const DEFP = { xp: 0, stars: {}, best: {}, stats: {}, days: 0, last: '', schema: PROGRESS_SCHEMA };

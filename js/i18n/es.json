@@ -79,7 +79,9 @@
     "degNamingOpt": {
       "num": "1 2 3",
       "movable": "Do Re Mi (m\u00f3vil)"
-    }
+    },
+    "iosMediaChannel": "Sonar con el interruptor de silencio activado",
+    "iosHint": "iPhone y iPad"
   },
   "stats": {
     "summary": "Aciertos por elemento",

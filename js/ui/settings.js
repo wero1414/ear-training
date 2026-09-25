@@ -6,7 +6,7 @@ import { applyStatic, setLang, t } from '../i18n/index.js';
 import { CH } from '../theory/chords.js';
 import { SC } from '../theory/scales.js';
 import { nn } from '../labels.js';
-import { setReverb } from '../audio/context.js';
+import { isIOS, mediaChannel, setReverb } from '../audio/context.js';
 import { clearPluckCache, playNote } from '../audio/instruments.js';
 import { paintTop } from './hud.js';
 import { paintStats } from './stats.js';
@@ -109,6 +109,8 @@ export function syncSettings() {
   el('naming').value = S.naming;
   el('lang').value = S.lang;
   el('degNaming').value = S.degNaming;
+  el('iosMediaChannel').checked = S.iosMediaChannel;
+  el('iosRow').hidden = !isIOS();
   el('mask').checked = S.mask;
   el('sfx').checked = S.sfx;
   el('adaptive').checked = S.adaptive;
@@ -165,6 +167,11 @@ export function bindSettings() {
     chips();
     paintStats();
     go(view);
+  };
+  el('iosMediaChannel').onchange = e => {
+    S.iosMediaChannel = e.target.checked;
+    sv();
+    mediaChannel(S.iosMediaChannel);
   };
   el('degNaming').onchange = e => {
     S.degNaming = e.target.value;
