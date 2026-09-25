@@ -2,6 +2,7 @@
 import { el } from '../util.js';
 import { t } from '../i18n/index.js';
 import { makeTrial, playTrial } from '../drills/trial.js';
+import { bindSing, singArea, singButton } from './sing.js';
 
 export function showPractice() {
   el('setBox').hidden = false;
@@ -17,12 +18,14 @@ export function showPractice() {
     '<button class="ghost" id="btnSkip" disabled>' +
     t('run.skip') +
     '</button>' +
+    singButton() +
     '<div class="spacer"></div><span class="hint" id="kh">' +
     t('practice.keys') +
     '</span></div>' +
     '<div class="msg" id="msg">' +
     t('practice.ready') +
     '</div>' +
+    singArea() +
     '<div id="answers"></div><div class="octrow" id="octrow" hidden></div></div>';
   el('btnPlay').onclick = () => {
     el('btnReplay').disabled = false;
@@ -30,5 +33,6 @@ export function showPractice() {
     makeTrial();
   };
   el('btnReplay').onclick = () => playTrial();
+  bindSing();
   el('btnSkip').onclick = () => makeTrial();
 }

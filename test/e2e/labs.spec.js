@@ -1,6 +1,9 @@
 // Phase 2 features behind the Experimental flags, exercised through the UI.
 import { test, expect } from '@playwright/test';
 import { AUDIO_CLOCK, PRNG, watch } from './helpers.js';
+import { readFileSync } from 'node:fs';
+
+const EN = JSON.parse(readFileSync('js/i18n/en.json', 'utf8'));
 
 async function practice(page, kind, flags = []) {
   await page.addInitScript(PRNG);
@@ -130,7 +133,8 @@ test('labMidi: a note outside the scale is a wrong degree answer', async ({ page
 test('labMidi: two keys answer the interval drill', async ({ page }) => {
   await midiPractice(page, 'interval');
   await page.evaluate(() => window.__key(60));
-  await expect(page.locator('#msg.ok, #msg.bad')).toHaveCount(0);
+  // A single immediate check: toHaveCount(0) would retry until a verdict disappears.
+  expect(await page.locator('#msg.ok, #msg.bad').count()).toBe(0);
   await page.evaluate(() => window.__key(67)); // a fifth
   expect(await marked(page, '#answers .grid button[data-v="7"]')).toBe(true);
 });
@@ -138,7 +142,8 @@ test('labMidi: two keys answer the interval drill', async ({ page }) => {
 test('without labMidi, MIDI keys do nothing', async ({ page }) => {
   await midiPractice(page, 'note', []);
   await page.evaluate(() => window.__key(64));
-  await expect(page.locator('#msg.ok, #msg.bad')).toHaveCount(0);
+  // A single immediate check: toHaveCount(0) would retry until a verdict disappears.
+  expect(await page.locator('#msg.ok, #msg.bad').count()).toBe(0);
 });
 
 test('browsers without Web MIDI never show the setting', async ({ page }) => {
@@ -199,4 +204,130 @@ test('without labJamQuiz the jam never stops to ask', async ({ page }) => {
   await page.click('#jamBtn');
   await page.clock.runFor(12000);
   await expect(page.locator('#quizMsg')).toHaveCount(0);
+});
+
+// A fake microphone: getUserMedia yields a silent stream, and the analyser reads a
+// synthesized voice (fundamental plus harmonics) at window.__singHz, or noise when
+// window.__singNoise is set, or silence.
+const FAKE_MIC = () => {
+  window.__singHz = 0;
+  window.__micTracks = 0;
+  navigator.mediaDevices.getUserMedia = async () => {
+    if (window.__micDenied) throw new DOMException('denied', 'NotAllowedError');
+    const ctx = new AudioContext();
+    const stream = ctx.createMediaStreamDestination().stream;
+    window.__micTracks++;
+    stream.getTracks().forEach(tr => {
+      const stop = tr.stop.bind(tr);
+      tr.stop = () => {
+        window.__micTracks--;
+        stop();
+      };
+    });
+    return stream;
+  };
+  let seed = 7;
+  AnalyserNode.prototype.getFloatTimeDomainData = function (buf) {
+    const sr = this.context.sampleRate,
+      f = window.__singHz;
+    for (let i = 0; i < buf.length; i++) {
+      if (window.__singNoise) buf[i] = ((seed = (seed * 16807) % 2147483647) / 2147483647 - 0.5) * 0.4;
+      else if (!f) buf[i] = 0;
+      else {
+        let v = 0;
+        for (let h = 1; h <= 6; h++) v += Math.sin((2 * Math.PI * f * h * i) / sr) / h;
+        buf[i] = 0.2 * v;
+      }
+    }
+  };
+};
+
+async function singPractice(page, kind, flags = ['labSing']) {
+  await page.addInitScript(FAKE_MIC);
+  await page.addInitScript(AUDIO_CLOCK);
+  // Paused, so only runFor() moves time: a flowing clock would start the next question
+  // while an assertion retries and hide a verdict.
+  await page.clock.install({ time: new Date('2026-03-02T10:00:00Z') });
+  await page.clock.pauseAt(new Date('2026-03-02T10:00:00Z'));
+  await practice(page, kind, flags);
+}
+
+async function allowMic(page) {
+  await page.click('#btnSing');
+  await expect(page.locator('#singPanel')).toContainText(/never recorded, stored or sent/);
+  await page.click('#singAllow');
+  await expect(page.locator('#singStatus')).toBeVisible();
+}
+
+test('labSing: singing a degree answers it, and the privacy promise is shown first', async ({ page }) => {
+  const problems = watch(page);
+  await singPractice(page, 'degree');
+  await page.click('#btnPlay');
+  await allowMic(page);
+  // Past the key context and the target note.
+  await page.clock.runFor(4000);
+  await page.evaluate(() => (window.__singHz = 329.63)); // E4: degree index 2 in C major
+  await page.clock.runFor(800);
+  expect(await marked(page, '#answers .grid button[data-v="2"]')).toBe(true);
+  expect(problems).toEqual([]);
+});
+
+test('labSing: a degree sung an octave lower is still that degree', async ({ page }) => {
+  await singPractice(page, 'degree');
+  await page.click('#btnPlay');
+  await allowMic(page);
+  await page.clock.runFor(4000);
+  await page.evaluate(() => (window.__singHz = 164.81)); // E3
+  await page.clock.runFor(800);
+  expect(await marked(page, '#answers .grid button[data-v="2"]')).toBe(true);
+});
+
+test('labSing: the app does not hear its own playback as an answer', async ({ page }) => {
+  await singPractice(page, 'degree');
+  await page.click('#btnPlay');
+  await allowMic(page);
+  // Singing starts while the key context is still sounding.
+  await page.evaluate(() => (window.__singHz = 329.63));
+  await page.clock.runFor(1000);
+  // A single immediate check: toHaveCount(0) would retry until a verdict disappears.
+  expect(await page.locator('#msg.ok, #msg.bad').count()).toBe(0);
+  await page.clock.runFor(4000);
+  await expect(page.locator('#msg.ok, #msg.bad')).toHaveCount(1);
+});
+
+test('labSing: unclear input asks again instead of marking wrong', async ({ page }) => {
+  await singPractice(page, 'degree');
+  await page.click('#btnPlay');
+  await allowMic(page);
+  await page.clock.runFor(4000);
+  await page.evaluate(() => (window.__singNoise = true));
+  await page.clock.runFor(7000);
+  // A single immediate check: toHaveCount(0) would retry until a verdict disappears.
+  expect(await page.locator('#msg.ok, #msg.bad').count()).toBe(0);
+  await expect(page.locator('#singStatus')).toHaveText(EN.sing.retry);
+});
+
+test('labSing: a blocked microphone says so', async ({ page }) => {
+  await page.addInitScript(() => (window.__micDenied = true));
+  await singPractice(page, 'degree');
+  await page.click('#btnPlay');
+  await page.click('#btnSing');
+  await page.click('#singAllow');
+  await expect(page.locator('#singStatus')).toHaveText(EN.sing.denied);
+  // A single immediate check: toHaveCount(0) would retry until a verdict disappears.
+  expect(await page.locator('#msg.ok, #msg.bad').count()).toBe(0);
+});
+
+test('labSing: leaving the drill releases the microphone', async ({ page }) => {
+  await singPractice(page, 'degree');
+  await page.click('#btnPlay');
+  await allowMic(page);
+  expect(await page.evaluate(() => window.__micTracks)).toBe(1);
+  await page.click('#nav-jam');
+  expect(await page.evaluate(() => window.__micTracks)).toBe(0);
+});
+
+test('without labSing there is no Sing button', async ({ page }) => {
+  await singPractice(page, 'degree', []);
+  await expect(page.locator('#btnSing')).toHaveCount(0);
 });

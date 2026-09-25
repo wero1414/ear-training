@@ -9,6 +9,7 @@ import { CHAPTERS } from '../drills/chapters.js';
 import { abandon, dueCount, session, makeTrial, playTrial, stopTimer } from '../drills/trial.js';
 import { paintHUD, paintTop, say } from './hud.js';
 import { paintStats } from './stats.js';
+import { bindSing, singArea, singButton } from './sing.js';
 import { go } from '../main.js';
 
 const skey = (c, s) => 'c' + c + 's' + s;
@@ -123,10 +124,12 @@ function startRun(ci, si) {
     '<button class="ghost" id="btnQuit">' +
     t('run.quit') +
     '</button>' +
+    singButton() +
     '<div class="spacer"></div><span class="hint" id="kh"></span></div>' +
     '<div class="msg" id="msg">' +
     t('run.ready') +
     '</div>' +
+    singArea() +
     '<div id="answers"></div><div class="octrow" id="octrow" hidden></div></div>';
   el('btnPlay').onclick = () => {
     el('btnPlay').disabled = true;
@@ -134,6 +137,7 @@ function startRun(ci, si) {
     makeTrial();
   };
   el('btnReplay').onclick = () => playTrial();
+  bindSing();
   el('btnQuit').onclick = () => {
     abandon();
     go('map');

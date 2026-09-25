@@ -441,6 +441,10 @@
     "labJamQuiz": {
       "name": "Preguntas en la jam",
       "hint": "la jam se detiene cada pocos compases y pregunta por lo que acaba de sonar"
+    },
+    "labSing": {
+      "name": "Cantar las respuestas",
+      "hint": "detecci\u00f3n de altura con el micr\u00f3fono en este dispositivo; el audio nunca sale de \u00e9l"
     }
   },
   "srs": {
@@ -456,5 +460,17 @@
     "degree": "\u00bfQu\u00e9 grado era esa nota del bajo?",
     "replay": "Repetir comp\u00e1s",
     "continue": "Seguir"
+  },
+  "sing": {
+    "button": "Cantar",
+    "stop": "Dejar de cantar",
+    "allow": "Permitir micr\u00f3fono",
+    "cancel": "Ahora no",
+    "why": "Canta la respuesta en lugar de pulsarla. El micr\u00f3fono solo se usa para detectar la altura que cantas: el sonido se analiza en este dispositivo y nunca se graba, se guarda ni se env\u00eda a ning\u00fan sitio.",
+    "listening": "Escuchando: canta tu respuesta.",
+    "hold": "Mant\u00e9n la nota: {note}",
+    "heard": "O\u00ed: {note}",
+    "retry": "No te o\u00ed bien. Canta otra vez, un poco m\u00e1s fuerte.",
+    "denied": "Micr\u00f3fono bloqueado. Perm\u00edtelo en los ajustes del navegador para cantar respuestas."
   }
 }

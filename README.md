@@ -21,6 +21,18 @@ Everything stays on your device.
 
 All sound is synthesised in the browser; there are no audio files.
 
+## Experimental features
+
+Settings has an *Experimental* panel with features that are still being tuned: musical
+melodies and minor/modal progressions, spaced repetition (SM-2) with a daily review,
+MIDI keyboard input (browsers with Web MIDI; not Safari), quizzes inside the jam loop,
+and singing your answers.
+
+**Microphone:** singing answers uses your microphone only to detect the pitch you sing.
+The signal is analysed on your device, frame by frame, and is never recorded, stored or
+sent anywhere. The app asks for the microphone only after you choose to sing, releases
+it when you leave the drill, and works fully without it.
+
 ## Install it as an app
 
 **iPhone / iPad (Safari):** open the link, tap Share, then *Add to Home Screen*. Open it

@@ -6,6 +6,10 @@ import { keyContextChords } from '../theory/harmony.js';
 import { ac, audio, bus, send } from './context.js';
 
 let noiseBuf = null;
+// AudioContext time until which the app's own notes are still sounding. Sing-back
+// ignores the microphone until then, so it never grades the app's playback.
+let soundingUntil = 0;
+export const sounding = () => ac && ac.currentTime < soundingUntil;
 let drone = null;
 const ksCache = new Map();
 
@@ -94,6 +98,8 @@ export function playNote(midi, when, dur, tname, vel) {
     f = freqOf(midi),
     T = pickTimbre(tname),
     out = vgain(vel);
+  // Every voice is stopped by dur + 0.3 s at the latest (fmv), so that bounds the sound.
+  soundingUntil = Math.max(soundingUntil, t0 + dur + 0.3);
   if (T === 'rhodes') {
     fmv(f, t0, dur, out, { ratio: 1, idx: 3.4, idxEnd: 0.12, mdec: 0.5, atk: 0.004, dec: 1.05, peak: 0.42 });
     // Tine: a short, inharmonic 7.02 operator on top.

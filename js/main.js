@@ -15,6 +15,7 @@ import { bindShortcuts } from './ui/shortcuts.js';
 import { registerWorker } from './ui/update.js';
 import { installLifecycle } from './audio/context.js';
 import { setMidi } from './ui/midi.js';
+import { stopSing } from './ui/sing.js';
 
 const TABS = ['map', 'practice', 'jam', 'ref'];
 
@@ -24,6 +25,8 @@ export let view = 'map';
 export function go(v) {
   view = v;
   abandon();
+  // The microphone is released whenever the view changes.
+  stopSing();
   droneOff();
   jamStop();
   TABS.forEach(x => el('nav-' + x).setAttribute('aria-selected', String(x === v)));

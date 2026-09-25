@@ -428,6 +428,10 @@
     "labJamQuiz": {
       "name": "Jam quizzes",
       "hint": "the jam stops every few bars and asks about what just played"
+    },
+    "labSing": {
+      "name": "Sing your answers",
+      "hint": "microphone pitch detection on this device; audio never leaves it"
     }
   },
   "srs": {
@@ -443,5 +447,17 @@
     "degree": "What degree was that bass note?",
     "replay": "Replay bar",
     "continue": "Continue"
+  },
+  "sing": {
+    "button": "Sing",
+    "stop": "Stop singing",
+    "allow": "Allow microphone",
+    "cancel": "Not now",
+    "why": "Sing the answer instead of tapping it. Your microphone is only used to find the pitch you sing: the sound is analysed on this device and is never recorded, stored or sent anywhere.",
+    "listening": "Listening: sing your answer.",
+    "hold": "Hold steady: {note}",
+    "heard": "Heard: {note}",
+    "retry": "Didn't catch that. Sing again, a little louder.",
+    "denied": "Microphone blocked. Allow it in the browser settings to sing answers."
   }
 }

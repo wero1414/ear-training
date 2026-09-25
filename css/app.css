@@ -807,3 +807,17 @@ footer {
 .due button {
   margin-left: auto;
 }
+
+.sing {
+  border: 1px solid var(--line2);
+  background: var(--panel2);
+  border-radius: 10px;
+  padding: 12px;
+  margin: 10px 0;
+  font-size: 13.5px;
+}
+#singStatus {
+  margin-top: 6px;
+  font-size: 12.5px;
+  color: var(--teal);
+}

@@ -11,6 +11,7 @@ import { isIOS, mediaChannel, setReverb } from '../audio/context.js';
 import { clearPluckCache, playNote } from '../audio/instruments.js';
 import { paintTop } from './hud.js';
 import { midiAvailable, setMidi } from './midi.js';
+import { singAvailable, stopSing } from './sing.js';
 import { paintStats } from './stats.js';
 import { go, view } from '../main.js';
 
@@ -37,6 +38,7 @@ export const LAB_FLAGS = [
   { key: 'labSrs' },
   { key: 'labMidi', available: midiAvailable, apply: setMidi },
   { key: 'labJamQuiz' },
+  { key: 'labSing', available: singAvailable, apply: on => on || stopSing() },
 ];
 
 function labRows() {
