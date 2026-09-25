@@ -7,7 +7,7 @@ import { chordMidis } from '../theory/chords.js';
 import { JAMP } from '../theory/harmony.js';
 import { ac, audio } from '../audio/context.js';
 import { hat, kick, playNote, playStack } from '../audio/instruments.js';
-import { LOOKAHEAD_S, startPolling, stopPolling } from '../audio/scheduler.js';
+import { LOOKAHEAD_S, atAudioTime, clearVisuals, startPolling, stopPolling } from '../audio/scheduler.js';
 import { highlightBar } from '../ui/jam-view.js';
 
 export const jam = { on: false, pos: 0, next: 0, timer: null, bars: [] };
@@ -41,6 +41,7 @@ export function jamStart() {
 export function jamStop() {
   jam.on = false;
   stopPolling(jam.timer);
+  clearVisuals();
   jam.timer = null;
   const b = el('jamBtn');
   if (b) b.textContent = t('jam.play');
@@ -53,15 +54,10 @@ function jamTick() {
     barLen = spb * 4;
   while (jam.next < ac.currentTime + LOOKAHEAD_S) {
     scheduleBar(jam.pos, jam.next);
-    const idx = jam.pos,
-      at = (jam.next - ac.currentTime) * 1000;
-    // Known drift: the highlight rides setTimeout, not the audio clock (Phase 1 item 4).
-    setTimeout(
-      () => {
-        if (jam.on) highlightBar(idx);
-      },
-      Math.max(0, at),
-    );
+    const idx = jam.pos;
+    atAudioTime(jam.next, () => {
+      if (jam.on) highlightBar(idx);
+    });
     jam.next += barLen;
     jam.pos = (jam.pos + 1) % jam.bars.length;
   }
