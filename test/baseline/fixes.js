@@ -44,3 +44,7 @@
     }
   };
 })();
+
+/* fix(run): cancel the pending next-trial / end-of-run timeout when a session is
+   abandoned. Not patched here: the scripted session never leaves a run inside that
+   delay, so the reference is unaffected. Covered by test/e2e/regressions.spec.js. */

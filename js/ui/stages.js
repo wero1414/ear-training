@@ -5,7 +5,7 @@ import { ALL12, ALLIVL } from '../theory/pitch.js';
 import { PROG_BASIC } from '../theory/harmony.js';
 import { sfx } from '../audio/instruments.js';
 import { CHAPTERS } from '../drills/chapters.js';
-import { session, makeTrial, playTrial, stopTimer } from '../drills/trial.js';
+import { abandon, session, makeTrial, playTrial, stopTimer } from '../drills/trial.js';
 import { paintHUD, paintTop } from './hud.js';
 import { paintStats } from './stats.js';
 import { go } from '../main.js';
@@ -110,9 +110,7 @@ function startRun(ci, si) {
   };
   el('btnReplay').onclick = () => playTrial();
   el('btnQuit').onclick = () => {
-    session.run = null;
-    session.trial = null;
-    stopTimer();
+    abandon();
     go('map');
   };
   el('timer').style.visibility = 'hidden';

@@ -87,3 +87,43 @@ for (const [qual, want] of [
     for (const label of truth) expect(want).toContain(label);
   });
 }
+
+// Stage-run timeouts (next trial, end of run) were never cancelled, so leaving a run
+// during the post-answer delay either crashed endRun or drove the next run.
+async function startStage(page) {
+  await page.click('#nav-map');
+  await page.click('[data-c="0"][data-s="0"]');
+  await page.click('#btnPlay');
+}
+
+test('quitting during the end-of-run delay does not throw', async ({ page }) => {
+  const errors = [];
+  page.on('pageerror', e => errors.push(e.message));
+  await page.addInitScript(PRNG);
+  await page.clock.install();
+  await page.goto(URL);
+  await startStage(page);
+  for (let i = 0; i < 12; i++) {
+    await page.locator('#answers .kb .k:not([disabled])').first().click();
+    const lives = await page.locator('#hh span:not(.off)').count();
+    if (lives === 0 || (await page.locator('#hq').textContent()) === '12 / 12') break;
+    await page.clock.runFor(2100);
+  }
+  await page.click('#btnQuit');
+  await page.clock.runFor(3000);
+  expect(errors).toEqual([]);
+  await expect(page.locator('#nav-map')).toHaveAttribute('aria-selected', 'true');
+});
+
+test('a new stage run does not start itself from the previous run', async ({ page }) => {
+  await page.addInitScript(PRNG);
+  await page.clock.install();
+  await page.goto(URL);
+  await startStage(page);
+  await page.locator('#answers .kb .k:not([disabled])').first().click();
+  await page.click('#btnQuit');
+  await page.click('[data-c="0"][data-s="0"]');
+  await page.clock.runFor(3000);
+  await expect(page.locator('#msg')).toHaveText('Headphones on. Press start.');
+  await expect(page.locator('#answers')).toBeEmpty();
+});

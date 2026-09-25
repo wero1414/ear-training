@@ -1,6 +1,6 @@
 import { el } from './util.js';
 import { droneOff } from './audio/instruments.js';
-import { session, stopTimer } from './drills/trial.js';
+import { abandon } from './drills/trial.js';
 import { jamStop } from './jam/engine.js';
 import { paintTop } from './ui/hud.js';
 import { paintStats } from './ui/stats.js';
@@ -18,9 +18,7 @@ export let view = 'map';
 // Switching tabs abandons any trial, run, drone or jam in progress.
 export function go(v) {
   view = v;
-  session.trial = null;
-  session.run = null;
-  stopTimer();
+  abandon();
   droneOff();
   jamStop();
   TABS.forEach(x => el('nav-' + x).setAttribute('aria-selected', String(x === v)));

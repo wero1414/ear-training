@@ -13,7 +13,28 @@ import { endRun } from '../ui/stages.js';
 
 export const session = { trial: null, run: null };
 let tTimer = null,
-  tStart = 0;
+  tStart = 0,
+  pending = null;
+
+// The follow-up to an answer (next trial, or the end of a run). There is only ever one,
+// and abandon() cancels it, so a timeout from a session the user has left can never act
+// on a later one.
+function after(ms, fn) {
+  clearTimeout(pending);
+  pending = setTimeout(() => {
+    pending = null;
+    fn();
+  }, ms);
+}
+
+// Drop the current trial and run, and everything scheduled for them.
+export function abandon() {
+  session.trial = null;
+  session.run = null;
+  stopTimer();
+  clearTimeout(pending);
+  pending = null;
+}
 
 function specOf() {
   if (session.run) return session.run.spec;
@@ -130,24 +151,18 @@ export function judge(given) {
     }
     paintHUD(run);
     if (run.lives <= 0 || run.i >= run.spec.n) {
-      setTimeout(endRun, 1200);
+      after(1200, endRun);
       return;
     }
-    setTimeout(
-      () => {
-        if (session.run) makeTrial();
-      },
-      ok ? 950 : 2000,
-    );
+    after(ok ? 950 : 2000, () => {
+      if (session.run) makeTrial();
+    });
   } else {
     paintStats();
-    setTimeout(
-      () => {
-        const t = session.trial;
-        if (t && t.done && !session.run) makeTrial();
-      },
-      ok ? 950 : 2300,
-    );
+    after(ok ? 950 : 2300, () => {
+      const t = session.trial;
+      if (t && t.done && !session.run) makeTrial();
+    });
   }
   sv();
 }
