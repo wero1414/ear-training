@@ -51,6 +51,26 @@ tests the same way it would in production. Playwright starts it automatically.
 - `test/e2e/regressions.spec.js` has one test per fixed bug. Confirm each new one fails
   on the seed with `REG_URL=test/baseline/seed.html` before trusting it.
 
+## Experimental features (Phase 2)
+
+Each Phase 2 feature sits behind a settings flag listed in `LAB_FLAGS`
+(`js/ui/settings.js`), which draws the Experimental panel; a flag can declare
+`available()` (hidden where the browser cannot support it) and `apply(on)`.
+
+- `labMelody`: `drills/phrase.js` phrase grammar; minor/modal pools in
+  `theory/harmony.js` (practice only, stage runs unchanged).
+- `labSrs`: `drills/srs.js` SM-2 cards in `P.srs` (progress schema 3), recorded in
+  `judge()`; review spec in `drills/trial.js`.
+- `labMidi`: `ui/midi.js`; a note-on presses the matching answer button.
+- `labJamQuiz`: pause/resume in `jam/engine.js`, question UI in `ui/jam-view.js`.
+- `labSing`: YIN and the state machine in `audio/pitch-detect.js`, UI in `ui/sing.js`;
+  heard notes go through `onMidiNote`. The microphone is never connected to the output
+  and is released on every view change; keep it that way.
+- `labRhythm`: `drills/rhythm-core.js` (pure), kinds `rhythm` and `tap`; kinds gated by
+  a flag are listed in `FLAGGED_KINDS` (`drills/registry.js`).
+
+Not done: the jam quiz question "sing the third of the next chord".
+
 ## Offline, deploy, CI
 
 - `tools/site.mjs` is the one list of deployable files. `sw.js` precaches exactly that
