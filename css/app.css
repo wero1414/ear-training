@@ -764,3 +764,25 @@ footer {
     grid-template-columns: 1fr 1fr;
   }
 }
+.update {
+  position: fixed;
+  left: 50%;
+  bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--panel);
+  border: 1px solid var(--line2);
+  border-radius: 11px;
+  padding: 8px 8px 8px 14px;
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.35);
+  max-width: calc(100% - 28px);
+}
+.update .play {
+  padding: 8px 16px;
+}
+.update .ghost {
+  padding: 7px 10px;
+}

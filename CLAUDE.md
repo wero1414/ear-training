@@ -23,7 +23,10 @@ npm test             # unit (vitest) then browser (playwright)
 npx vitest run test/unit/theory.test.js          # one unit file
 npx vitest run -t "labels the minor third"       # one unit test by name
 npx playwright test smoke                        # one browser spec
-npx playwright test session -u                   # re-record session snapshots
+npx playwright test session -u                   # re-record session snapshots (macOS)
+npm run snapshots:linux                          # same, Linux, in the CI Docker image
+npm run sw                                       # refresh sw.js after changing site files
+npm run icons                                    # re-render icons/*.png from icons/icon.svg
 REG_URL=test/baseline/seed.html npx playwright test regressions   # run bug tests on the seed
 ```
 
@@ -47,6 +50,22 @@ tests the same way it would in production. Playwright starts it automatically.
   leaving the local origin.
 - `test/e2e/regressions.spec.js` has one test per fixed bug. Confirm each new one fails
   on the seed with `REG_URL=test/baseline/seed.html` before trusting it.
+
+## Offline, deploy, CI
+
+- `tools/site.mjs` is the one list of deployable files. `sw.js` precaches exactly that
+  list with a content-hash version (`npm run sw`; lint fails when stale), and the Pages
+  job publishes exactly that list (`tools/stage-site.mjs`), so tests and snapshots never
+  ship. A new site file only needs to match the pattern there.
+- The worker is cache-first and never takes over mid-session: `js/ui/update.js` shows a
+  "new version" bar and reloads only after the user accepts.
+- `.github/workflows/ci.yml`: lint, unit and browser tests in
+  `mcr.microsoft.com/playwright:v1.63.0-noble` on `ubuntu-24.04-arm`, then deploy to
+  Pages on push to `main`. Screenshot snapshots are per platform; record Linux ones with
+  `npm run snapshots:linux` (Docker) whenever you re-record macOS ones.
+- Browser tests use a stand-in audio clock (`AUDIO_CLOCK` in `test/e2e/helpers.js`)
+  because headless browsers may have no audio output. Timing specs run as a separate
+  Playwright project after the rest.
 
 ## Architecture
 
@@ -74,7 +93,8 @@ other app modules.
 - `js/jam/` - `engine.js` schedules the backing loop; `midi-export.js` is the pure SMF
   writer.
 - `js/ui/` - one module per view plus the shared answer widgets (`keyboard`, `grid`,
-  `sequence`). Views render with `innerHTML` into `#view`.
+  `sequence`). Views render with `innerHTML` into `#view`. `update.js` registers the
+  service worker.
 - `js/i18n/` - string tables and `t()`. `main.js` fetches them, applies static text,
   then boots; `html[data-ready]` hides the page until then (see `css/app.css`).
 - `css/tokens.css` holds design tokens (alphabetised, enforced by a unit test);

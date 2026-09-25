@@ -9,7 +9,11 @@ export default [
     languageOptions: { ecmaVersion: 2022, sourceType: 'module', globals: globals.browser },
   },
   {
-    files: ['test/**/*.{js,mjs}', '*.config.js'],
+    files: ['sw.js'],
+    languageOptions: { ecmaVersion: 2022, sourceType: 'script', globals: globals.serviceworker },
+  },
+  {
+    files: ['test/**/*.{js,mjs}', 'tools/**/*.mjs', '*.config.js'],
     languageOptions: { ecmaVersion: 2022, sourceType: 'module', globals: { ...globals.node, ...globals.browser } },
   },
 ];

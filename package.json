@@ -1,16 +1,19 @@
 {
-  "name": "ear-trainer",
+  "name": "ear-training",
   "version": "0.0.0",
   "private": true,
   "license": "MIT",
   "type": "module",
   "scripts": {
     "serve": "node test/serve.mjs",
-    "lint": "eslint . && prettier --check . && node test/check-ascii.mjs",
+    "lint": "eslint . && prettier --check . && node test/check-ascii.mjs && node tools/build-sw.mjs --check",
     "format": "prettier --write .",
     "test": "vitest run && playwright test",
     "test:unit": "vitest run",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "sw": "node tools/build-sw.mjs",
+    "icons": "node tools/make-icons.mjs",
+    "snapshots:linux": "docker run --rm -v \"$PWD\":/work -w /work mcr.microsoft.com/playwright:v1.63.0-noble npx playwright test session -u"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

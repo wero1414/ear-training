@@ -411,5 +411,10 @@
   "langName": {
     "en": "English",
     "es": "Espa\u00f1ol"
+  },
+  "update": {
+    "available": "Hay una versi\u00f3n nueva",
+    "reload": "Recargar",
+    "dismiss": "Cerrar"
   }
 }

@@ -12,6 +12,7 @@ import { showJam } from './ui/jam-view.js';
 import { showRef } from './ui/reference.js';
 import { bindSettings, chips, octSelects, syncSettings } from './ui/settings.js';
 import { bindShortcuts } from './ui/shortcuts.js';
+import { registerWorker } from './ui/update.js';
 
 const TABS = ['map', 'practice', 'jam', 'ref'];
 
@@ -43,6 +44,7 @@ function boot() {
   syncSettings();
   paintTop();
   go('map');
+  registerWorker();
 }
 
 // The page stays hidden (css/app.css) until data-ready is set, so the markup's

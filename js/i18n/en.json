@@ -398,5 +398,10 @@
   "langName": {
     "en": "English",
     "es": "Espa\u00f1ol"
+  },
+  "update": {
+    "available": "New version available",
+    "reload": "Reload",
+    "dismiss": "Dismiss"
   }
 }

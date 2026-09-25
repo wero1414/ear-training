@@ -33,7 +33,13 @@ createServer(async (req, res) => {
     return;
   }
   try {
-    const body = await readFile(file);
+    let body = await readFile(file);
+    // Test hook: a `sw-version` cookie serves the worker as a different build, so the
+    // update flow can be exercised. Cookies are per browser context, and the browser's
+    // own worker update check (which page routing cannot see) sends them.
+    const cookie = /(?:^|;\s*)sw-version=([\w-]+)/.exec(req.headers.cookie || '');
+    if (rel === 'sw.js' && cookie)
+      body = String(body).replace(/const VERSION = '[^']*';/, `const VERSION = '${cookie[1]}';`);
     res.writeHead(200, {
       'content-type': TYPES[extname(file)] || 'application/octet-stream',
       'cache-control': 'no-store',
