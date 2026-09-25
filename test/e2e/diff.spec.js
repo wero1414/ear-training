@@ -1,13 +1,18 @@
-// Behaviour-freeze test for the Phase 0 restructure. Drives the seed prototype and the
-// target build through one scripted session with Math.random seeded and the clock paused,
-// and requires identical DOM, form values, localStorage and downloaded files after every
-// step. The PRNG is reseeded per step so a divergence is reported at the step that caused
-// it rather than smearing across the rest of the run.
+// Behaviour-freeze test. Drives the seed prototype and the target build through one
+// scripted session with Math.random seeded and the clock paused, and requires identical
+// DOM, form values, localStorage, downloaded files and screenshots after every step. The
+// PRNG is reseeded per step so a divergence is reported at the step that caused it rather
+// than smearing across the rest of the run.
+//
+// The reference is the seed plus test/baseline/fixes.js: every intended behaviour change
+// since Phase 0 is applied to the seed there, so anything else that differs still fails.
+// Set DIFF_SEED_FIXES=0 to compare against the untouched seed.
 import { test, expect } from '@playwright/test';
 import { readFile } from 'node:fs/promises';
-import { SEED, watch, answer } from './helpers.js';
+import { PRNG, SEED, watch, answer } from './helpers.js';
 
 const TARGET = process.env.DIFF_TARGET ?? './';
+const SEED_FIXES = process.env.DIFF_SEED_FIXES !== '0';
 const T0 = new Date('2026-03-02T10:00:00Z');
 // Steps that also get a full-page screenshot, chosen to cover every view and widget.
 const SHOTS = new Set([
@@ -26,17 +31,6 @@ const SHOTS = new Set([
   'jam configured',
   'stats open',
 ]);
-
-const PRNG = `(() => {
-  let s = 1;
-  Math.random = () => {
-    s |= 0; s = (s + 0x6D2B79F5) | 0;
-    let t = Math.imul(s ^ (s >>> 15), 1 | s);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-  window.__reseed = n => { s = n; };
-})();`;
 
 async function snap(page, label) {
   return page.evaluate(label => {
@@ -84,7 +78,9 @@ async function scenario(browser, url) {
   await page.addInitScript(PRNG);
   await page.clock.install({ time: T0 });
   await page.clock.pauseAt(T0);
+  const patch = () => (url === SEED && SEED_FIXES ? page.addScriptTag({ path: 'test/baseline/fixes.js' }) : null);
   await page.goto(url);
+  await patch();
   await page.evaluate(() => window.__reseed(1));
   await S('boot');
 
@@ -201,6 +197,7 @@ async function scenario(browser, url) {
   await page.click('#btnReset');
   await S('after reset');
   await page.reload();
+  await patch();
   await page.evaluate(() => window.__reseed(99));
   await S('after reload');
   await page.emulateMedia({ colorScheme: 'light' });
@@ -213,7 +210,7 @@ async function scenario(browser, url) {
   return { snaps: out, shots, midi, progress, problems };
 }
 
-test('restructured build matches the seed step for step', async ({ browser }) => {
+test('app matches the seed (plus intended fixes) step for step', async ({ browser }) => {
   const want = await scenario(browser, SEED);
   const got = await scenario(browser, TARGET);
 

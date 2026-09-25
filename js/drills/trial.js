@@ -6,7 +6,7 @@ import { ALL12 } from '../theory/pitch.js';
 import { PROG_BASIC } from '../theory/harmony.js';
 import { noiseBurst, pickTimbre, sfx } from '../audio/instruments.js';
 import { bump } from './adaptive.js';
-import { KINDS, grade, truthOf } from './registry.js';
+import { KINDS, grade, statKey, truthOf } from './registry.js';
 import { say, pop, flash, paintHUD } from '../ui/hud.js';
 import { paintStats } from '../ui/stats.js';
 import { endRun } from '../ui/stages.js';
@@ -104,7 +104,7 @@ export function judge(given) {
   const ms = performance.now() - tStart;
   const ok = given !== null && grade(trial, given);
   mark(given, ok);
-  bump(trial.kind, Array.isArray(trial.ans) ? 'seq' : trial.ans, ok);
+  bump(trial.kind, statKey(trial), ok);
   const truth = truthOf(trial);
   if (given === null) say('Out of time \u2014 <b>' + truth + '</b>', 'bad');
   else if (ok) say('<b>' + truth + '</b>', 'ok');

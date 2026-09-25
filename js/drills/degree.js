@@ -1,7 +1,6 @@
 import { S } from '../state/store.js';
 import { ALL12 } from '../theory/pitch.js';
 import {
-  DIA_MAJ,
   DEGREE_NUMERALS_BY_SEMITONE,
   DEGREE_SOLFEGE_BY_SEMITONE,
   degreeToSemitone,
@@ -16,16 +15,19 @@ import { judge } from './trial.js';
 export const prompt = 'Which scale degree?';
 
 // The answer is a degree index into the drill scale (a semitone in chromatic mode).
+// Stats are keyed by semitone above the tonic, so the same function is one item across
+// major, minor and chromatic drills.
 // 30% of targets are an octave up: the skill is function, not register.
 export function make(trial, sp) {
   const K = keyFor(sp);
   const degs = sp.chrom ? ALL12 : sp.degrees;
+  const scale = drillScale(sp, K.minor);
   let d,
     g = 0;
-  do d = weighted(degs, 'degree');
+  do d = weighted(degs, 'degree', x => degreeToSemitone(x, scale));
   while (degs.length > 1 && d === guard.last && g++ < 6);
   guard.last = d;
-  const semi = degreeToSemitone(d, drillScale(sp, K.minor));
+  const semi = degreeToSemitone(d, scale);
   Object.assign(trial, { key: K, ans: d, midis: [60 + K.pc + semi + (Math.random() < 0.3 ? 12 : 0)] });
 }
 
@@ -43,7 +45,9 @@ export const truth = t =>
   fullName(t.midis[0]) +
   ')';
 
-export const statLabel = key => degLabel(+key < 7 ? degreeToSemitone(+key, DIA_MAJ) : +key);
+export const statKey = t => degreeToSemitone(t.ans, drillScale(t.sp, t.key.minor));
+
+export const statLabel = key => degLabel(+key);
 
 export function render(host, trial, sp) {
   const degs = sp.chrom ? ALL12 : sp.degrees;

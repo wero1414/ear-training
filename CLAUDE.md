@@ -41,6 +41,12 @@ tests the same way it would in production. Playwright starts it automatically.
   deliberate behaviour change (bug fix, new feature) makes it fail by design, and the
   scenario or reference has to be updated in the same change, with the reason stated.
   It does not control `AudioContext.currentTime`, so jam is only snapshotted after stop.
+- The reference is the seed plus `test/baseline/fixes.js`, which re-applies every intended
+  behaviour change to the seed's globals. A deliberate change lands in `js/` and in
+  `fixes.js` in the same commit; then check that `DIFF_SEED_FIXES=0` makes the diff fail
+  at the step you expect, which proves the scenario exercises the change.
+- `test/e2e/regressions.spec.js` has one test per fixed bug. Confirm each new one fails
+  on the seed with `REG_URL=test/baseline/seed.html` before trusting it.
 
 ## Architecture
 
@@ -51,7 +57,11 @@ other app modules.
 
 - `js/state/store.js` - settings `S` and progress `P` (`localStorage` keys `pe.set`,
   `pe.prog`). `P` is replaced on reset; importers see it through the live binding, so
-  never cache `P` in a local.
+  never cache `P` in a local. Stored progress carries `schema`; a change to its shape or
+  meaning bumps `PROGRESS_SCHEMA` and adds a step in `js/state/migrate.js`.
+- Stats (`P.stats[kind][key]`) drive adaptive weighting and the accuracy table. The key
+  comes from the kind's `statKey(trial)`; degree stats are keyed by semitone above the
+  tonic, never by degree index.
 - `js/theory/` - pure data and functions, no DOM, no settings. `js/labels.js` binds
   them to the current naming setting (`nn`, `fullName`, `degText`, ...).
 - `js/audio/` - `context.js` owns the single `AudioContext` and the master graph;

@@ -1,3 +1,5 @@
+import { PROGRESS_SCHEMA, migrateProgress } from './migrate.js';
+
 export const DEFS = {
   a4: 440,
   timbre: 'rhodes',
@@ -29,12 +31,12 @@ export const DEFS = {
   jamDrums: true,
   jamBass: true,
 };
-export const DEFP = { xp: 0, stars: {}, best: {}, stats: {}, days: 0, last: '' };
+export const DEFP = { xp: 0, stars: {}, best: {}, stats: {}, days: 0, last: '', schema: PROGRESS_SCHEMA };
 
-function ldj(k, d) {
+function ldj(k, d, migrate = x => x) {
   try {
     const v = localStorage.getItem(k);
-    return v ? Object.assign({}, d, JSON.parse(v)) : Object.assign({}, d);
+    return v ? Object.assign({}, d, migrate(JSON.parse(v))) : Object.assign({}, d);
   } catch {
     return Object.assign({}, d);
   }
@@ -42,7 +44,7 @@ function ldj(k, d) {
 
 export const S = ldj('pe.set', DEFS);
 // Reassigned by resetProgress(); importers see the new object through the live binding.
-export let P = ldj('pe.prog', DEFP);
+export let P = ldj('pe.prog', DEFP, migrateProgress);
 if (!P.stats) P.stats = {};
 
 export function sv() {
