@@ -1,7 +1,8 @@
 // Practice settings, Sound, and the progress export/reset controls.
 import { S, P, sv, resetProgress } from '../state/store.js';
 import { el } from '../util.js';
-import { ALL12, IVS, WHITE } from '../theory/pitch.js';
+import { ALL12, WHITE } from '../theory/pitch.js';
+import { t } from '../i18n/index.js';
 import { CH } from '../theory/chords.js';
 import { SC } from '../theory/scales.js';
 import { nn } from '../labels.js';
@@ -30,17 +31,10 @@ function chipRow(host, items, isOn, toggle) {
 export function chips() {
   chipRow(
     el('kindChips'),
-    [
-      ['note', 'notes'],
-      ['interval', 'intervals'],
-      ['chord', 'chords'],
-      ['inv', 'inversions'],
-      ['degree', 'degrees'],
-      ['melody', 'melody'],
-      ['prog', 'progressions'],
-      ['cadence', 'cadences'],
-      ['scale', 'scales'],
-    ].map(([v, b]) => ({ v, b })),
+    ['note', 'interval', 'chord', 'inv', 'degree', 'melody', 'prog', 'cadence', 'scale'].map(v => ({
+      v,
+      b: t('kinds.' + v),
+    })),
     v => S.kinds.includes(v),
     v => {
       S.kinds.includes(v) ? S.kinds.length > 1 && (S.kinds = S.kinds.filter(x => x !== v)) : S.kinds.push(v);
@@ -58,7 +52,7 @@ export function chips() {
   );
   chipRow(
     el('ivlChips'),
-    [...Array(13).keys()].map(i => ({ v: i, b: IVS[i] })),
+    [...Array(13).keys()].map(i => ({ v: i, b: t('theory.intervalShort')[i] })),
     v => S.ivls.includes(v),
     v => {
       S.ivls.includes(v)
@@ -76,7 +70,7 @@ export function chips() {
   );
   chipRow(
     el('scChips'),
-    Object.keys(SC).map(m => ({ v: m, b: SC[m].n.split(' ')[0] })),
+    Object.keys(SC).map(m => ({ v: m, b: t('theory.scale.' + m).short })),
     v => S.scales.includes(v),
     v => {
       S.scales.includes(v) ? S.scales.length > 1 && (S.scales = S.scales.filter(x => x !== v)) : S.scales.push(v);
@@ -244,7 +238,7 @@ export function bindSettings() {
     setTimeout(() => URL.revokeObjectURL(a.href), 2000);
   };
   el('btnReset').onclick = () => {
-    if (!confirm('Erase stars, xp and all accuracy history?')) return;
+    if (!confirm(t('stats.confirmReset'))) return;
     resetProgress();
     sv();
     paintTop();

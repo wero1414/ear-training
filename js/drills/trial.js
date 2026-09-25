@@ -2,6 +2,7 @@
 // the answer and advances either the scored stage run or the endless practice loop.
 import { S, sv } from '../state/store.js';
 import { el, pick } from '../util.js';
+import { t } from '../i18n/index.js';
 import { ALL12 } from '../theory/pitch.js';
 import { PROG_BASIC } from '../theory/harmony.js';
 import { noiseBurst, pickTimbre, sfx } from '../audio/instruments.js';
@@ -70,7 +71,7 @@ export function makeTrial() {
   const trial = (session.trial = { kind, sp, timbre: tb, arp, done: false, sel: { pc: null, oct: null }, seq: [] });
   KINDS[kind].make(trial, sp, lo, hi);
   renderPlay();
-  say(KINDS[kind].prompt, '');
+  say(t('prompt.' + kind), '');
   playTrial();
   startTimer(sp.limit);
   tStart = performance.now();
@@ -127,9 +128,9 @@ export function judge(given) {
   mark(given, ok);
   bump(trial.kind, statKey(trial), ok);
   const truth = truthOf(trial);
-  if (given === null) say('Out of time \u2014 <b>' + truth + '</b>', 'bad');
+  if (given === null) say(t('trial.outOfTime', { truth }), 'bad');
   else if (ok) say('<b>' + truth + '</b>', 'ok');
-  else say('No \u2014 <b>' + truth + '</b>', 'bad');
+  else say(t('trial.wrong', { truth }), 'bad');
   sfx(ok ? 'ok' : 'bad');
   flash(ok);
   const run = session.run;
@@ -147,7 +148,7 @@ export function judge(given) {
     } else {
       run.combo = 0;
       run.lives--;
-      pop(given === null ? 'time' : '\u2715', 'var(--red)');
+      pop(given === null ? t('trial.time') : '\u2715', 'var(--red)');
     }
     paintHUD(run);
     if (run.lives <= 0 || run.i >= run.spec.n) {

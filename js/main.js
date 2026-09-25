@@ -1,4 +1,5 @@
 import { el } from './util.js';
+import { applyStatic, loadStrings, setLang } from './i18n/index.js';
 import { droneOff } from './audio/instruments.js';
 import { abandon } from './drills/trial.js';
 import { jamStop } from './jam/engine.js';
@@ -29,12 +30,22 @@ export function go(v) {
   paintStats();
 }
 
-bindSettings();
-TABS.forEach(v => (el('nav-' + v).onclick = () => go(v)));
-bindShortcuts();
+function boot() {
+  setLang('en');
+  applyStatic();
+  bindSettings();
+  TABS.forEach(v => (el('nav-' + v).onclick = () => go(v)));
+  bindShortcuts();
 
-octSelects();
-chips();
-syncSettings();
-paintTop();
-go('map');
+  octSelects();
+  chips();
+  syncSettings();
+  paintTop();
+  go('map');
+}
+
+// The page stays hidden (css/app.css) until data-ready is set, so the markup's
+// placeholder text never flashes before the strings are applied.
+loadStrings()
+  .then(boot)
+  .finally(() => (document.documentElement.dataset.ready = ''));

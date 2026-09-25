@@ -1,12 +1,11 @@
 import { rnd, el } from '../util.js';
+import { t } from '../i18n/index.js';
 import { fullName, nn } from '../labels.js';
 import { freqOf, playNote } from '../audio/instruments.js';
 import { keyboard } from '../ui/keyboard.js';
 import { say } from '../ui/hud.js';
 import { guard, weighted } from './adaptive.js';
 import { judge, session } from './trial.js';
-
-export const prompt = 'Which note?';
 
 export function make(trial, sp) {
   const pcs = sp.pcs;
@@ -25,7 +24,7 @@ export function play(trial, t, d) {
 
 export const grade = (trial, given) => given.pc === trial.ans && (!trial.reqOct || given.oct === trial.oct);
 
-export const truth = t => fullName(t.midis[0]) + '   ' + freqOf(t.midis[0]).toFixed(1) + ' Hz';
+export const truth = tr => t('truth.note', { note: fullName(tr.midis[0]), hz: freqOf(tr.midis[0]).toFixed(1) });
 
 export const statLabel = key => nn(+key);
 
@@ -35,7 +34,7 @@ export function selectPc(pc) {
   trial.sel.pc = pc;
   if (trial.reqOct && trial.sel.oct === null) {
     document.querySelectorAll('.kb .k').forEach(x => x.classList.toggle('target', +x.dataset.pc === pc));
-    say('Now the octave.', '');
+    say(t('trial.nowOctave'), '');
     return;
   }
   judge({ pc, oct: trial.sel.oct });
@@ -62,7 +61,7 @@ function octRow() {
   row.hidden = false;
   const l = document.createElement('span');
   l.className = 'hint';
-  l.textContent = 'octave';
+  l.textContent = t('trial.octave');
   row.appendChild(l);
   const trial = session.trial;
   for (let o = trial.sp.oct[0]; o <= trial.sp.oct[1]; o++) {

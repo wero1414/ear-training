@@ -1,12 +1,10 @@
 import { pick, rnd } from '../util.js';
-import { IVL, IVS } from '../theory/pitch.js';
+import { t } from '../i18n/index.js';
 import { fullName } from '../labels.js';
 import { playNote } from '../audio/instruments.js';
 import { gridUI } from '../ui/grid.js';
 import { guard, weighted } from './adaptive.js';
 import { judge } from './trial.js';
-
-export const prompt = 'Which interval?';
 
 export function make(trial, sp, lo, hi) {
   const list = sp.ivls;
@@ -30,14 +28,15 @@ export function play(trial, t, d) {
   }
 }
 
-export const truth = t => IVL[t.ans] + '   ' + fullName(t.midis[0]) + ' \u2192 ' + fullName(t.midis[1]);
+export const truth = tr =>
+  t('truth.interval', { name: t('theory.interval')[tr.ans], from: fullName(tr.midis[0]), to: fullName(tr.midis[1]) });
 
-export const statLabel = key => IVS[+key];
+export const statLabel = key => t('theory.intervalShort')[+key];
 
 export function render(host, trial, sp) {
   gridUI(
     host,
-    sp.ivls.map(i => ({ v: i, b: IVS[i], s: IVL[i] })),
+    sp.ivls.map(i => ({ v: i, b: t('theory.intervalShort')[i], s: t('theory.interval')[i] })),
     undefined,
     v => judge({ v }),
   );

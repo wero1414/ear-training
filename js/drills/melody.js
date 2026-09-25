@@ -1,12 +1,11 @@
 import { pick } from '../util.js';
+import { t } from '../i18n/index.js';
 import { DIA_MAJ, DIA_MIN, degreeToSemitone } from '../theory/scales.js';
 import { degLabel, nn } from '../labels.js';
 import { keyContext, playNote } from '../audio/instruments.js';
 import { seqUI } from '../ui/sequence.js';
 import { keyFor } from './adaptive.js';
 import { judge, session } from './trial.js';
-
-export const prompt = 'Enter the melody by degree.';
 
 // Random walk over degree indices 0-6, starting on the tonic. The answer is the list of
 // degree indices into trial.scale, which is always diatonic: "Chromatic degrees" applies
@@ -33,8 +32,11 @@ export function play(trial) {
 
 export const slotLabel = (v, trial) => degLabel(degreeToSemitone(v, trial.scale));
 
-export const truth = t =>
-  t.ans.map(d => slotLabel(d, t)).join(' ') + '   in ' + nn(t.key.pc) + (t.key.minor ? 'm' : '');
+export const truth = tr =>
+  t('truth.melody', {
+    seq: tr.ans.map(d => slotLabel(d, tr)).join(' '),
+    key: nn(tr.key.pc) + (tr.key.minor ? t('truth.minorKeySuffix') : ''),
+  });
 
 export function render(host, trial) {
   const degs = [0, 1, 2, 3, 4, 5, 6];

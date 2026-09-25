@@ -1,13 +1,12 @@
 import { pick, rnd } from '../util.js';
-import { CH, INVN, chordMidis } from '../theory/chords.js';
+import { CH, chordMidis } from '../theory/chords.js';
+import { t } from '../i18n/index.js';
 import { chordName } from '../labels.js';
 import { gridUI } from '../ui/grid.js';
 import { weighted } from './adaptive.js';
 import { judge } from './trial.js';
 
 export { play } from './chord.js';
-
-export const prompt = 'Which inversion?';
 
 export function make(trial, sp, lo, hi) {
   const q = pick(sp.chords);
@@ -17,14 +16,14 @@ export function make(trial, sp, lo, hi) {
   Object.assign(trial, { midis: chordMidis(root, q, inv), ans: inv, root, q });
 }
 
-export const truth = t => INVN[t.ans] + '   ' + chordName(t.root, t.q);
+export const truth = tr => t('truth.inv', { inv: t('theory.inversion')[tr.ans], symbol: chordName(tr.root, tr.q) });
 
-export const statLabel = key => INVN[+key].replace(' position', '').replace(' inversion', '');
+export const statLabel = key => t('theory.inversionShort')[+key];
 
 export function render(host, trial, sp) {
   gridUI(
     host,
-    sp.invs.filter(i => i < 4).map(i => ({ v: i, b: ['root', '1st', '2nd', '3rd'][i], s: 'inversion' })),
+    sp.invs.filter(i => i < 4).map(i => ({ v: i, b: t('theory.inversionShort')[i], s: t('theory.inversionWord') })),
     undefined,
     v => judge({ v }),
   );

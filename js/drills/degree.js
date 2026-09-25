@@ -1,4 +1,5 @@
 import { S } from '../state/store.js';
+import { t } from '../i18n/index.js';
 import { ALL12 } from '../theory/pitch.js';
 import {
   DEGREE_NUMERALS_BY_SEMITONE,
@@ -11,8 +12,6 @@ import { keyContext, playNote } from '../audio/instruments.js';
 import { gridUI } from '../ui/grid.js';
 import { guard, keyFor, weighted } from './adaptive.js';
 import { judge } from './trial.js';
-
-export const prompt = 'Which scale degree?';
 
 // The answer is a degree index into the drill scale (a semitone in chromatic mode).
 // Stats are keyed by semitone above the tonic, so the same function is one item across
@@ -36,14 +35,13 @@ export function play(trial, t, d) {
   playNote(trial.midis[0], off + 0.25, Math.max(d, 1.3), trial.timbre);
 }
 
-export const truth = t =>
-  degText(t.ans, t.sp, t.key.minor) +
-  '  of  ' +
-  nn(t.key.pc) +
-  (t.key.minor ? ' minor' : ' major') +
-  '   (' +
-  fullName(t.midis[0]) +
-  ')';
+export const truth = tr =>
+  t('truth.degree', {
+    deg: degText(tr.ans, tr.sp, tr.key.minor),
+    key: nn(tr.key.pc),
+    quality: t(tr.key.minor ? 'truth.minor' : 'truth.major'),
+    note: fullName(tr.midis[0]),
+  });
 
 export const statKey = t => degreeToSemitone(t.ans, drillScale(t.sp, t.key.minor));
 

@@ -1,6 +1,7 @@
 // Stage map, the scored stage run, and its result screen.
 import { S, P, sv, touchDay } from '../state/store.js';
 import { el } from '../util.js';
+import { t } from '../i18n/index.js';
 import { ALL12, ALLIVL } from '../theory/pitch.js';
 import { PROG_BASIC } from '../theory/harmony.js';
 import { sfx } from '../audio/instruments.js';
@@ -21,7 +22,7 @@ export function showMap() {
     const got = ch.st.reduce((a, _, si) => a + (P.stars[skey(ci, si)] || 0), 0);
     h +=
       '<div class="chap"><b>' +
-      ch.t +
+      t('chapters')[ci].title +
       '</b><span class="cs">' +
       got +
       ' / ' +
@@ -41,18 +42,17 @@ export function showMap() {
         (open ? '' : ' disabled') +
         '>' +
         '<div class="no">' +
-        (open ? String(si + 1).padStart(2, '0') : 'locked') +
+        (open ? String(si + 1).padStart(2, '0') : t('map.locked')) +
         '</div>' +
         '<div class="ti">' +
-        s.t +
+        t('chapters')[ci].stages[si] +
         '</div>' +
         '<div class="stars">' +
         [0, 1, 2].map(k => '<span class="' + (k < st ? 'on' : '') + '">\u2605</span>').join('') +
         '</div>' +
         '<div class="meta">' +
-        s.n +
-        ' q' +
-        (s.limit ? '  \u00b7  ' + s.limit + 's' : '') +
+        t('map.questions', { n: s.n }) +
+        (s.limit ? '  \u00b7  ' + t('map.limit', { n: s.limit }) : '') +
         (P.best[skey(ci, si)] ? '  \u00b7  ' + P.best[skey(ci, si)] : '') +
         '</div></button>';
     });
@@ -91,17 +91,25 @@ function startRun(ci, si) {
   el('setBox').hidden = true;
   el('view').innerHTML =
     '<div class="hud"><div><div class="nm">' +
-    s.t +
+    t('chapters')[ci].stages[si] +
     '</div><div class="q" id="hq"></div></div>' +
     '<div class="spacer"></div><div class="hearts" id="hh"></div>' +
     '<div class="combo" id="hc"></div><div class="score" id="hs">0</div></div>' +
     '<div class="timer" id="timer"><i></i></div>' +
     '<div class="stage"><div class="row">' +
-    '<button class="play" id="btnPlay">Start</button>' +
-    '<button class="ghost" id="btnReplay" disabled>Replay</button>' +
-    '<button class="ghost" id="btnQuit">Quit</button>' +
+    '<button class="play" id="btnPlay">' +
+    t('run.start') +
+    '</button>' +
+    '<button class="ghost" id="btnReplay" disabled>' +
+    t('run.replay') +
+    '</button>' +
+    '<button class="ghost" id="btnQuit">' +
+    t('run.quit') +
+    '</button>' +
     '<div class="spacer"></div><span class="hint" id="kh"></span></div>' +
-    '<div class="msg" id="msg">Headphones on. Press start.</div>' +
+    '<div class="msg" id="msg">' +
+    t('run.ready') +
+    '</div>' +
     '<div id="answers"></div><div class="octrow" id="octrow" hidden></div></div>';
   el('btnPlay').onclick = () => {
     el('btnPlay').disabled = true;
@@ -114,10 +122,7 @@ function startRun(ci, si) {
     go('map');
   };
   el('timer').style.visibility = 'hidden';
-  el('kh').textContent =
-    s.k[0] === 'note'
-      ? 'A W S E D F T G Y H U J \u00b7 space replays'
-      : '1-9 0 \u00b7 space replays \u00b7 \u232b undo';
+  el('kh').textContent = s.k[0] === 'note' ? t('run.keysNote') : t('run.keysGrid');
   paintHUD(session.run);
 }
 
@@ -150,23 +155,29 @@ export function endRun() {
     r.score +
     '</div>' +
     '<div class="sub">' +
-    r.right +
-    ' of ' +
-    r.i +
-    ' \u00b7 ' +
-    Math.round(acc * 100) +
-    '% \u00b7 +' +
-    gained +
-    ' xp</div>' +
+    t('result.summary', { right: r.right, total: r.i, pct: Math.round(acc * 100), xp: gained }) +
+    '</div>' +
     '<div class="sub" style="margin-top:8px;color:' +
     (cleared ? 'var(--teal)' : 'var(--red)') +
     '">' +
-    (cleared ? (stars === 3 ? 'Stage mastered' : 'Stage cleared') : r.lives <= 0 ? 'Out of hearts' : 'Below 70%') +
+    t(
+      cleared
+        ? stars === 3
+          ? 'result.mastered'
+          : 'result.cleared'
+        : r.lives <= 0
+          ? 'result.outOfHearts'
+          : 'result.below',
+    ) +
     '</div>' +
     '<div class="row" style="justify-content:center;margin-top:16px">' +
-    '<button class="play" id="rAgain">Try again</button>' +
-    (cleared && !last ? '<button class="ghost" id="rNext">Next stage</button>' : '') +
-    '<button class="ghost" id="rMap">Stages</button></div></div>';
+    '<button class="play" id="rAgain">' +
+    t('result.again') +
+    '</button>' +
+    (cleared && !last ? '<button class="ghost" id="rNext">' + t('result.next') + '</button>' : '') +
+    '<button class="ghost" id="rMap">' +
+    t('result.map') +
+    '</button></div></div>';
   el('rAgain').onclick = () => startRun(r.ci, r.si);
   const nx = el('rNext');
   if (nx) nx.onclick = () => startRun(r.ci, r.si + 1);

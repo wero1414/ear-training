@@ -2,6 +2,8 @@
 // "hear mine" playback. The trial is read through current() at click time.
 //   current()  the live trial        label(v)  slot text for a value
 //   submit(seq) called when full     hear(trial) plays the entered sequence
+import { t } from '../i18n/index.js';
+
 export function seqUI(host, items, len, cls, { current, label, submit, hear }) {
   const slots = document.createElement('div');
   slots.className = 'slots';
@@ -49,7 +51,7 @@ export function seqUI(host, items, len, cls, { current, label, submit, hear }) {
     }
   };
   const hearBtn = document.createElement('button');
-  hearBtn.textContent = 'hear mine';
+  hearBtn.textContent = t('trial.hearMine');
   hearBtn.onclick = () => {
     const trial = current();
     if (!trial || !trial.seq.length) return;

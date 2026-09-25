@@ -1,11 +1,10 @@
 import { chordMidis } from '../theory/chords.js';
+import { t } from '../i18n/index.js';
 import { CAD, ROM } from '../theory/harmony.js';
 import { playNote, playStack } from '../audio/instruments.js';
 import { gridUI } from '../ui/grid.js';
 import { keyFor, weighted } from './adaptive.js';
 import { judge } from './trial.js';
-
-export const prompt = 'Which cadence?';
 
 export function make(trial, sp) {
   const K = keyFor(sp);
@@ -24,14 +23,16 @@ export function play(trial) {
   });
 }
 
-export const truth = t => CAD[t.ans].n;
+const cad = i => t('theory.cadence')[i];
 
-export const statLabel = key => (CAD[+key] ? CAD[+key].n.split('  ')[0] : key);
+export const truth = tr => cad(tr.ans).name + '  ' + cad(tr.ans).formula;
+
+export const statLabel = key => (CAD[+key] ? cad(+key).name : key);
 
 export function render(host) {
   gridUI(
     host,
-    CAD.map((c, i) => ({ v: i, b: c.n.split('  ')[0], s: c.n.split('  ')[1] || '' })),
+    CAD.map((c, i) => ({ v: i, b: cad(i).name, s: cad(i).formula })),
     undefined,
     v => judge({ v }),
   );

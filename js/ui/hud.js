@@ -1,5 +1,6 @@
 import { P, lvlOf, xpFor } from '../state/store.js';
 import { el } from '../util.js';
+import { t } from '../i18n/index.js';
 
 export function say(h, c) {
   const m = el('msg');
@@ -34,12 +35,12 @@ export function paintTop() {
     next = xpFor(l + 1);
   const frac = Math.max(0, Math.min(1, (P.xp - cur) / (next - cur)));
   el('lvlNum').textContent = l;
-  el('xpLabel').textContent = 'level ' + l;
-  el('xpNum').textContent = P.xp - cur + ' / ' + (next - cur) + ' xp';
+  el('xpLabel').textContent = t('top.level', { n: l });
+  el('xpNum').textContent = t('top.xp', { cur: P.xp - cur, next: next - cur });
   el('xpFill').style.width = frac * 100 + '%';
   // 119.4 is the ring's circumference, 2 * pi * r for r = 19.
   el('ring').setAttribute('stroke-dashoffset', String(119.4 * (1 - frac)));
-  el('fire').textContent = P.days > 1 ? P.days + ' day streak' : '';
+  el('fire').textContent = P.days > 1 ? t('top.streak', { n: P.days }) : '';
 }
 
 // Question count, hearts, multiplier and score during a stage run.

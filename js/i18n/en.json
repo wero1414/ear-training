@@ -1,0 +1,391 @@
+{
+  "app": {
+    "title": "Perfect Ear"
+  },
+  "nav": {
+    "map": "Stages",
+    "practice": "Practice",
+    "jam": "Jam",
+    "ref": "Reference"
+  },
+  "top": {
+    "level": "level {n}",
+    "xp": "{cur} / {next} xp",
+    "streak": "{n} day streak"
+  },
+  "practiceSettings": {
+    "summary": "Practice settings",
+    "drill": "Drill",
+    "notes": "Notes in play",
+    "presets": "Note presets",
+    "white": "White",
+    "all12": "All 12",
+    "intervals": "Intervals",
+    "chords": "Chord types",
+    "modes": "Modes",
+    "direction": "Direction",
+    "dir": {
+      "asc": "Ascending",
+      "desc": "Descending",
+      "harm": "Together",
+      "random": "Random"
+    },
+    "arpLabel": "Chords",
+    "arp": {
+      "0": "Block",
+      "1": "Arpeggio",
+      "2": "Random"
+    },
+    "keyFor": "Key for function drills",
+    "keyMode": {
+      "fixed": "Always C",
+      "random": "Random key"
+    },
+    "keyQual": {
+      "maj": "Major",
+      "min": "Minor",
+      "both": "Both"
+    },
+    "melLen": "Melody length",
+    "chrom": "Chromatic degrees",
+    "octRange": "Octave range",
+    "to": "to",
+    "reqOct": "Also name the octave",
+    "limit": "Answer time limit",
+    "off": "off"
+  },
+  "sound": {
+    "summary": "Sound",
+    "instrument": "Instrument",
+    "timbre": {
+      "rhodes": "Electric piano",
+      "pluck": "Plucked string",
+      "marimba": "Marimba",
+      "organ": "Organ",
+      "sine": "Pure sine",
+      "mixed": "Random each time"
+    },
+    "volume": "Volume",
+    "reverb": "Reverb",
+    "noteLength": "Note length",
+    "a4": "A4 reference",
+    "naming": "Note names",
+    "mask": "Noise between trials",
+    "maskHint": "only applies to single-note drills",
+    "sfx": "Sound effects",
+    "adaptive": "Drill weak items more"
+  },
+  "stats": {
+    "summary": "Accuracy by item",
+    "export": "Export progress",
+    "reset": "Reset everything",
+    "confirmReset": "Erase stars, xp and all accuracy history?",
+    "empty": "nothing yet",
+    "row": "{p}%  n={n}",
+    "kind": {
+      "note": "notes",
+      "interval": "intervals",
+      "chord": "chords",
+      "inv": "inversions",
+      "degree": "degrees",
+      "melody": "melodies",
+      "prog": "progressions",
+      "cadence": "cadences",
+      "scale": "scales"
+    }
+  },
+  "kinds": {
+    "note": "notes",
+    "interval": "intervals",
+    "chord": "chords",
+    "inv": "inversions",
+    "degree": "degrees",
+    "melody": "melody",
+    "prog": "progressions",
+    "cadence": "cadences",
+    "scale": "scales"
+  },
+  "about": {
+    "summary": "What trains what",
+    "p": "Absolute pitch barely transfers to playing. The skills that do are functional: hearing a note as a scale degree inside a key, hearing a chord's quality, and hearing where a progression is going. Chapters C and D are the ones that show up when you improvise.",
+    "li": [
+      "Degrees before intervals. Once <span class=\"hint\">4</span> sounds like <span class=\"hint\">4</span> rather than \"a fourth above something\", you can find a melody by ear in real time.",
+      "Sing the answer before you click it. Passive listening plateaus fast.",
+      "Do the chord chapters with arpeggio off. Block chords force you to hear the whole stack, not the top line.",
+      "Jam tab is the transfer test: loop a progression, improvise, and check yourself against the highlighted chord tones.",
+      "Ten focused minutes daily beats an hour once a week."
+    ]
+  },
+  "footer": "One file, no network. Save it and it runs offline. Progress lives in this browser's storage.",
+  "prompt": {
+    "note": "Which note?",
+    "interval": "Which interval?",
+    "chord": "Which chord?",
+    "inv": "Which inversion?",
+    "degree": "Which scale degree?",
+    "melody": "Enter the melody by degree.",
+    "prog": "Enter the progression.",
+    "cadence": "Which cadence?",
+    "scale": "Which scale?"
+  },
+  "trial": {
+    "outOfTime": "Out of time \u2014 <b>{truth}</b>",
+    "wrong": "No \u2014 <b>{truth}</b>",
+    "nowOctave": "Now the octave.",
+    "octave": "octave",
+    "hearMine": "hear mine",
+    "time": "time"
+  },
+  "truth": {
+    "note": "{note}   {hz} Hz",
+    "interval": "{name}   {from} \u2192 {to}",
+    "chord": "{symbol}   {name}",
+    "chordInv": "{symbol}   {name}  ({inv})",
+    "inv": "{inv}   {symbol}",
+    "degree": "{deg}  of  {key} {quality}   ({note})",
+    "melody": "{seq}   in {key}",
+    "prog": "{seq}   in {key}",
+    "scale": "{root} {name}",
+    "major": "major",
+    "minor": "minor",
+    "minorKeySuffix": "m"
+  },
+  "run": {
+    "start": "Start",
+    "replay": "Replay",
+    "quit": "Quit",
+    "skip": "Skip",
+    "ready": "Headphones on. Press start.",
+    "keysNote": "A W S E D F T G Y H U J \u00b7 space replays",
+    "keysGrid": "1-9 0 \u00b7 space replays \u00b7 \u232b undo"
+  },
+  "result": {
+    "summary": "{right} of {total} \u00b7 {pct}% \u00b7 +{xp} xp",
+    "mastered": "Stage mastered",
+    "cleared": "Stage cleared",
+    "outOfHearts": "Out of hearts",
+    "below": "Below 70%",
+    "again": "Try again",
+    "next": "Next stage",
+    "map": "Stages"
+  },
+  "map": {
+    "locked": "locked",
+    "questions": "{n} q",
+    "limit": "{n}s"
+  },
+  "practice": {
+    "ready": "Endless drill. Nothing is scored here.",
+    "keys": "space replays \u00b7 enter next"
+  },
+  "ref": {
+    "intro": "Tap a key to hear it in octave {oct}. Hold a drone to sit inside one pitch, then take it away and test yourself.",
+    "holdDrone": "Hold drone",
+    "stopDrone": "Stop drone"
+  },
+  "jam": {
+    "play": "Play",
+    "stop": "Stop",
+    "tempo": "tempo",
+    "bpm": "{n} bpm",
+    "drums": "drums",
+    "bass": "bass",
+    "exportMidi": "Export MIDI",
+    "oneBar": "1 bar",
+    "help": "Press play. Chord tones light up in solid teal, the rest of the scale in outline.",
+    "now": "<b>{chord}</b> \u00b7 {root} {scale}<br>{notes}   \u00b7   chord tones {tones}",
+    "presets": [
+      "Pop loop  I V vi IV",
+      "ii V I  (jazz)",
+      "12-bar blues",
+      "Minor loop  i \u266dVI \u266dIII \u266dVII",
+      "Dorian vamp  i IV",
+      "Turnaround  I vi ii V",
+      "Lydian pad  I II",
+      "Andalusian  i \u266dVII \u266dVI V",
+      "Modal drone  i"
+    ]
+  },
+  "theory": {
+    "interval": [
+      "unison",
+      "minor 2nd",
+      "major 2nd",
+      "minor 3rd",
+      "major 3rd",
+      "perfect 4th",
+      "tritone",
+      "perfect 5th",
+      "minor 6th",
+      "major 6th",
+      "minor 7th",
+      "major 7th",
+      "octave"
+    ],
+    "intervalShort": ["P1", "m2", "M2", "m3", "M3", "P4", "TT", "P5", "m6", "M6", "m7", "M7", "P8"],
+    "chord": {
+      "maj": "major",
+      "min": "minor",
+      "dim": "diminished",
+      "aug": "augmented",
+      "sus4": "suspended 4",
+      "sus2": "suspended 2",
+      "maj7": "major 7",
+      "dom7": "dominant 7",
+      "min7": "minor 7",
+      "m7b5": "half-diminished",
+      "dim7": "diminished 7",
+      "mMaj7": "minor-major 7",
+      "maj6": "major 6",
+      "min6": "minor 6",
+      "dom9": "dominant 9",
+      "maj9": "major 9",
+      "min9": "minor 9",
+      "d7b9": "dominant 7\u266d9"
+    },
+    "inversion": ["root position", "1st inversion", "2nd inversion", "3rd inversion"],
+    "inversionShort": ["root", "1st", "2nd", "3rd"],
+    "inversionWord": "inversion",
+    "cadence": [
+      {
+        "name": "authentic",
+        "formula": "V\u2013I"
+      },
+      {
+        "name": "plagal",
+        "formula": "IV\u2013I"
+      },
+      {
+        "name": "half",
+        "formula": "\u2026\u2013V"
+      },
+      {
+        "name": "deceptive",
+        "formula": "V\u2013vi"
+      }
+    ],
+    "scale": {
+      "ionian": {
+        "name": "major (ionian)",
+        "short": "major"
+      },
+      "aeolian": {
+        "name": "natural minor (aeolian)",
+        "short": "natural"
+      },
+      "dorian": {
+        "name": "dorian",
+        "short": "dorian"
+      },
+      "phrygian": {
+        "name": "phrygian",
+        "short": "phrygian"
+      },
+      "lydian": {
+        "name": "lydian",
+        "short": "lydian"
+      },
+      "mixolydian": {
+        "name": "mixolydian",
+        "short": "mixolydian"
+      },
+      "locrian": {
+        "name": "locrian",
+        "short": "locrian"
+      },
+      "harmMinor": {
+        "name": "harmonic minor",
+        "short": "harmonic"
+      },
+      "melMinor": {
+        "name": "melodic minor",
+        "short": "melodic"
+      },
+      "majPent": {
+        "name": "major pentatonic",
+        "short": "major"
+      },
+      "minPent": {
+        "name": "minor pentatonic",
+        "short": "minor"
+      },
+      "blues": {
+        "name": "blues",
+        "short": "blues"
+      },
+      "wholeTone": {
+        "name": "whole tone",
+        "short": "whole"
+      },
+      "halfWhole": {
+        "name": "half-whole diminished",
+        "short": "half-whole"
+      }
+    }
+  },
+  "chapters": [
+    {
+      "title": "A \u00b7 Pitch",
+      "stages": [
+        "Two anchors",
+        "Three anchors",
+        "Four anchors",
+        "White keys",
+        "All twelve",
+        "Across octaves",
+        "Shifting timbre",
+        "Name the octave"
+      ]
+    },
+    {
+      "title": "B \u00b7 Intervals",
+      "stages": [
+        "Fourths & fifths",
+        "Thirds & sixths",
+        "Seconds & sevenths",
+        "Every interval up",
+        "Up and down",
+        "Played together"
+      ]
+    },
+    {
+      "title": "C \u00b7 Chords",
+      "stages": [
+        "Major or minor",
+        "Add dim and aug",
+        "Suspensions",
+        "Triad inversions",
+        "Three sevenths",
+        "The full seven",
+        "Extensions",
+        "Seventh inversions",
+        "Chords, arpeggiated"
+      ]
+    },
+    {
+      "title": "D \u00b7 Function",
+      "stages": [
+        "Degrees 1 3 5",
+        "Degrees 1 2 3 5 6",
+        "All seven",
+        "Seven in any key",
+        "Minor key degrees",
+        "Cadences",
+        "ii V I spotting",
+        "Four-chord loops",
+        "Borrowed chords",
+        "Melody, 3 notes",
+        "Melody, 5 notes",
+        "Melody, any key"
+      ]
+    },
+    {
+      "title": "E \u00b7 Scales",
+      "stages": ["Major or minor", "Church modes", "Pentatonic & blues", "Altered minors", "Everything"]
+    },
+    {
+      "title": "F \u00b7 Combined",
+      "stages": ["Notes and intervals", "Chords and degrees", "The lot"]
+    }
+  ]
+}

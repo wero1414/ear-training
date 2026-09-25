@@ -2,6 +2,7 @@
 // audio clock.
 import { S } from '../state/store.js';
 import { el, rnd } from '../util.js';
+import { t } from '../i18n/index.js';
 import { chordMidis } from '../theory/chords.js';
 import { JAMP } from '../theory/harmony.js';
 import { ac, audio } from '../audio/context.js';
@@ -34,7 +35,7 @@ export function jamStart() {
   jam.next = ac.currentTime + 0.15;
   jam.timer = startPolling(jamTick);
   const b = el('jamBtn');
-  if (b) b.textContent = 'Stop';
+  if (b) b.textContent = t('jam.stop');
 }
 
 export function jamStop() {
@@ -42,7 +43,7 @@ export function jamStop() {
   stopPolling(jam.timer);
   jam.timer = null;
   const b = el('jamBtn');
-  if (b) b.textContent = 'Play';
+  if (b) b.textContent = t('jam.play');
   document.querySelectorAll('.bar').forEach(x => x.classList.remove('on'));
 }
 

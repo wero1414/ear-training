@@ -38,12 +38,8 @@ export const PROG_BORROW = [
   [0, 10, 7, 0],
 ];
 
-export const CAD = [
-  { n: 'authentic  V\u2013I', s: [4, 0] },
-  { n: 'plagal  IV\u2013I', s: [3, 0] },
-  { n: 'half  \u2026\u2013V', s: [1, 4] },
-  { n: 'deceptive  V\u2013vi', s: [4, 5] },
-];
+// Cadences as ROM indices. Names are in the i18n tables under theory.cadence.
+export const CAD = [{ s: [4, 0] }, { s: [3, 0] }, { s: [1, 4] }, { s: [4, 5] }];
 
 // A degree has no function outside a key, so every functional drill is preceded by a
 // cadence. Minor keeps a major dominant. Entries are [semitone from tonic, quality].
@@ -62,10 +58,11 @@ export const keyContextChords = minor =>
         [0, 'maj'],
       ];
 
-// Jam presets. Each chord is [semitone from key, quality, bars].
+// Jam presets. `id` names the exported MIDI file; display names are in the i18n tables
+// under jam.presets. Each chord is [semitone from key, quality, bars].
 export const JAMP = [
   {
-    n: 'Pop loop  I V vi IV',
+    id: 'pop-loop-i-v-vi-iv',
     q: 'maj',
     c: [
       [0, 'maj', 1],
@@ -75,7 +72,7 @@ export const JAMP = [
     ],
   },
   {
-    n: 'ii V I  (jazz)',
+    id: 'ii-v-i-jazz-',
     q: 'maj',
     c: [
       [2, 'min7', 1],
@@ -84,7 +81,7 @@ export const JAMP = [
     ],
   },
   {
-    n: '12-bar blues',
+    id: '12-bar-blues',
     q: 'maj',
     c: [
       [0, 'dom7', 4],
@@ -97,7 +94,7 @@ export const JAMP = [
     ],
   },
   {
-    n: 'Minor loop  i \u266dVI \u266dIII \u266dVII',
+    id: 'minor-loop-i-vi-iii-vii',
     q: 'min',
     c: [
       [0, 'min', 1],
@@ -107,7 +104,7 @@ export const JAMP = [
     ],
   },
   {
-    n: 'Dorian vamp  i IV',
+    id: 'dorian-vamp-i-iv',
     q: 'min',
     c: [
       [0, 'min7', 2],
@@ -115,7 +112,7 @@ export const JAMP = [
     ],
   },
   {
-    n: 'Turnaround  I vi ii V',
+    id: 'turnaround-i-vi-ii-v',
     q: 'maj',
     c: [
       [0, 'maj7', 1],
@@ -125,7 +122,7 @@ export const JAMP = [
     ],
   },
   {
-    n: 'Lydian pad  I II',
+    id: 'lydian-pad-i-ii',
     q: 'maj',
     c: [
       [0, 'maj7', 2],
@@ -133,7 +130,7 @@ export const JAMP = [
     ],
   },
   {
-    n: 'Andalusian  i \u266dVII \u266dVI V',
+    id: 'andalusian-i-vii-vi-v',
     q: 'min',
     c: [
       [0, 'min', 1],
@@ -142,5 +139,5 @@ export const JAMP = [
       [7, 'maj', 1],
     ],
   },
-  { n: 'Modal drone  i', q: 'min', c: [[0, 'min7', 4]] },
+  { id: 'modal-drone-i', q: 'min', c: [[0, 'min7', 4]] },
 ];

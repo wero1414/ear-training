@@ -1,4 +1,5 @@
 import { pick } from '../util.js';
+import { t } from '../i18n/index.js';
 import { chordMidis } from '../theory/chords.js';
 import { ROM } from '../theory/harmony.js';
 import { nn } from '../labels.js';
@@ -6,8 +7,6 @@ import { playNote, playStack } from '../audio/instruments.js';
 import { seqUI } from '../ui/sequence.js';
 import { keyFor } from './adaptive.js';
 import { judge, session } from './trial.js';
-
-export const prompt = 'Enter the progression.';
 
 // Progressions are major-key only; the answer is a list of ROM indices.
 export function make(trial, sp) {
@@ -28,7 +27,7 @@ export function play(trial) {
   });
 }
 
-export const truth = t => t.ans.map(i => ROM[i].r).join(' \u2013 ') + '   in ' + nn(t.key.pc);
+export const truth = tr => t('truth.prog', { seq: tr.ans.map(i => ROM[i].r).join(' \u2013 '), key: nn(tr.key.pc) });
 
 export const slotLabel = v => ROM[v].r;
 

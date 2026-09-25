@@ -1,5 +1,4 @@
 // Drill kind -> module. Each kind exports:
-//   prompt                     question shown when a trial starts
 //   make(trial, sp, lo, hi)    fills in the answer and what to play (lo/hi: MIDI range)
 //   play(trial, t, d)          t: start offset after the masking noise, d: note length
 //   render(host, trial, sp)    builds the answer widget

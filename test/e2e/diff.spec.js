@@ -32,12 +32,25 @@ const SHOTS = new Set([
   'stats open',
 ]);
 
+// The app sets data-ready once its strings are applied (the seed has no module script
+// and is ready on load). Polled from Node because the page's timers are faked.
+async function ready(page) {
+  const done = () =>
+    page.evaluate(() => !document.querySelector('script[type=module]') || 'ready' in document.documentElement.dataset);
+  while (!(await done())) await new Promise(r => setTimeout(r, 20));
+}
+
 async function snap(page, label) {
   return page.evaluate(label => {
     const wrap = document.querySelector('.wrap').cloneNode(true);
     // The countdown bar's width comes from a CSS transition on the real compositor
     // clock, which page.clock does not control.
     wrap.querySelectorAll('#timer i').forEach(i => i.removeAttribute('style'));
+    // i18n hooks only exist in the app; the text they produce is still compared.
+    wrap.querySelectorAll('[data-i18n], [data-i18n-html]').forEach(e => {
+      e.removeAttribute('data-i18n');
+      e.removeAttribute('data-i18n-html');
+    });
     const values = [...document.querySelectorAll('.wrap input, .wrap select')].map(
       e => (e.id || e.className) + '=' + (e.type === 'checkbox' ? e.checked : e.value),
     );
@@ -80,6 +93,7 @@ async function scenario(browser, url) {
   await page.clock.pauseAt(T0);
   const patch = () => (url === SEED && SEED_FIXES ? page.addScriptTag({ path: 'test/baseline/fixes.js' }) : null);
   await page.goto(url);
+  await ready(page);
   await patch();
   await page.evaluate(() => window.__reseed(1));
   await S('boot');
@@ -197,6 +211,7 @@ async function scenario(browser, url) {
   await page.click('#btnReset');
   await S('after reset');
   await page.reload();
+  await ready(page);
   await patch();
   await page.evaluate(() => window.__reseed(99));
   await S('after reload');
