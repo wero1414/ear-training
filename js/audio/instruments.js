@@ -169,11 +169,9 @@ export function playStack(midis, when, dur, tb, arp, vel) {
   return arp ? dur + midis.length * 0.19 : dur;
 }
 
-// Low-weighted noise (three summed one-pole filters over white noise), played as a
-// masker before single-note trials so the previous note cannot serve as a reference.
-export function noiseBurst(when, dur) {
-  const a = audio(),
-    t0 = a.currentTime + (when || 0);
+// One second of low-weighted noise (three summed one-pole filters over white noise),
+// built on first use and looped by every noise source.
+function noise(a) {
   if (!noiseBuf) {
     const n = a.sampleRate | 0;
     noiseBuf = a.createBuffer(1, n, a.sampleRate);
@@ -189,8 +187,15 @@ export function noiseBurst(when, dur) {
       d[i] = (b0 + b1 + b2 + w * 0.1848) * 0.2;
     }
   }
+  return noiseBuf;
+}
+
+// Masker before single-note trials, so the previous note cannot serve as a reference.
+export function noiseBurst(when, dur) {
+  const a = audio(),
+    t0 = a.currentTime + (when || 0);
   const src = a.createBufferSource();
-  src.buffer = noiseBuf;
+  src.buffer = noise(a);
   src.loop = true;
   const bp = a.createBiquadFilter();
   bp.type = 'bandpass';
@@ -210,10 +215,8 @@ export function noiseBurst(when, dur) {
 export function hat(when, vel) {
   const a = audio(),
     t0 = a.currentTime + when;
-  // Builds the shared noise buffer; the burst itself is scheduled in the past and silent.
-  if (!noiseBuf) noiseBurst(-99, 0.001);
   const src = a.createBufferSource();
-  src.buffer = noiseBuf;
+  src.buffer = noise(a);
   src.loop = true;
   const hp = a.createBiquadFilter();
   hp.type = 'highpass';

@@ -127,3 +127,17 @@ test('a new stage run does not start itself from the previous run', async ({ pag
   await expect(page.locator('#msg')).toHaveText('Headphones on. Press start.');
   await expect(page.locator('#answers')).toBeEmpty();
 });
+
+// Starting the jam on a fresh page built the shared noise buffer by scheduling a burst
+// 99 s in the past; with the audio clock under 99 s that is a negative time, Web Audio
+// throws, the first bar is abandoned half-scheduled and then scheduled again.
+test('starting the jam on a fresh page does not throw', async ({ page }) => {
+  const errors = [];
+  page.on('pageerror', e => errors.push(e.message));
+  await page.goto(URL);
+  await page.click('#nav-jam');
+  await page.click('#jamBtn');
+  await page.waitForTimeout(400);
+  await page.click('#jamBtn');
+  expect(errors).toEqual([]);
+});
