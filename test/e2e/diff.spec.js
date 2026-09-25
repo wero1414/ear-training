@@ -9,6 +9,10 @@ import { SEED, watch, answer, verdict } from './helpers.js';
 
 const TARGET = process.env.DIFF_TARGET ?? './';
 const T0 = new Date('2026-03-02T10:00:00Z');
+// Steps that also get a full-page screenshot, chosen to cover every view and widget.
+const SHOTS = new Set(['boot', 'A1 answer 6', 'A1 result', 'D1 answered', 'practice configured',
+  'practice answer 1', 'practice answer 2', 'practice answer 4', 'practice answer 12', 'practice answer 14',
+  'settings changed', 'drone on', 'jam configured', 'stats open']);
 
 const PRNG = `(() => {
   let s = 1;
@@ -45,14 +49,19 @@ async function download(page, click) {
 }
 
 async function scenario(browser, url) {
-  const ctx = await browser.newContext();
+  // Reduced motion keeps CSS animations out of the screenshots; the rules it disables
+  // are identical in both builds, so nothing under test is hidden by it.
+  const ctx = await browser.newContext({ reducedMotion: 'reduce', colorScheme: 'dark' });
   const page = await ctx.newPage();
   const problems = watch(page);
   const out = [];
+  const shots = [];
   let step = 0;
+  const shoot = async label => shots.push({ label, png: (await page.screenshot({ fullPage: true })).toString('base64') });
   const S = async label => {
     await page.clock.runFor(10);
     out.push(await snap(page, label));
+    if (SHOTS.has(label)) await shoot(label);
     await page.evaluate(n => window.__reseed(n), ++step * 7919);
   };
   const next = () => page.clock.runFor(2400);
@@ -172,9 +181,14 @@ async function scenario(browser, url) {
   await page.reload();
   await page.evaluate(() => window.__reseed(99));
   await S('after reload');
+  await page.emulateMedia({ colorScheme: 'light' });
+  await shoot('light: map');
+  await page.click('#nav-jam');
+  await page.click('#audioBox summary');
+  await shoot('light: jam and sound panel');
 
   await ctx.close();
-  return { snaps: out, midi, progress, problems };
+  return { snaps: out, shots, midi, progress, problems };
 }
 
 test('restructured build matches the seed step for step', async ({ browser }) => {
@@ -198,4 +212,7 @@ test('restructured build matches the seed step for step', async ({ browser }) =>
   for (let i = 0; i < want.snaps.length; i++) expect(got.snaps[i], want.snaps[i].label).toEqual(want.snaps[i]);
   expect(got.midi).toEqual(want.midi);
   expect(got.progress).toEqual(want.progress);
+  expect(got.shots.map(s => s.label)).toEqual(want.shots.map(s => s.label));
+  for (let i = 0; i < want.shots.length; i++)
+    expect(got.shots[i].png === want.shots[i].png, 'screenshot differs: ' + want.shots[i].label).toBe(true);
 });
