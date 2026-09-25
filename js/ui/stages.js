@@ -6,8 +6,8 @@ import { ALL12, ALLIVL } from '../theory/pitch.js';
 import { PROG_BASIC } from '../theory/harmony.js';
 import { sfx } from '../audio/instruments.js';
 import { CHAPTERS } from '../drills/chapters.js';
-import { abandon, session, makeTrial, playTrial, stopTimer } from '../drills/trial.js';
-import { paintHUD, paintTop } from './hud.js';
+import { abandon, dueCount, session, makeTrial, playTrial, stopTimer } from '../drills/trial.js';
+import { paintHUD, paintTop, say } from './hud.js';
 import { paintStats } from './stats.js';
 import { go } from '../main.js';
 
@@ -18,6 +18,15 @@ const unlocked = (c, s) => s === 0 || (P.stars[skey(c, s - 1)] || 0) > 0;
 export function showMap() {
   el('setBox').hidden = true;
   let h = '';
+  if (S.labSrs) {
+    const n = dueCount();
+    h +=
+      '<div class="due"><span>' +
+      (n ? t('srs.due', { n }) : t('srs.none')) +
+      '</span>' +
+      (n ? '<button class="mini" id="btnReview">' + t('srs.review') + '</button>' : '') +
+      '</div>';
+  }
   CHAPTERS.forEach((ch, ci) => {
     const got = ch.st.reduce((a, _, si) => a + (P.stars[skey(ci, si)] || 0), 0);
     h +=
@@ -62,6 +71,14 @@ export function showMap() {
   el('view')
     .querySelectorAll('[data-c]')
     .forEach(b => (b.onclick = () => startRun(+b.dataset.c, +b.dataset.s)));
+  const rv = el('btnReview');
+  if (rv)
+    rv.onclick = () => {
+      const n = dueCount();
+      go('practice');
+      session.review = true;
+      say(t('srs.reviewing', { n }), '');
+    };
 }
 
 function startRun(ci, si) {

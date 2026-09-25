@@ -54,3 +54,41 @@ test('without the flag, progressions stay major', async ({ page }) => {
   expect(buttons).toContain('I');
   expect(buttons).not.toContain('i');
 });
+
+test('labSrs: answers create review cards, and due cards drive the Review button', async ({ page }) => {
+  const problems = watch(page);
+  await page.clock.install();
+  await practice(page, 'interval', ['labSrs']);
+  await page.click('#btnPlay');
+  await page.locator('#answers .grid button').first().click();
+  const prog = await page.evaluate(() => JSON.parse(localStorage.getItem('pe.prog')));
+  const cards = Object.values(prog.srs.interval);
+  expect(cards).toHaveLength(1);
+  expect(cards[0]).toMatchObject({ reps: expect.any(Number), interval: 1, history: [{ q: expect.any(Number) }] });
+
+  // A chord card that was due yesterday.
+  await page.evaluate(() => {
+    const p = JSON.parse(localStorage.getItem('pe.prog'));
+    p.srs.chord = { dim7: { ef: 2.5, reps: 2, interval: 6, due: '2000-01-01', history: [] } };
+    localStorage.setItem('pe.prog', JSON.stringify(p));
+  });
+  await page.reload();
+  await expect(page.locator('.due')).toContainText('1');
+  await page.click('#btnReview');
+  await expect(page.locator('#nav-practice')).toHaveAttribute('aria-selected', 'true');
+  await page.click('#btnPlay');
+  // Practice is set to notes only; review drills the kind that is due.
+  const symbols = await page.locator('#answers .grid button b').allTextContents();
+  expect(symbols).toContain('\u00b07');
+  expect(problems).toEqual([]);
+});
+
+test('without labSrs no review cards are recorded', async ({ page }) => {
+  await practice(page, 'interval');
+  await page.click('#btnPlay');
+  await page.locator('#answers .grid button').first().click();
+  const prog = await page.evaluate(() => JSON.parse(localStorage.getItem('pe.prog')));
+  expect(prog.srs).toEqual({});
+  await page.click('#nav-map');
+  await expect(page.locator('.due')).toHaveCount(0);
+});

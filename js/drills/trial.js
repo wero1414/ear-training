@@ -1,18 +1,22 @@
 // The trial engine: builds a trial from the current spec, plays it, times it, grades
 // the answer and advances either the scored stage run or the endless practice loop.
-import { S, sv } from '../state/store.js';
+import { P, S, sv } from '../state/store.js';
 import { el, pick } from '../util.js';
 import { t } from '../i18n/index.js';
 import { ALL12 } from '../theory/pitch.js';
 import { PROG_BASIC } from '../theory/harmony.js';
+import { CH } from '../theory/chords.js';
+import { SC } from '../theory/scales.js';
 import { noiseBurst, pickTimbre, sfx } from '../audio/instruments.js';
 import { bump } from './adaptive.js';
+import { quality, record, today } from './srs.js';
 import { KINDS, grade, statKey, truthOf } from './registry.js';
 import { say, pop, flash, paintHUD } from '../ui/hud.js';
 import { paintStats } from '../ui/stats.js';
 import { endRun } from '../ui/stages.js';
 
-export const session = { trial: null, run: null };
+// review: practice limited to the kinds with due review cards (spaced repetition).
+export const session = { trial: null, run: null, review: false };
 let tTimer = null,
   tStart = 0,
   pending = null;
@@ -32,6 +36,7 @@ function after(ms, fn) {
 export function abandon() {
   session.trial = null;
   session.run = null;
+  session.review = false;
   stopTimer();
   clearTimeout(pending);
   pending = null;
@@ -39,6 +44,7 @@ export function abandon() {
 
 function specOf() {
   if (session.run) return session.run.spec;
+  if (session.review) return reviewSpec();
   return {
     kinds: S.kinds.length ? S.kinds : ['note'],
     pcs: S.pcs.length ? S.pcs : [0],
@@ -58,6 +64,43 @@ function specOf() {
     limit: +S.limit,
     timbre: S.timbre,
     chrom: S.chrom,
+  };
+}
+
+export function dueKinds(day = today()) {
+  return Object.keys(P.srs || {}).filter(k => Object.values(P.srs[k]).some(c => c.due && c.due <= day));
+}
+
+export const dueCount = (day = today()) =>
+  Object.values(P.srs || {}).reduce(
+    (n, cards) => n + Object.values(cards).filter(c => c.due && c.due <= day).length,
+    0,
+  );
+
+// Every item of every kind that has something due, so any due card can come up; the
+// review weights then put due cards first. Degree keys are semitones, so degrees are
+// drilled chromatically here.
+function reviewSpec() {
+  const kinds = dueKinds();
+  return {
+    kinds: kinds.length ? kinds : S.kinds,
+    pcs: ALL12,
+    ivls: [...Array(13).keys()],
+    chords: Object.keys(CH),
+    scales: Object.keys(SC),
+    invs: [0, 1, 2, 3],
+    degrees: ALL12,
+    progs: PROG_BASIC,
+    dir: 'random',
+    arp: 0,
+    oct: [3, 5],
+    reqOct: false,
+    keyMode: 'random',
+    keyQual: 'both',
+    melLen: 4,
+    limit: 0,
+    timbre: S.timbre,
+    chrom: true,
   };
 }
 
@@ -127,6 +170,11 @@ export function judge(given) {
   const ok = given !== null && grade(trial, given);
   mark(given, ok);
   bump(trial.kind, statKey(trial), ok);
+  if (S.labSrs) {
+    const key = statKey(trial),
+      cards = P.srs[trial.kind] || (P.srs[trial.kind] = {});
+    cards[key] = record(cards[key], quality({ ok, ms, timeout: given === null }), today());
+  }
   const truth = truthOf(trial);
   if (given === null) say(t('trial.outOfTime', { truth }), 'bad');
   else if (ok) say('<b>' + truth + '</b>', 'ok');

@@ -429,6 +429,16 @@
     "labMelody": {
       "name": "Melod\u00edas musicales y progresiones menores",
       "hint": "dictado por frases; ciclos menores y modales en la pr\u00e1ctica"
+    },
+    "labSrs": {
+      "name": "Repetici\u00f3n espaciada",
+      "hint": "calendario de repaso SM-2 por elemento; pendientes en el mapa de etapas"
     }
+  },
+  "srs": {
+    "due": "{n} para repasar hoy",
+    "none": "Nada para repasar hoy",
+    "review": "Repasar",
+    "reviewing": "Repasando {n} elementos pendientes."
   }
 }

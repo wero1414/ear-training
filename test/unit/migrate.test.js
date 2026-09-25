@@ -28,3 +28,18 @@ describe('migrateProgress v1 -> v2', () => {
     expect(migrateProgress({ schema: 2, stats: { degree } }).stats.degree).toBe(degree);
   });
 });
+
+describe('migrateProgress v2 -> v3', () => {
+  it('adds an empty review schedule and keeps everything else', () => {
+    const stats = { note: { 0: { n: 1, ok: 1 } } };
+    const p = migrateProgress({ schema: 2, xp: 5, stats });
+    expect(p.schema).toBe(3);
+    expect(p.srs).toEqual({});
+    expect(p.stats).toBe(stats);
+  });
+
+  it('keeps an existing schedule', () => {
+    const srs = { note: { 0: { ef: 2.5, reps: 1, interval: 1, due: '2026-03-03', history: [] } } };
+    expect(migrateProgress({ schema: 3, srs }).srs).toBe(srs);
+  });
+});

@@ -32,7 +32,7 @@ export const DEFS = {
   iosMediaChannel: true,
   ...localeDefaults(navigator.language),
 };
-export const DEFP = { xp: 0, stars: {}, best: {}, stats: {}, days: 0, last: '', schema: PROGRESS_SCHEMA };
+export const DEFP = { xp: 0, stars: {}, best: {}, stats: {}, days: 0, last: '', schema: PROGRESS_SCHEMA, srs: {} };
 
 function ldj(k, d, migrate = x => x) {
   try {
@@ -66,7 +66,7 @@ export function replaceAll(settings, progress) {
 }
 
 export function resetProgress() {
-  P = Object.assign({}, DEFP, { stars: {}, best: {}, stats: {} });
+  P = Object.assign({}, DEFP, { stars: {}, best: {}, stats: {}, srs: {} });
 }
 
 // Level n starts at 60 * (n - 1)^2 xp.

@@ -790,3 +790,20 @@ footer {
 .update .ghost {
   padding: 7px 10px;
 }
+
+.due {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  border-radius: 11px;
+  padding: 9px 12px;
+  margin-bottom: 8px;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: var(--gold);
+}
+.due button {
+  margin-left: auto;
+}

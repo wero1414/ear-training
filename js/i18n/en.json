@@ -416,6 +416,16 @@
     "labMelody": {
       "name": "Musical melodies and minor progressions",
       "hint": "phrase-based dictation; minor and modal loops in practice"
+    },
+    "labSrs": {
+      "name": "Spaced repetition",
+      "hint": "SM-2 review schedule per item; due count on the stage map"
     }
+  },
+  "srs": {
+    "due": "{n} due today",
+    "none": "Nothing due today",
+    "review": "Review",
+    "reviewing": "Reviewing {n} due items."
   }
 }

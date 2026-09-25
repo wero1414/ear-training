@@ -19,7 +19,7 @@ describe('parseBackup', () => {
     const { settings, progress } = parseBackup(JSON.stringify(good));
     expect(settings.naming).toBe('solf');
     expect(settings.degNaming).toBe('movable'); // upgraded like stored settings
-    expect(progress.schema).toBe(2);
+    expect(progress.schema).toBe(3);
     expect(progress.stats.degree).toEqual({ 2: { n: 2, ok: 1 } }); // v1 degree keys migrated
     expect(progress.xp).toBe(120);
   });

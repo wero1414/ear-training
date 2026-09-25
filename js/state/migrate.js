@@ -2,7 +2,7 @@
 // the stored shape or meaning changes; data without `schema` is version 1.
 import { DIA_MAJ } from '../theory/scales.js';
 
-export const PROGRESS_SCHEMA = 2;
+export const PROGRESS_SCHEMA = 3;
 
 // v1 keyed degree stats by degree index (0-6) in diatonic drills and by semitone (0-11)
 // in chromatic ones, in the same bucket, for major and minor keys alike. v2 keys every
@@ -24,8 +24,15 @@ function v1to2(p) {
   p.schema = 2;
 }
 
+// v3 adds per-item review cards (spaced repetition), keyed like the stats.
+function v2to3(p) {
+  if (!p.srs) p.srs = {};
+  p.schema = 3;
+}
+
 export function migrateProgress(p) {
   if (!p.schema || p.schema < 2) v1to2(p);
+  if (p.schema < 3) v2to3(p);
   return p;
 }
 

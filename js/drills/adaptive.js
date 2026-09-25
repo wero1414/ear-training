@@ -1,5 +1,6 @@
 import { S, P } from '../state/store.js';
 import { pick, rnd } from '../util.js';
+import { srsWeight, today } from './srs.js';
 
 // Previous answer, shared across drill kinds, so the same answer is not asked twice in a row.
 export const guard = { last: null };
@@ -15,8 +16,12 @@ export function bump(b, key, ok) {
 // surface early. keyOf maps a candidate to its stats key when the two differ.
 export function weighted(items, b, keyOf = i => i) {
   if (!S.adaptive) return pick(items);
-  const st = P.stats[b] || {};
+  const st = P.stats[b] || {},
+    cards = (S.labSrs && P.srs[b]) || {},
+    day = today();
+  // With spaced repetition on, the review schedule decides instead of the error rate.
   const w = items.map(i => {
+    if (S.labSrs) return srsWeight(cards[keyOf(i)], day);
     const s = st[keyOf(i)];
     return !s || s.n < 3 ? 2 : 1 + 3.2 * (1 - s.ok / s.n);
   });

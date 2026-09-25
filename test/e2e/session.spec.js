@@ -262,6 +262,15 @@ for (const locale of LOCALES) {
       return;
     }
     const want = JSON.parse(readFileSync(file, 'utf8'));
+    // Name the first diverging step and fields, so a failure points at its cause.
+    const first = want.steps.findIndex((w, i) => JSON.stringify(w) !== JSON.stringify(steps[i]));
+    if (first >= 0) {
+      const keys = new Set([...Object.keys(want.steps[first]), ...Object.keys(steps[first] || {})]);
+      const diff = [...keys].filter(
+        k => JSON.stringify(want.steps[first][k]) !== JSON.stringify((steps[first] || {})[k]),
+      );
+      console.log(`[${locale}] first diverging step: ${want.steps[first].label} (${diff.join(', ')})`);
+    }
     expect(steps.map(s => s.label)).toEqual(want.steps.map(s => s.label));
     for (let i = 0; i < want.steps.length; i++) expect(steps[i], want.steps[i].label).toEqual(want.steps[i]);
     expect(got.midi).toEqual(want.midi);

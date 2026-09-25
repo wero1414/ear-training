@@ -59,7 +59,7 @@ test('degree stats: v1 progress migrates without changing the labels it showed',
   ]);
   await openPractice(page, ['intervals']); // chip clicks save
   const stored = await page.evaluate(() => JSON.parse(localStorage.getItem('pe.prog')));
-  expect(stored.schema).toBe(2);
+  expect(stored.schema).toBe(3);
   expect(stored.stats.degree).toEqual({ 2: { n: 2, ok: 1 }, 9: { n: 1, ok: 1 } });
   expect(stored.xp).toBe(10);
 });
